@@ -11,7 +11,7 @@ $title = MarkdownHelper::filenameToTitle($slug) . ' - ' . MarkdownHelper::filena
 ?>
 
 <x-layouts.docs :title="$title">
-    <div class="max-w-4xl mx-auto prose prose-lg">
+    <div class="max-w-4xl mx-auto prose prose-lg dark:prose-invert prose-gray">
         {!! $content !!}
     </div>
 </x-layouts.docs>
