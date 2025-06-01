@@ -16,12 +16,22 @@
 
         <!-- Styles -->
         @livewireStyles
+        @stack('styles')
     </head>
     <body class="font-sans antialiased">
-        <x-banner />
+        @unless($hideAppShell ?? false)
+            <x-banner />
+        @endunless
 
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @livewire('navigation-menu')
+            {{-- Navigation - can be overridden --}}
+            @hasSection('navigation')
+                @yield('navigation')
+            @else
+                @auth
+                    @livewire('navigation-menu')
+                @endauth
+            @endif
 
             <!-- Page Heading -->
             @if (isset($header))
@@ -34,12 +44,17 @@
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                @hasSection('content')
+                    @yield('content')
+                @else
+                    {{ $slot }}
+                @endif
             </main>
         </div>
 
         @stack('modals')
 
         @livewireScripts
+        @stack('scripts')
     </body>
 </html>
