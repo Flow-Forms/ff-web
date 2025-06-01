@@ -5,22 +5,25 @@
 <div class="lg:hidden" x-data="{ open: false }">
     <!-- Mobile menu button -->
     <div class="fixed top-4 left-4 z-50">
-        <flux:button @click="open = !open" size="sm" variant="outline" class="shadow-md">
+        <flux:button x-on:click="open = !open" size="sm" variant="outline" class="shadow-md">
             <flux:icon.bars-3 class="h-5 w-5" />
         </flux:button>
     </div>
     
     <!-- Mobile menu overlay -->
-    <div x-show="open" @click="open = false" class="fixed inset-0 z-40 bg-black bg-opacity-25"></div>
+    <div x-show="open" x-on:click="open = false" class="fixed inset-0 z-40 bg-black bg-opacity-25"></div>
     
     <!-- Mobile sidebar -->
     <div x-show="open" class="fixed top-0 left-0 z-50 w-64 h-full bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
         <div class="p-4">
             <div class="flex items-center justify-between mb-6">
                 <flux:heading size="base">Navigation</flux:heading>
-                <flux:button @click="open = false" size="sm" variant="ghost">
-                    <flux:icon.x-mark class="h-5 w-5" />
-                </flux:button>
+                <div class="flex items-center gap-2">
+                    <x-docs.theme-toggle />
+                    <flux:button x-on:click="open = false" size="sm" variant="ghost">
+                        <flux:icon.x-mark class="h-5 w-5" />
+                    </flux:button>
+                </div>
             </div>
             
             {{-- Mobile Search --}}
@@ -37,7 +40,7 @@
                             <flux:navlist.item
                                 href="{{ $item['url'] }}"
                                 :current="request()->is($item['filename'])"
-                                @click="open = false">
+                                x-on:click="open = false">
                                 {{ $item['title'] }}
                             </flux:navlist.item>
                         @endforeach
@@ -55,7 +58,7 @@
                                 <flux:navlist.item
                                     href="{{ $item['url'] }}"
                                     :current="$isActive"
-                                    @click="open = false">
+                                    x-on:click="open = false">
                                     {{ $item['title'] }}
                                 </flux:navlist.item>
                             @endforeach

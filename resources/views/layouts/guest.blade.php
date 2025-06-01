@@ -13,15 +13,31 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        
+        <script>
+            // Theme initialization
+            (function() {
+                const theme = localStorage.getItem('theme') || 'system';
+                function applyTheme() {
+                    if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                        document.documentElement.classList.add('dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                    }
+                }
+                applyTheme();
+            })();
+        </script>
 
         <!-- Styles -->
         @livewireStyles
     </head>
-    <body>
+    <body class="bg-gray-50 dark:bg-gray-900">
         <div class="font-sans text-gray-900 dark:text-gray-100 antialiased">
             {{ $slot }}
         </div>
 
         @livewireScripts
+        @fluxScripts
     </body>
 </html>
