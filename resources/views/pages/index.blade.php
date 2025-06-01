@@ -1,6 +1,6 @@
-@extends('layouts.docs')
-
-@section('docs-content')
+<x-layouts.docs>
+    <x-slot name="title">Flow Forms Documentation</x-slot>
+    
 <div class="max-w-4xl mx-auto">
     <div class="text-center py-12">
         <flux:heading size="2xl" class="mb-4">Flow Forms Documentation</flux:heading>
@@ -36,4 +36,4 @@
         </div>
     </div>
 </div>
-@endsection
+</x-layouts.docs>

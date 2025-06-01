@@ -7,12 +7,11 @@ if (!MarkdownHelper::markdownExists($slug)) {
 }
 
 $content = MarkdownHelper::parseFile(resource_path("markdown/{$slug}.md"));
+$title = MarkdownHelper::filenameToTitle($slug) . ' - Flow Forms Documentation';
 ?>
 
-@extends('layouts.docs')
-
-@section('docs-content')
-<div class="max-w-4xl mx-auto prose prose-lg">
-    {!! $content !!}
-</div>
-@endsection
+<x-layouts.docs :title="$title">
+    <div class="max-w-4xl mx-auto prose prose-lg">
+        {!! $content !!}
+    </div>
+</x-layouts.docs>
