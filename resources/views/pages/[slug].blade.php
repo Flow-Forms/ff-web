@@ -6,7 +6,7 @@ if (!MarkdownHelper::markdownExists($slug)) {
     abort(404, 'Documentation page not found');
 }
 
-$content = MarkdownHelper::parseFile(resource_path("markdown/{$slug}.md"));
+$content = MarkdownHelper::parseFile(MarkdownHelper::getMarkdownPath($slug));
 $title = MarkdownHelper::filenameToTitle($slug) . ' - Flow Forms Documentation';
 ?>
 

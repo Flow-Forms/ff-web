@@ -18,13 +18,31 @@
         "breadcrumb": "Security"
     },
     {
-        "id": "forms\/field-types",
-        "title": "Field Types",
-        "content": "Field Types Flow Forms supports a wide variety of field types to collect exactly the data you need. Text Fields Single Line Text Perfect for names, titles, and short responses. Multi-line Text For longer responses like comments and feedback. Email Built-in email validation ensures you get valid email addresses. Phone Number Handles international phone number formats automatically. Selection Fields Dropdown Present users with a list of options to choose from. Radio Buttons When users should...",
-        "headings": "Field Types Text Fields Single Line Text Multi-line Text Email Phone Number Selection Fields Dropdown Radio Buttons Checkboxes Advanced Fields File Upload Date Picker Number Input URL Field Field Validation Next Steps",
-        "url": "\/forms\/field-types",
-        "section": "Forms",
-        "breadcrumb": "Forms \u203a Field Types"
+        "id": "terms",
+        "title": "Terms",
+        "content": "Terms of Service Edit this file to define the terms of service for your application.",
+        "headings": "Terms of Service",
+        "url": "\/terms",
+        "section": "Documentation",
+        "breadcrumb": "Terms"
+    },
+    {
+        "id": "policy",
+        "title": "Policy",
+        "content": "Privacy Policy Edit this file to define the privacy policy for your application.",
+        "headings": "Privacy Policy",
+        "url": "\/policy",
+        "section": "Documentation",
+        "breadcrumb": "Policy"
+    },
+    {
+        "id": "README",
+        "title": "Readme",
+        "content": "Documentation Organization This directory contains the markdown documentation files for Flow Forms. File Naming Convention Files use a numeric prefix to control their display order in the navigation: 01-quick-start.md - Displays as \"Quick Start\" (first in navigation) 02-security.md - Displays as \"Security\" (second in navigation) 03-terms.md - Displays as \"Terms\" (third in navigation) 04-policy.md - Displays as \"Policy\" (fourth in navigation) Folder Structure Folders can contain their own...",
+        "headings": "Documentation Organization File Naming Convention Folder Structure Adding New Documentation URL Structure",
+        "url": "\/README",
+        "section": "Documentation",
+        "breadcrumb": "Readme"
     },
     {
         "id": "forms\/overview",
@@ -34,5 +52,14 @@
         "url": "\/forms\/overview",
         "section": "Forms",
         "breadcrumb": "Forms \u203a Overview"
+    },
+    {
+        "id": "forms\/field-types",
+        "title": "Field Types",
+        "content": "Field Types Flow Forms supports a wide variety of field types to collect exactly the data you need. Text Fields Single Line Text Perfect for names, titles, and short responses. Multi-line Text For longer responses like comments and feedback. Email Built-in email validation ensures you get valid email addresses. Phone Number Handles international phone number formats automatically. Selection Fields Dropdown Present users with a list of options to choose from. Radio Buttons When users should...",
+        "headings": "Field Types Text Fields Single Line Text Multi-line Text Email Phone Number Selection Fields Dropdown Radio Buttons Checkboxes Advanced Fields File Upload Date Picker Number Input URL Field Field Validation Next Steps",
+        "url": "\/forms\/field-types",
+        "section": "Forms",
+        "breadcrumb": "Forms \u203a Field Types"
     }
 ]

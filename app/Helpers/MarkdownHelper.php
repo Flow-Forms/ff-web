@@ -47,10 +47,15 @@ class MarkdownHelper
                 $title = self::filenameToTitle($filename);
                 $url = '/' . $filename;
 
+                // Store the original filename for sorting, but clean URL
+                $cleanFilename = preg_replace('/^\d{2}-/', '', $filename);
+                $url = '/' . $cleanFilename;
+                
                 $navigation['_root'][] = [
                     'title' => $title,
                     'url' => $url,
-                    'filename' => $filename,
+                    'filename' => $cleanFilename,
+                    'originalFilename' => $filename,
                     'type' => 'file'
                 ];
             }
@@ -71,10 +76,15 @@ class MarkdownHelper
                     $title = self::filenameToTitle($filename);
                     $url = '/' . $folderName . '/' . $filename;
 
+                    // Store the original filename for sorting, but clean URL
+                    $cleanFilename = preg_replace('/^\d{2}-/', '', $filename);
+                    $url = '/' . $folderName . '/' . $cleanFilename;
+                    
                     $folderItems[] = [
                         'title' => $title,
                         'url' => $url,
-                        'filename' => $filename,
+                        'filename' => $cleanFilename,
+                        'originalFilename' => $filename,
                         'folder' => $folderName,
                         'type' => 'file'
                     ];
@@ -82,8 +92,10 @@ class MarkdownHelper
             }
             
             if (!empty($folderItems)) {
-                // Sort files within folder
-                usort($folderItems, fn($a, $b) => strcmp($a['filename'], $b['filename']));
+                // Sort files within folder by their original filename (preserves numeric ordering)
+                usort($folderItems, function($a, $b) {
+                    return strcmp($a['originalFilename'], $b['originalFilename']);
+                });
                 
                 $navigation[$folderName] = [
                     'title' => $folderTitle,
@@ -95,7 +107,7 @@ class MarkdownHelper
 
         // Sort root files if they exist
         if (isset($navigation['_root'])) {
-            usort($navigation['_root'], fn($a, $b) => strcmp($a['filename'], $b['filename']));
+            usort($navigation['_root'], fn($a, $b) => strcmp($a['originalFilename'], $b['originalFilename']));
         }
 
         return $navigation;
@@ -103,6 +115,9 @@ class MarkdownHelper
 
     public static function filenameToTitle(string $filename): string
     {
+        // Remove numeric prefix if present (e.g., "01-overview" becomes "overview")
+        $filename = preg_replace('/^\d{2}-/', '', $filename);
+        
         // Convert kebab-case and snake_case to title case
         return Str::of($filename)
             ->replace(['-', '_'], ' ')
@@ -112,16 +127,64 @@ class MarkdownHelper
 
     public static function markdownExists(string $filename, string $folder = null): bool
     {
+        // Check for exact filename first
         if ($folder) {
             $filePath = resource_path("markdown/{$folder}/{$filename}.md");
         } else {
             $filePath = resource_path("markdown/{$filename}.md");
         }
-        return File::exists($filePath);
+        
+        if (File::exists($filePath)) {
+            return true;
+        }
+        
+        // Check for files with numeric prefix
+        $directory = $folder ? resource_path("markdown/{$folder}") : resource_path("markdown");
+        if (File::exists($directory)) {
+            $files = File::files($directory);
+            foreach ($files as $file) {
+                if ($file->getExtension() === 'md') {
+                    $baseFilename = $file->getFilenameWithoutExtension();
+                    $cleanFilename = preg_replace('/^\d{2}-/', '', $baseFilename);
+                    if ($cleanFilename === $filename) {
+                        return true;
+                    }
+                }
+            }
+        }
+        
+        return false;
     }
 
     public static function getMarkdownPath(string $filename, string $folder = null): string
     {
+        // Check for exact filename first
+        if ($folder) {
+            $filePath = resource_path("markdown/{$folder}/{$filename}.md");
+        } else {
+            $filePath = resource_path("markdown/{$filename}.md");
+        }
+        
+        if (File::exists($filePath)) {
+            return $filePath;
+        }
+        
+        // Check for files with numeric prefix
+        $directory = $folder ? resource_path("markdown/{$folder}") : resource_path("markdown");
+        if (File::exists($directory)) {
+            $files = File::files($directory);
+            foreach ($files as $file) {
+                if ($file->getExtension() === 'md') {
+                    $baseFilename = $file->getFilenameWithoutExtension();
+                    $cleanFilename = preg_replace('/^\d{2}-/', '', $baseFilename);
+                    if ($cleanFilename === $filename) {
+                        return $file->getPathname();
+                    }
+                }
+            }
+        }
+        
+        // Return the expected path even if it doesn't exist
         if ($folder) {
             return resource_path("markdown/{$folder}/{$filename}.md");
         } else {

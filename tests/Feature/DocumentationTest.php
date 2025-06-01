@@ -269,9 +269,13 @@ describe('Dynamic file discovery and accessibility', function () {
         );
         
         foreach ($iterator as $file) {
-            if ($file->getExtension() === 'md') {
+            if ($file->getExtension() === 'md' && $file->getFilename() !== 'README.md') {
                 $relativePath = str_replace($markdownPath . '/', '', $file->getPathname());
+                // Remove .md extension
                 $url = '/' . str_replace('.md', '', $relativePath);
+                // Remove numeric prefix from URLs
+                $url = preg_replace('/\/\d{2}-/', '/', $url);
+                $url = preg_replace('/^\/\d{2}-/', '/', $url);
                 $allFiles[] = $url;
             }
         }

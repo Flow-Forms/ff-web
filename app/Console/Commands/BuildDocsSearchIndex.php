@@ -84,15 +84,18 @@ class BuildDocsSearchIndex extends Command
         // Extract headings for better search relevance
         $headings = $this->extractHeadings($htmlContent);
         
+        // Remove numeric prefix from filename for URL
+        $cleanFilename = preg_replace('/^\d{2}-/', '', $filename);
+        
         // Build URL
-        $url = rtrim('/' . $basePath . $filename, '/');
+        $url = rtrim('/' . $basePath . $cleanFilename, '/');
         if ($url === '/index') {
             $url = '/';
         }
         
         // Create search entry
         $searchEntry = [
-            'id' => $basePath . $filename,
+            'id' => $basePath . $cleanFilename,
             'title' => MarkdownHelper::filenameToTitle($filename),
             'content' => $this->truncateContent($textContent, 500),
             'headings' => implode(' ', $headings),
