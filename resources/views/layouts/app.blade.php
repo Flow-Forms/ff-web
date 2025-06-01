@@ -19,10 +19,9 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        <!-- Styles -->
-        @livewireStyles
-        @stack('styles')
+        @fluxAppearance
     </head>
+
     <body class="font-sans antialiased">
         @unless($hideAppShell)
             <x-banner />
@@ -55,7 +54,7 @@
 
         @stack('modals')
 
-        @livewireScripts
+        @fluxScripts
         @stack('scripts')
     </body>
 </html>

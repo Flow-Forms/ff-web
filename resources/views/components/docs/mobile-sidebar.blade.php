@@ -23,6 +23,11 @@
                 </flux:button>
             </div>
             
+            {{-- Mobile Search --}}
+            <div class="mb-6">
+                <x-docs.search />
+            </div>
+            
             <!-- Navigation content -->
             <div class="space-y-6">
                 {{-- Root level files --}}

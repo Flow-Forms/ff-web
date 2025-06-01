@@ -34,6 +34,11 @@
                 
                 <flux:spacer />
                 
+                {{-- Search --}}
+                <flux:navbar.item class="hidden md:block">
+                    <x-docs.search class="w-96" />
+                </flux:navbar.item>
+                
                 <flux:navbar.item>
                     <flux:link href="https://flowforms.io" variant="subtle" size="sm">
                         ← Return to Main Site
