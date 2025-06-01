@@ -37,48 +37,74 @@ This allows you to reorder documentation without breaking existing links.
 
 ## Search System
 
-The documentation site includes a powerful search system powered by Fuse.js for fast, client-side fuzzy search.
+The documentation site includes a powerful search system powered by Laravel Scout with a database driver for fast, server-side full-text search.
 
 ### What Gets Indexed
 
 The search index includes the following data from each markdown file:
 
-- **Title** - Derived from the filename (highest search weight: 50%)
-- **Headings** - All H1, H2, H3, etc. headings in the content (weight: 30%)
-- **Content** - The full text content of the markdown file (weight: 20%)
+- **Title** - Derived from the filename (primary search field)
+- **Headings** - All H1, H2, H3, etc. headings in the content
+- **Content** - The full text content of the markdown file  
 - **Section** - The folder/category the document belongs to
 - **Breadcrumb** - Navigation path for the document
 - **URL** - The clean URL without numeric prefixes
 
 ### How Search Works
 
-1. **Index Generation**: Run `php artisan command:build-index` to generate `/public/docs-search-index.json`
-2. **Auto-Updates**: The search index automatically rebuilds when markdown files change (via git pre-commit hook)
-3. **Client-Side Search**: Fuse.js performs fuzzy search in the browser with no server requests
-4. **Smart Highlighting**: Search terms are highlighted in results with fallback logic
-5. **Keyboard Navigation**: Use ↑/↓ arrows to navigate results, Enter to select
+1. **Database Storage**: Documentation is stored in a `documentation` table with full-text indexing
+2. **Index Generation**: Run `php artisan command:build-index` to populate the database from markdown files
+3. **Auto-Updates**: The search index automatically rebuilds when markdown files change (via git pre-commit hook)
+4. **Server-Side Search**: Laravel Scout performs database queries with relevance ranking
+5. **Smart Snippets**: Search results include contextual content snippets around matching terms
+6. **Keyboard Navigation**: Use ↑/↓ arrows to navigate results, Enter to select
 
 ### Search Features
 
-- **Fuzzy Matching**: Finds results even with typos or partial matches
+- **Full-Text Search**: Database-powered search with proper relevance scoring
 - **Grouped Results**: Results are organized by document section
-- **Instant Results**: No loading delays - search happens as you type
+- **Fast Performance**: Server-side search with optimized database queries
 - **Keyboard Shortcuts**: Press ⌘K (Mac) or Ctrl+K (Windows/Linux) to focus search
-- **Smart Ranking**: Title matches are weighted higher than content matches
+- **Smart Highlighting**: Search terms are highlighted in titles and content
+- **Real-Time Results**: Search as you type with request cancellation
 
-### Search Configuration
+### Search API
 
-Search behavior can be customized in `resources/js/docs-search.js`:
+The search is exposed via a REST API endpoint:
 
-```javascript
-// Search thresholds and weights
-threshold: 0.3,        // Lower = more strict matching
-minMatchCharLength: 2, // Minimum characters to highlight
-keys: [
-    { name: 'title', weight: 0.5 },     // 50% weight
-    { name: 'headings', weight: 0.3 },  // 30% weight  
-    { name: 'content', weight: 0.2 }    // 20% weight
-]
 ```
+GET /api/docs/search?q=your+search+term
+```
+
+Response format:
+```json
+{
+  "results": [
+    {
+      "section": "Documentation", 
+      "items": [
+        {
+          "id": "security",
+          "title": "Security",
+          "content": "...snippet with highlighted terms...",
+          "section": "Documentation", 
+          "breadcrumb": "Security",
+          "url": "/security"
+        }
+      ]
+    }
+  ],
+  "query": "your search term",
+  "total": 1
+}
+```
+
+### Technical Implementation
+
+- **Laravel Scout**: Provides search abstraction layer
+- **Database Driver**: Uses your existing database for search indexing  
+- **Documentation Model**: `App\Models\Documentation` handles search indexing
+- **Search Controller**: `App\Http\Controllers\Api\DocumentationSearchController`
+- **Frontend**: Alpine.js component makes API calls for search results
 
 The search index is automatically maintained - just add new markdown files and commit your changes!

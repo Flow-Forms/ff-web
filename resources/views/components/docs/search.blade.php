@@ -1,28 +1,27 @@
 @props([
-    'placeholder' => 'Search documentation... (⌘K)',
+    'placeholder' => 'Search documentation...',
     'class' => ''
 ])
 
-<div 
+<div
     x-data="docsSearch()"
-    @keydown.window.cmd.k.prevent="$refs.searchInput.focus()"
-    @keydown.window.ctrl.k.prevent="$refs.searchInput.focus()"
-    @click.outside="showResults = false"
+    x-on:keydown.window.cmd.k.prevent="$refs.searchInput.focus()"
+    x-on:keydown.window.ctrl.k.prevent="$refs.searchInput.focus()"
+    x-on:click.outside="showResults = false"
     class="relative {{ $class }}"
 >
-    {{-- Search Input --}}
     <flux:input
         x-ref="searchInput"
         x-model="query"
-        @input.debounce.300ms="search"
-        @focus="onFocus"
-        @keydown.down.prevent="navigateDown"
-        @keydown.up.prevent="navigateUp"
-        @keydown.enter.prevent="selectResult"
-        @keydown.escape="showResults = false"
+        x-on:input.debounce.300ms="search"
+        x-on:focus="onFocus"
+        x-on:keydown.down.prevent="navigateDown"
+        x-on:keydown.up.prevent="navigateUp"
+        x-on:keydown.enter.prevent="selectResult"
+        x-on:keydown.escape="showResults = false"
         type="search"
         :placeholder="$placeholder"
-        class="w-full"
+        class="w-full min-w-96"
     >
         <x-slot:iconLeading>
             <flux:icon.magnifying-glass class="size-5 text-gray-400" />
@@ -42,61 +41,52 @@
         x-transition:leave-start="transform opacity-100 scale-100"
         x-transition:leave-end="transform opacity-0 scale-95"
         class="absolute z-50 mt-2 w-full max-w-2xl bg-white dark:bg-gray-800 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-gray-700 overflow-hidden"
-        @keydown.down.prevent="navigateDown"
-        @keydown.up.prevent="navigateUp"
-        @keydown.enter.prevent="selectResult"
+        x-on:keydown.down.prevent="navigateDown"
+        x-on:keydown.up.prevent="navigateUp"
+        x-on:keydown.enter.prevent="selectResult"
     >
-        {{-- Loading State --}}
         <div x-show="loading" class="p-4 text-center text-gray-500 dark:text-gray-400">
             <flux:icon.arrow-path class="animate-spin size-5 mx-auto mb-2" />
             <p class="text-sm">Searching...</p>
         </div>
 
-        {{-- No Results --}}
         <div x-show="!loading && query.length > 0 && results.length === 0" class="p-8 text-center">
             <flux:icon.magnifying-glass class="size-8 mx-auto mb-2 text-gray-400" />
             <p class="text-gray-500 dark:text-gray-400">No results found for "<span x-text="query" class="font-semibold"></span>"</p>
             <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">Try searching for something else</p>
         </div>
 
-        {{-- Results List --}}
         <div x-show="!loading && results.length > 0" class="max-h-96 overflow-y-auto">
-            <template x-for="(group, groupIndex) in groupedResults" :key="groupIndex">
+            <template x-for="(group, groupIndex) in results" :key="groupIndex">
                 <div>
-                    {{-- Section Header --}}
                     <div class="px-4 py-2 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
                         <h3 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider" x-text="group.section"></h3>
                     </div>
-                    
-                    {{-- Results in Section --}}
-                    <template x-for="(result, resultIndex) in group.items" :key="result.item.id">
+
+                    <template x-for="(result, resultIndex) in group.items" :key="result.id" x-data="{ globalIndex: flatResults.findIndex(item => item.id === result.id) }">
                         <a
-                            :href="result.item.url"
-                            @mouseenter="selectedIndex = result.globalIndex"
+                            :href="result.url"
+                            x-on:mouseenter="selectedIndex = globalIndex"
                             :class="{
-                                'bg-indigo-50 dark:bg-indigo-900/20': selectedIndex === result.globalIndex,
-                                'hover:bg-gray-50 dark:hover:bg-gray-700/50': selectedIndex !== result.globalIndex
+                                'bg-indigo-50 dark:bg-indigo-900/20': selectedIndex === globalIndex,
+                                'hover:bg-gray-50 dark:hover:bg-gray-700/50': selectedIndex !== globalIndex
                             }"
                             class="block px-4 py-3 border-b border-gray-100 dark:border-gray-700 last:border-0 transition-colors"
                         >
-                            {{-- Result Title --}}
                             <div class="flex items-center justify-between mb-1">
-                                <h4 class="text-sm font-medium text-gray-900 dark:text-gray-100" x-html="highlightMatch(result.item.title, result.matches, 'title')"></h4>
-                                <flux:icon.arrow-right class="size-4 text-gray-400" x-show="selectedIndex === result.globalIndex" />
+                                <h4 class="text-sm font-medium text-gray-900 dark:text-gray-100" x-html="highlightMatch(result.title)"></h4>
+                                <flux:icon.arrow-right class="size-4 text-gray-400" x-show="selectedIndex === globalIndex" />
                             </div>
-                            
-                            {{-- Breadcrumb --}}
-                            <p class="text-xs text-gray-500 dark:text-gray-400 mb-1" x-text="result.item.breadcrumb"></p>
-                            
-                            {{-- Content Preview --}}
-                            <p class="text-xs text-gray-600 dark:text-gray-300 line-clamp-2" x-html="highlightMatch(result.item.content, result.matches, 'content')"></p>
+
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mb-1" x-text="result.breadcrumb"></p>
+
+                            <p class="text-xs text-gray-600 dark:text-gray-300 line-clamp-2" x-html="highlightMatch(result.content)"></p>
                         </a>
                     </template>
                 </div>
             </template>
         </div>
 
-        {{-- Footer --}}
         <div x-show="!loading && results.length > 0" class="px-4 py-2 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
             <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
                 <div class="flex items-center gap-4">

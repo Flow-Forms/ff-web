@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Helpers\MarkdownHelper;
+use App\Models\Documentation;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use League\CommonMark\Environment\Environment;
@@ -32,22 +33,24 @@ class BuildDocsSearchIndex extends Command
     {
         $this->info('Building documentation search index...');
         
+        // Clear existing documentation
+        Documentation::truncate();
+        
         $markdownPath = resource_path('markdown');
-        $searchIndex = [];
+        $documentsIndexed = 0;
         
-        // Process all markdown files
-        $this->processDirectory($markdownPath, $searchIndex);
+        // Process all markdown files and save to database
+        $this->processDirectory($markdownPath, $documentsIndexed);
         
-        // Save the index
-        $indexPath = public_path('docs-search-index.json');
-        File::put($indexPath, json_encode($searchIndex, JSON_PRETTY_PRINT));
+        // Trigger Scout indexing
+        $this->info('Indexing documents with Typesense...');
+        Documentation::makeAllSearchable();
         
         $this->info('Search index built successfully!');
-        $this->info('Index saved to: ' . $indexPath);
-        $this->info('Total documents indexed: ' . count($searchIndex));
+        $this->info('Total documents indexed: ' . $documentsIndexed);
     }
     
-    private function processDirectory(string $path, array &$searchIndex, string $basePath = ''): void
+    private function processDirectory(string $path, int &$documentsIndexed, string $basePath = ''): void
     {
         $files = File::files($path);
         $directories = File::directories($path);
@@ -55,18 +58,18 @@ class BuildDocsSearchIndex extends Command
         // Process markdown files
         foreach ($files as $file) {
             if ($file->getExtension() === 'md') {
-                $this->processMarkdownFile($file->getPathname(), $searchIndex, $basePath);
+                $this->processMarkdownFile($file->getPathname(), $documentsIndexed, $basePath);
             }
         }
         
         // Process subdirectories
         foreach ($directories as $directory) {
             $folderName = basename($directory);
-            $this->processDirectory($directory, $searchIndex, $basePath . $folderName . '/');
+            $this->processDirectory($directory, $documentsIndexed, $basePath . $folderName . '/');
         }
     }
     
-    private function processMarkdownFile(string $filePath, array &$searchIndex, string $basePath): void
+    private function processMarkdownFile(string $filePath, int &$documentsIndexed, string $basePath): void
     {
         $content = File::get($filePath);
         $filename = pathinfo($filePath, PATHINFO_FILENAME);
@@ -93,19 +96,19 @@ class BuildDocsSearchIndex extends Command
             $url = '/';
         }
         
-        // Create search entry
-        $searchEntry = [
-            'id' => $basePath . $cleanFilename,
+        // Create documentation record
+        Documentation::create([
+            'slug' => $basePath . $cleanFilename,
             'title' => MarkdownHelper::filenameToTitle($filename),
-            'content' => $this->truncateContent($textContent, 500),
-            'headings' => implode(' ', $headings),
+            'content' => $textContent, // Store full content, no truncation
+            'headings' => $headings,
             'url' => $url,
             'section' => $basePath ? MarkdownHelper::filenameToTitle(rtrim($basePath, '/')) : 'Documentation',
             'breadcrumb' => $this->generateBreadcrumb($basePath, $filename),
-        ];
+            'file_path' => $filePath,
+        ]);
         
-        $searchIndex[] = $searchEntry;
-        
+        $documentsIndexed++;
         $this->line('  Indexed: ' . $basePath . $filename);
     }
     
@@ -123,21 +126,6 @@ class BuildDocsSearchIndex extends Command
         return $headings;
     }
     
-    private function truncateContent(string $content, int $length): string
-    {
-        if (strlen($content) <= $length) {
-            return $content;
-        }
-        
-        $truncated = substr($content, 0, $length);
-        $lastSpace = strrpos($truncated, ' ');
-        
-        if ($lastSpace !== false) {
-            $truncated = substr($truncated, 0, $lastSpace);
-        }
-        
-        return $truncated . '...';
-    }
     
     private function generateBreadcrumb(string $basePath, string $filename): string
     {
