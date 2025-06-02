@@ -1,36 +1,47 @@
 # Forms Overview
 
-Forms are the heart of Flow Forms. This guide covers everything you need to know about creating and managing forms.
+Flow Forms makes it easy to create powerful, secure forms for collecting data, processing payments, and automating workflows.
 
-## What are Flow Forms?
+## Key Features
 
-Flow Forms are dynamic, customizable forms that can be embedded anywhere on your website. They provide:
+### Drag-and-Drop Form Builder
+Build forms visually with our intuitive interface. Add fields, arrange layouts, and configure settings without writing code.
 
-- **Real-time validation** - Validate fields as users type
-- **Conditional logic** - Show/hide fields based on responses  
-- **Multi-step workflows** - Break complex forms into steps
-- **Rich field types** - Text, email, file uploads, and more
+### Smart Field Types
+Choose from over 15 field types including:
+- Payment collection with Stripe
+- Digital signatures
+- File uploads
+- Calculated fields
+- Pre-built field sets for common needs
 
-## Creating Your First Form
+### Conditional Logic
+Create dynamic forms that adapt based on user responses. Show or hide fields, skip sections, and create personalized experiences.
 
-1. Navigate to your dashboard
-2. Click "Create New Form"
-3. Choose a template or start blank
-4. Add your fields
-5. Configure settings
-6. Publish and embed
+### Secure Submissions
+- All data encrypted in transit and at rest
+- GDPR-compliant data handling
+- Built-in spam protection
+- File upload scanning
 
-## Form Settings
+## Form Management
 
-Each form has configurable settings:
+### Organization
+- Search and filter your forms
+- Duplicate forms to save time
+- Archive old forms
 
-- **Name & Description** - Help identify your forms
-- **Submission Actions** - Email notifications, webhooks
-- **Styling** - Match your brand
-- **Security** - CAPTCHA, rate limiting
+### Collaboration
+- Share forms with team members
+- Set permissions and access levels
+- Track who makes changes
+- Leave notes and comments
 
-## Next Steps
+### Submissions & Data
+- View submissions in real-time
+- Export data to CSV
+- Set up automatic email notifications and reminders
+- Integrate with webhooks and APIs
+- [Zapier](https://zapier.com/) integrate with over 8,000 apps
 
-- Learn about [Field Types](/forms/field-types)
-- Explore advanced features
-- Check out integration options
+Ready to dive deeper? Check out our [Field Types](/forms/field-types) documentation to explore all available options.
