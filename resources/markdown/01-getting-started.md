@@ -28,6 +28,6 @@ Sign in without remembering a password:
 ### Single Sign-On (SSO)
 If your organization uses SSO (like Google), the password reset option won't be available. Contact your system administrator for password assistance.
 
-Need help? Contact our support team through the help menu in your dashboard.
+Need help? Contact our support team through the help menu on your dashboard.
 
 Happy form building! 🚀
