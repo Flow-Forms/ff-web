@@ -44,4 +44,10 @@ Create dynamic forms that adapt based on user responses. Show or hide fields, sk
 - Integrate with webhooks and APIs
 - [Zapier](https://zapier.com/) integrate with over 8,000 apps
 
-Ready to dive deeper? Check out our [Field Types](/forms/field-types) documentation to explore all available options.
+## Next Steps
+
+Ready to dive deeper? 
+- Learn about all available [Field Types](./02-field-types.md)
+- Master the [Form Builder](./03-form-builder.md)
+- Set up [Conditional Logic](./04-conditional-logic.md)
+- Configure [Validation Rules](./05-validation.md)
