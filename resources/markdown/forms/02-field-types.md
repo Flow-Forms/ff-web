@@ -48,9 +48,4 @@ All fields support:
 - **Custom patterns** - Use regex for specific formats
 - **Length limits** - Min/max character counts
 - **Custom error messages** - Provide helpful feedback
-
-## Next Steps
-
-- Return to [Forms Overview](/forms/overview)
-- Learn about form styling
-- Explore conditional logic
+- 
