@@ -1,37 +1,68 @@
-# Documentation Organization
+# Flow Forms Documentation
 
-This directory contains the markdown documentation files for Flow Forms.
+## Frontmatter Configuration
 
-## File Naming Convention
+Documentation files use YAML frontmatter for navigation and ordering:
 
-Files use a numeric prefix to control their display order in the navigation:
+```yaml
+---
+title: Getting Started Guide
+order: 2
+---
+```
 
-- `01-getting-started.md` - Displays as "Getting Started" (first in navigation)
-- `02-security.md` - Displays as "Security" (second in navigation)
+### Regular Documentation Files
 
-### Folder Structure
+- **`title`** - Display title for navigation (defaults to filename)
+- **`order`** - Menu position (lower numbers appear first, default: 999)
 
-Folders can contain their own ordered markdown files:
+### Main Documentation Index
+
+```yaml
+---
+title: Flow Forms Documentation
+is_index: true
+sections:
+  - title: Getting Started
+    items:
+      - title: Quick Start
+        description: Get up and running fast
+        url: /quick-start
+---
+```
+
+### Folder Configuration
+
+Create `_meta.md` inside any folder:
+
+```yaml
+---
+title: API Documentation
+order: 5
+---
+```
+
+## File Structure
 
 ```
+getting-started.md
+security.md
 forms/
-  01-overview.md    - Displays as "Overview" (first in Forms section)
-  02-field-types.md - Displays as "Field Types" (second in Forms section)
+  _meta.md
+  overview.md
+  field-types.md
 ```
 
-## Adding New Documentation
+## Adding Documentation
 
-1. Create a new markdown file with a numeric prefix (e.g., `05-new-feature.md`)
-2. The numeric prefix controls the order but is not shown in the navigation
-3. The search index will automatically update when you commit changes (via git pre-commit hook)
+1. Create a markdown file with a descriptive name
+2. Add frontmatter for title and order
+3. Commit changes (search index updates automatically)
 
-## URL Structure
+## URLs
 
-URLs automatically strip the numeric prefix:
-- `01-getting-started.md` → `/getting-started`
-- `forms/01-overview.md` → `/forms/overview`
-
-This allows you to reorder documentation without breaking existing links.
+- `getting-started.md` → `/getting-started`
+- `forms/overview.md` → `/forms/overview`
 
 ## Search System
 
