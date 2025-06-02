@@ -1,3 +1,8 @@
+---
+title: Security
+order: 3
+---
+
 # Security at Flow Forms
 
 Security isn't just a feature—it's the foundation of everything we build. We follow industry-standard security frameworks and leverage enterprise-grade infrastructure to protect your data.

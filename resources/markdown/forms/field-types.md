@@ -1,3 +1,8 @@
+---
+title: Field Types
+order: 2
+---
+
 # Field Types
 
 Flow Forms provides a comprehensive set of field types to handle any data collection need. Each field type is optimized for its specific use case with built-in validation and user-friendly interfaces.

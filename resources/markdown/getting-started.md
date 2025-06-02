@@ -1,3 +1,8 @@
+---
+title: Getting Started Guide
+order: 2
+---
+
 # Getting Started Guide
 
 Welcome to Flow Forms! This guide will walk you through everything you need to start collecting data with beautiful, secure forms.
