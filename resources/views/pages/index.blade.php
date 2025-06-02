@@ -1,39 +1,71 @@
+<?php
+use App\Helpers\MarkdownHelper;
+
+// Find the index document dynamically
+$indexPath = MarkdownHelper::getIndexDocumentPath();
+
+if (!$indexPath) {
+    // Fallback if no index document is found
+    $title = 'Flow Forms Documentation';
+    $subtitle = 'Welcome to Flow Forms';
+    $sections = [];
+    $help = null;
+} else {
+    // Parse the index document with frontmatter
+    $data = MarkdownHelper::parseWithFrontmatter($indexPath);
+    $frontmatter = $data['frontmatter'];
+    $title = $frontmatter['title'] ?? 'Flow Forms Documentation';
+    $subtitle = $frontmatter['subtitle'] ?? '';
+    $sections = $frontmatter['sections'] ?? [];
+    $help = $frontmatter['help'] ?? null;
+}
+?>
+
 <x-layouts.docs>
-    <x-slot name="title">Flow Forms Documentation</x-slot>
+    <x-slot name="title">{{ $title }}</x-slot>
     
-<div class="max-w-4xl mx-auto">
+<div class="max-w-6xl mx-auto">
     <div class="text-center py-12">
-        <flux:heading size="2xl" class="mb-4">Flow Forms Documentation</flux:heading>
-        <flux:subheading size="lg" class="mb-8">Everything you need to know about building and deploying forms with Flow Forms</flux:subheading>
+        <flux:heading size="2xl" class="mb-4">{{ $title }}</flux:heading>
+        @if($subtitle)
+            <flux:subheading size="lg" class="mb-8">{{ $subtitle }}</flux:subheading>
+        @endif
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
-            <flux:card class="hover:shadow-lg transition-shadow">
-                <div class="p-6">
-                    <flux:heading size="lg" class="mb-3">
-                        <flux:link href="/getting-started" class="text-inherit">Getting Started</flux:link>
-                    </flux:heading>
-                    <flux:text>Get up and running with Flow Forms in minutes</flux:text>
+        @foreach($sections as $section)
+            <div class="mt-12">
+                <flux:heading size="xl" class="mb-6 text-left">{{ $section['title'] }}</flux:heading>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-{{ $section['columns'] ?? 2 }} gap-6">
+                    @foreach($section['items'] as $item)
+                        <flux:card class="hover:shadow-lg transition-shadow">
+                            <div class="p-6">
+                                <flux:heading size="lg" class="mb-3">
+                                    <flux:link href="{{ $item['url'] }}" class="text-inherit">{{ $item['title'] }}</flux:link>
+                                </flux:heading>
+                                <flux:text>{{ $item['description'] }}</flux:text>
+                            </div>
+                        </flux:card>
+                    @endforeach
                 </div>
-            </flux:card>
-            
-            <flux:card class="hover:shadow-lg transition-shadow">
-                <div class="p-6">
-                    <flux:heading size="lg" class="mb-3">
-                        <flux:link href="/forms/overview" class="text-inherit">Forms</flux:link>
-                    </flux:heading>
-                    <flux:text>Learn how to create and customize forms</flux:text>
+            </div>
+        @endforeach
+        
+        @if($help)
+            <div class="mt-16 mb-8 p-8 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                <flux:heading size="xl" class="mb-4">{{ $help['title'] }}</flux:heading>
+                <div class="flex flex-wrap gap-6 justify-center">
+                    @foreach($help['links'] as $index => $link)
+                        @if($index > 0)
+                            <flux:text>•</flux:text>
+                        @endif
+                        @if(isset($link['url']))
+                            <flux:link href="{{ $link['url'] }}" class="text-blue-600 dark:text-blue-400 hover:underline">{{ $link['text'] }}</flux:link>
+                        @else
+                            <flux:text>{{ $link['text'] }}</flux:text>
+                        @endif
+                    @endforeach
                 </div>
-            </flux:card>
-            
-            <flux:card class="hover:shadow-lg transition-shadow">
-                <div class="p-6">
-                    <flux:heading size="lg" class="mb-3">
-                        <flux:link href="/security" class="text-inherit">Security</flux:link>
-                    </flux:heading>
-                    <flux:text>Understand our security practices and compliance</flux:text>
-                </div>
-            </flux:card>
-        </div>
+            </div>
+        @endif
     </div>
 </div>
 </x-layouts.docs>

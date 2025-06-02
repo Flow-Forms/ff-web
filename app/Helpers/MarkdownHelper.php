@@ -5,18 +5,14 @@ namespace App\Helpers;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use League\CommonMark\CommonMarkConverter;
+use Symfony\Component\Yaml\Yaml;
 
 class MarkdownHelper
 {
     public static function parseFile(string $filePath): string
     {
-        if (!File::exists($filePath)) {
-            return '<p>Documentation file not found.</p>';
-        }
-
-        $markdown = File::get($filePath);
-        
-        return self::parse($markdown);
+        $data = self::parseWithFrontmatter($filePath);
+        return $data['html'];
     }
 
     public static function parse(string $markdown): string
@@ -27,6 +23,44 @@ class MarkdownHelper
         ]);
 
         return $converter->convert($markdown)->getContent();
+    }
+    
+    /**
+     * Extract frontmatter and content from raw file content
+     */
+    protected static function extractFrontmatter(string $content): array
+    {
+        if (preg_match('/^---\s*\n(.*?)\n---\s*\n(.*)$/s', $content, $matches)) {
+            return [
+                'frontmatter' => Yaml::parse($matches[1]),
+                'content' => $matches[2]
+            ];
+        }
+        
+        return [
+            'frontmatter' => [],
+            'content' => $content
+        ];
+    }
+
+    public static function parseWithFrontmatter(string $filePath): array
+    {
+        if (!File::exists($filePath)) {
+            return [
+                'content' => '',
+                'frontmatter' => [],
+                'html' => '<p>Documentation file not found.</p>'
+            ];
+        }
+
+        $fileContent = File::get($filePath);
+        $extracted = self::extractFrontmatter($fileContent);
+        
+        return [
+            'content' => $extracted['content'],
+            'frontmatter' => $extracted['frontmatter'],
+            'html' => self::parse($extracted['content'])
+        ];
     }
 
     public static function getNavigationItems(): array
@@ -44,18 +78,22 @@ class MarkdownHelper
         foreach ($files as $file) {
             if ($file->getExtension() === 'md') {
                 $filename = $file->getFilenameWithoutExtension();
-                $title = self::filenameToTitle($filename);
+                
+                // Parse frontmatter to get title and order
+                $data = self::parseWithFrontmatter($file->getPathname());
+                $frontmatter = $data['frontmatter'];
+                
+                // Use frontmatter title if available, otherwise generate from filename
+                $title = $frontmatter['title'] ?? self::filenameToTitle($filename);
+                $order = $frontmatter['order'] ?? 999; // Default high number for unordered items
+                
                 $url = '/' . $filename;
-
-                // Store the original filename for sorting, but clean URL
-                $cleanFilename = preg_replace('/^\d{2}-/', '', $filename);
-                $url = '/' . $cleanFilename;
                 
                 $navigation['_root'][] = [
                     'title' => $title,
                     'url' => $url,
-                    'filename' => $cleanFilename,
-                    'originalFilename' => $filename,
+                    'filename' => $filename,
+                    'order' => $order,
                     'type' => 'file'
                 ];
             }
@@ -65,59 +103,94 @@ class MarkdownHelper
         $directories = File::directories($markdownPath);
         foreach ($directories as $directory) {
             $folderName = basename($directory);
+            
+            // Check if folder has a _meta.md file for folder configuration
+            $folderMetaPath = $directory . '/_meta.md';
+            $folderOrder = 999;
             $folderTitle = self::filenameToTitle($folderName);
+            
+            if (File::exists($folderMetaPath)) {
+                $folderMeta = self::parseWithFrontmatter($folderMetaPath);
+                $folderTitle = $folderMeta['frontmatter']['title'] ?? $folderTitle;
+                $folderOrder = $folderMeta['frontmatter']['order'] ?? 999;
+            }
             
             $folderFiles = File::files($directory);
             $folderItems = [];
             
             foreach ($folderFiles as $file) {
-                if ($file->getExtension() === 'md') {
+                if ($file->getExtension() === 'md' && $file->getFilename() !== '_meta.md') {
                     $filename = $file->getFilenameWithoutExtension();
-                    $title = self::filenameToTitle($filename);
+                    
+                    // Parse frontmatter to get title and order
+                    $data = self::parseWithFrontmatter($file->getPathname());
+                    $frontmatter = $data['frontmatter'];
+                    
+                    // Use frontmatter title if available
+                    $title = $frontmatter['title'] ?? self::filenameToTitle($filename);
+                    $order = $frontmatter['order'] ?? 999;
+                    
                     $url = '/' . $folderName . '/' . $filename;
-
-                    // Store the original filename for sorting, but clean URL
-                    $cleanFilename = preg_replace('/^\d{2}-/', '', $filename);
-                    $url = '/' . $folderName . '/' . $cleanFilename;
                     
                     $folderItems[] = [
                         'title' => $title,
                         'url' => $url,
-                        'filename' => $cleanFilename,
-                        'originalFilename' => $filename,
+                        'filename' => $filename,
                         'folder' => $folderName,
+                        'order' => $order,
                         'type' => 'file'
                     ];
                 }
             }
             
             if (!empty($folderItems)) {
-                // Sort files within folder by their original filename (preserves numeric ordering)
+                // Sort files within folder by order, then by title
                 usort($folderItems, function($a, $b) {
-                    return strcmp($a['originalFilename'], $b['originalFilename']);
+                    if ($a['order'] == $b['order']) {
+                        return strcmp($a['title'], $b['title']);
+                    }
+                    return $a['order'] - $b['order'];
                 });
                 
                 $navigation[$folderName] = [
                     'title' => $folderTitle,
                     'type' => 'folder',
+                    'order' => $folderOrder,
                     'items' => $folderItems
                 ];
             }
         }
 
-        // Sort root files if they exist
+        // Sort root files by order, then by title
         if (isset($navigation['_root'])) {
-            usort($navigation['_root'], fn($a, $b) => strcmp($a['originalFilename'], $b['originalFilename']));
+            usort($navigation['_root'], function($a, $b) {
+                if ($a['order'] == $b['order']) {
+                    return strcmp($a['title'], $b['title']);
+                }
+                return $a['order'] - $b['order'];
+            });
         }
-
-        return $navigation;
+        
+        // Sort folders by order
+        $sortedNavigation = [];
+        
+        // Add root items first
+        if (isset($navigation['_root'])) {
+            $sortedNavigation['_root'] = $navigation['_root'];
+            unset($navigation['_root']);
+        }
+        
+        // Sort remaining folders by order
+        uasort($navigation, function($a, $b) {
+            return $a['order'] - $b['order'];
+        });
+        
+        // Merge sorted folders back
+        return array_merge($sortedNavigation, $navigation);
     }
 
     public static function filenameToTitle(string $filename): string
     {
-        // Remove numeric prefix if present (e.g., "01-overview" becomes "overview")
-        $filename = preg_replace('/^\d{2}-/', '', $filename);
-        
         // Convert kebab-case and snake_case to title case
         return Str::of($filename)
             ->replace(['-', '_'], ' ')
@@ -127,68 +200,52 @@ class MarkdownHelper
 
     public static function markdownExists(string $filename, string $folder = null): bool
     {
-        // Check for exact filename first
         if ($folder) {
-            $filePath = resource_path("markdown/{$folder}/{$filename}.md");
+            $filePath = resource_path("markdown/$folder/$filename.md");
         } else {
-            $filePath = resource_path("markdown/{$filename}.md");
+            $filePath = resource_path("markdown/$filename.md");
         }
         
-        if (File::exists($filePath)) {
-            return true;
-        }
-        
-        // Check for files with numeric prefix
-        $directory = $folder ? resource_path("markdown/{$folder}") : resource_path("markdown");
-        if (File::exists($directory)) {
-            $files = File::files($directory);
-            foreach ($files as $file) {
-                if ($file->getExtension() === 'md') {
-                    $baseFilename = $file->getFilenameWithoutExtension();
-                    $cleanFilename = preg_replace('/^\d{2}-/', '', $baseFilename);
-                    if ($cleanFilename === $filename) {
-                        return true;
-                    }
-                }
-            }
-        }
-        
-        return false;
+        return File::exists($filePath);
     }
 
     public static function getMarkdownPath(string $filename, string $folder = null): string
     {
-        // Check for exact filename first
         if ($folder) {
-            $filePath = resource_path("markdown/{$folder}/{$filename}.md");
+            return resource_path("markdown/$folder/$filename.md");
         } else {
-            $filePath = resource_path("markdown/{$filename}.md");
+            return resource_path("markdown/$filename.md");
+        }
+    }
+    
+    public static function getIndexDocumentPath(): ?string
+    {
+        $markdownPath = resource_path('markdown');
+        
+        if (!File::exists($markdownPath)) {
+            return null;
         }
         
-        if (File::exists($filePath)) {
-            return $filePath;
-        }
-        
-        // Check for files with numeric prefix
-        $directory = $folder ? resource_path("markdown/{$folder}") : resource_path("markdown");
-        if (File::exists($directory)) {
-            $files = File::files($directory);
-            foreach ($files as $file) {
-                if ($file->getExtension() === 'md') {
-                    $baseFilename = $file->getFilenameWithoutExtension();
-                    $cleanFilename = preg_replace('/^\d{2}-/', '', $baseFilename);
-                    if ($cleanFilename === $filename) {
-                        return $file->getPathname();
-                    }
+        // Look for a file with is_index: true in frontmatter
+        $files = File::files($markdownPath);
+        foreach ($files as $file) {
+            if ($file->getExtension() === 'md') {
+                $data = self::parseWithFrontmatter($file->getPathname());
+                if (isset($data['frontmatter']['is_index']) && $data['frontmatter']['is_index'] === true) {
+                    return $file->getPathname();
                 }
             }
         }
         
-        // Return the expected path even if it doesn't exist
-        if ($folder) {
-            return resource_path("markdown/{$folder}/{$filename}.md");
-        } else {
-            return resource_path("markdown/{$filename}.md");
+        // Fallback to looking for overview.md or index.md
+        $fallbackFiles = ['overview.md', 'index.md'];
+        foreach ($fallbackFiles as $filename) {
+            $path = resource_path("markdown/$filename");
+            if (File::exists($path)) {
+                return $path;
+            }
         }
+        
+        return null;
     }
 }

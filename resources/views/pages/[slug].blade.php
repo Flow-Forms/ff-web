@@ -6,8 +6,13 @@ if (!MarkdownHelper::markdownExists($slug)) {
     abort(404, 'Documentation page not found');
 }
 
-$content = MarkdownHelper::parseFile(MarkdownHelper::getMarkdownPath($slug));
-$title = MarkdownHelper::filenameToTitle($slug) . ' - Flow Forms Documentation';
+$data = MarkdownHelper::parseWithFrontmatter(MarkdownHelper::getMarkdownPath($slug));
+$frontmatter = $data['frontmatter'];
+$content = $data['html'];
+
+// Use frontmatter title if available, otherwise use filename
+$pageTitle = $frontmatter['title'] ?? MarkdownHelper::filenameToTitle($slug);
+$title = $pageTitle . ' - Flow Forms Documentation';
 ?>
 
 <x-layouts.docs :title="$title">
