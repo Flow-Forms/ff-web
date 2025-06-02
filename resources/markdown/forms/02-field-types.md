@@ -1,51 +1,141 @@
 # Field Types
 
-Flow Forms supports a wide variety of field types to collect exactly the data you need.
+Flow Forms provides a comprehensive set of field types to handle any data collection need. Each field type is optimized for its specific use case with built-in validation and user-friendly interfaces.
 
-## Text Fields
+## Basic Input Fields
 
-### Single Line Text
-Perfect for names, titles, and short responses.
+### Text
+Single-line text input for names, titles, and short responses.
+- Supports input masks for formatting (phone numbers, postal codes, etc.)
+- Custom placeholder text
+- Character limit validation
 
-### Multi-line Text  
-For longer responses like comments and feedback.
+### Textarea
+Multi-line text area for longer responses, comments, and detailed feedback.
+- Adjustable height
+- Character count display
+- Rich text formatting options
 
 ### Email
-Built-in email validation ensures you get valid email addresses.
-
-### Phone Number
-Handles international phone number formats automatically.
+Email input with automatic validation.
+- Built-in email format validation
+- Prevents invalid submissions
+- Can be used for receipt delivery with payment fields
 
 ## Selection Fields
 
-### Dropdown
-Present users with a list of options to choose from.
+### Select (Dropdown)
+Dropdown menu for choosing from a list of options.
+- Single or multiple selection modes
+- "Allow Other" option for custom responses
+- Can use shared lists for consistent options across forms
 
 ### Radio Buttons
-When users should select exactly one option.
+Single-choice selection from a list of options.
+- Clean, accessible design
+- "Allow Other" option available
+- Ideal for yes/no questions or limited choices
 
 ### Checkboxes
-Allow multiple selections from a list.
+Multiple-choice selection with optional quantities.
+- Allow multiple selections
+- "Allow Other" option for unlisted items
+- Quantity selection for each option (e.g., for product orders)
+
+## Date & Time Fields
+
+### Date
+Date picker with calendar interface.
+- Customizable date format
+- Mobile-friendly date selection
+- Past/future date restrictions available
+
+### Time
+Time selection field.
+- 12 or 24-hour format options
+- Minute increment settings
+- Time range validation
+
+## Specialized Fields
+
+### File Upload
+Secure file upload with type and size restrictions.
+- Multiple file upload support
+- File type restrictions (images, documents, etc.)
+- Maximum file size limits
+- Progress indicators
+
+### Signature
+Digital signature capture field.
+- Touch and mouse support
+- Mobile-optimized drawing area
+- Signature image saved with submission
+
+### Payment
+Integrated payment collection via Stripe.
+- Fixed amount or calculated total options
+- Secure payment processing
+- Automatic receipt generation
+- Can reference calculated fields for dynamic pricing
 
 ## Advanced Fields
 
-### File Upload
-Let users upload documents, images, or other files.
+### Calculated
+Performs calculations on numeric fields.
+- Sum, average, min, max operations
+- Real-time calculation updates
+- Can be used with payment fields for dynamic pricing
 
-### Date Picker
-Easy date selection with calendar widget.
+### Composite
+Combines multiple fields into a single value.
+- Merge first and last name into full name
+- Create formatted addresses
+- Custom templates with field placeholders
 
-### Number Input
-Numeric fields with optional min/max validation.
+### Group
+Container for organizing related fields.
+- Visual grouping with borders/backgrounds
+- Conditional display logic
+- Helps organize complex forms
 
-### URL Field
-Validates web addresses automatically.
+### Content
+Display static content within your form.
+- HTML content support
+- Instructions, terms, or explanations
+- Images and formatted text
 
-## Field Validation
+## Pre-built Field Sets
 
-All fields support:
-- **Required validation** - Mark fields as mandatory
-- **Custom patterns** - Use regex for specific formats
-- **Length limits** - Min/max character counts
-- **Custom error messages** - Provide helpful feedback
-- 
+### User Information
+Quickly add a complete user information section:
+- First Name
+- Last Name
+- Full Name (automatically combined)
+- Email Address
+
+### Address
+Complete address collection with:
+- Street Address
+- City
+- State/Province (with dropdown for US states)
+- ZIP/Postal Code
+
+## Common Field Properties
+
+All fields support these standard options:
+
+### Validation
+- **Required** - Make any field mandatory
+- **Custom Rules** - Laravel validation syntax for advanced rules
+- **Custom Error Messages** - Helpful, specific error feedback
+
+### Display Options
+- **Label** - Field name displayed to users
+- **Placeholder** - Example text shown in empty fields
+- **Help Text** - Additional instructions below the field
+- **Conditional Logic** - Show/hide fields based on values from another field
+
+### Advanced Options
+- **Input Masks** - Format input automatically (e.g. US telephone numbers, (xxx) xxx-xxxx)
+- **Default Values** - Pre-fill fields with default data
+
