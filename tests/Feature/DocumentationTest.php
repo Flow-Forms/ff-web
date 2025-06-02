@@ -144,9 +144,7 @@ describe('All markdown files are accessible', function () {
     it('can access all root level markdown files', function () {
         $rootFiles = [
             'security' => 'Security at Flow Forms',
-            'quick-start' => 'Quick Start Guide',
-            'policy' => '', // Will check this exists but content varies
-            'terms' => '', // Will check this exists but content varies
+            'getting-started' => 'Getting Started Guide'
         ];
         
         foreach ($rootFiles as $slug => $expectedContent) {
@@ -202,9 +200,7 @@ describe('Navigation links work correctly', function () {
         // Check root files are in navigation
         $rootFilenames = collect($navigationItems['_root'] ?? [])->pluck('filename')->toArray();
         expect($rootFilenames)->toContain('security');
-        expect($rootFilenames)->toContain('quick-start');
-        expect($rootFilenames)->toContain('policy');
-        expect($rootFilenames)->toContain('terms');
+        expect($rootFilenames)->toContain('getting-started');
         
         // Check forms folder exists and contains expected files
         expect($navigationItems)->toHaveKey('forms');
@@ -288,10 +284,8 @@ describe('Dynamic file discovery and accessibility', function () {
         
         // Ensure we found at least the files we know should exist
         expect($allFiles)->toContain('/security');
-        expect($allFiles)->toContain('/quick-start');
+        expect($allFiles)->toContain('/getting-started');
         expect($allFiles)->toContain('/forms/overview');
         expect($allFiles)->toContain('/forms/field-types');
-        expect($allFiles)->toContain('/policy');
-        expect($allFiles)->toContain('/terms');
     });
 });

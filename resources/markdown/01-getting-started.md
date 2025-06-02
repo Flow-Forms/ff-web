@@ -1,4 +1,4 @@
-# Quick Start Guide
+# Getting Started Guide
 
 Welcome to Flow Forms! This guide will help you get started quickly.
 

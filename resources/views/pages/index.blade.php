@@ -10,7 +10,7 @@
             <flux:card class="hover:shadow-lg transition-shadow">
                 <div class="p-6">
                     <flux:heading size="lg" class="mb-3">
-                        <flux:link href="/quick-start" class="text-inherit">Quick Start</flux:link>
+                        <flux:link href="/getting-started" class="text-inherit">Getting Started</flux:link>
                     </flux:heading>
                     <flux:text>Get up and running with Flow Forms in minutes</flux:text>
                 </div>

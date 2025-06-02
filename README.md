@@ -6,10 +6,8 @@ This directory contains the markdown documentation files for Flow Forms.
 
 Files use a numeric prefix to control their display order in the navigation:
 
-- `01-quick-start.md` - Displays as "Quick Start" (first in navigation)
+- `01-getting-started.md` - Displays as "Getting Started" (first in navigation)
 - `02-security.md` - Displays as "Security" (second in navigation)
-- `03-terms.md` - Displays as "Terms" (third in navigation)
-- `04-policy.md` - Displays as "Policy" (fourth in navigation)
 
 ### Folder Structure
 
@@ -30,7 +28,7 @@ forms/
 ## URL Structure
 
 URLs automatically strip the numeric prefix:
-- `01-quick-start.md` → `/quick-start`
+- `01-getting-started.md` → `/getting-started`
 - `forms/01-overview.md` → `/forms/overview`
 
 This allows you to reorder documentation without breaking existing links.
