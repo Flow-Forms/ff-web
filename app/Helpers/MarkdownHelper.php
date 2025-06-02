@@ -30,10 +30,10 @@ class MarkdownHelper
      */
     protected static function extractFrontmatter(string $content): array
     {
-        if (preg_match('/^---\s*\n(.*?)\n---\s*\n(.*)$/s', $content, $matches)) {
+        if (preg_match('/^---\s*\n(.*?)\n---\s*(?:\n(.*))?$/s', $content, $matches)) {
             return [
                 'frontmatter' => Yaml::parse($matches[1]),
-                'content' => $matches[2]
+                'content' => $matches[2] ?? ''
             ];
         }
         
