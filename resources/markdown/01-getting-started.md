@@ -1,29 +1,33 @@
 # Getting Started Guide
 
-Welcome to Flow Forms! This guide will help you get started quickly.
+Welcome to Flow Forms! This guide will walk you through everything you need to start collecting data with beautiful, secure forms.
 
-## Installation
+## Logging In
 
-Getting started with Flow Forms is easy:
+Your first interaction with Flow Forms will be the login page. We offer multiple ways to access your account:
 
-1. Sign up for an account
-2. Create your first form
-3. Embed it on your website
+### Standard Login
+Enter your email address and password, then click "Sign In" to access your dashboard.
 
-## Creating Your First Form
+### Password Reset
+Forgot your password? No problem:
+1. Click the "Reset Password" link on the login page
+2. Enter your email address
+3. Check your email for a reset link
+4. Click the link and choose your new password
+5. You'll be redirected to login with your new credentials
 
-To create your first form:
+### Passwordless Login
+Sign in without remembering a password:
+1. Click "Sign in without a password"
+2. Choose email or phone number authentication
+3. Enter your email or phone number
+4. Check for a magic link (email) or text message (SMS)
+5. Click the link to instantly log in (valid for 30 minutes)
 
-1. Click "New Form" in your dashboard
-2. Choose a template or start from scratch
-3. Add your fields
-4. Configure your settings
-5. Publish your form
+### Single Sign-On (SSO)
+If your organization uses SSO (like Google), the password reset option won't be available. Contact your system administrator for password assistance.
 
-## Next Steps
-
-- Check out our [Security](/security) documentation
-- Read about advanced form features
-- Explore integration options
+Need help? Contact our support team through the help menu in your dashboard.
 
 Happy form building! 🚀
