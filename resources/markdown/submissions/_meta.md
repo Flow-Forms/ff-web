@@ -1,4 +1,4 @@
 ---
-title: Submissions & Data
+title: Submissions
 order: 5
 ---
