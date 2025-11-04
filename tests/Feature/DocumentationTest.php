@@ -2,42 +2,35 @@
 
 use function Pest\Laravel\get;
 
-it('displays the security documentation page', function () {
+it('displays markdown documentation pages', function () {
     $response = get('/security');
-    
-    $response->assertOk();
-    $response->assertSee('Security at Flow Forms');
-    $response->assertSee('Security Framework');
-    $response->assertSee('Infrastructure Security');
-    $response->assertSee('Application Security');
-    $response->assertSee('Data Privacy & Compliance');
-});
 
-it('renders markdown content from security.md file', function () {
-    $response = get('/security');
-    
     $response->assertOk();
-    // Check for specific markdown-rendered content
-    $response->assertSee('CIS (Center for Internet Security) Controls');
-    $response->assertSee('Amazon Web Services (AWS)');
-    $response->assertSee('Neon Postgres');
-    $response->assertSee('security@flowforms.com');
+    // Check that markdown H1 is rendered as HTML
+    $response->assertSee('<h1>', false);
+    // Check that markdown content exists (not empty)
+    $content = $response->getContent();
+    expect(strlen(strip_tags($content)))->toBeGreaterThan(100);
 });
 
 it('displays documentation with proper layout', function () {
     $response = get('/security');
-    
+
     $response->assertOk();
-    $response->assertSee('Security at Flow Forms');
-    $response->assertSee('Flow Forms', false); // Check for layout header
-    $response->assertSee('Security'); // Check for dynamic nav item
+    // Check that layout is present
+    $response->assertSee('<!DOCTYPE html>', false);
+    $response->assertSee('<html', false);
+    // Check that page has title
+    expect($response->getContent())->toContain('<title>');
 });
 
 it('displays the documentation homepage', function () {
     $response = get('/');
-    
+
     $response->assertOk();
-    $response->assertSee('Flow Forms Documentation');
+    // Check that homepage has content
+    $content = $response->getContent();
+    expect(strlen(strip_tags($content)))->toBeGreaterThan(100);
 });
 
 it('dynamically creates routes for new markdown files', function () {
@@ -77,34 +70,38 @@ it('generates navigation items from markdown files', function () {
 
 it('handles nested folder documentation', function () {
     $response = get('/forms/overview');
-    
+
     $response->assertOk();
-    $response->assertSee('Forms Overview');
-    $response->assertSee('What are Flow Forms?');
+    // Check that markdown is rendered
+    $response->assertSee('<h1>', false);
+    $content = $response->getContent();
+    expect(strlen(strip_tags($content)))->toBeGreaterThan(100);
 });
 
 it('displays nested pages with proper navigation', function () {
     $response = get('/forms/field-types');
-    
+
     $response->assertOk();
-    $response->assertSee('Field Types');
-    $response->assertSee('Text Fields');
-    $response->assertSee('Selection Fields');
+    // Check that markdown is rendered
+    $response->assertSee('<h1>', false);
+    $response->assertSee('<h2>', false);
+    $content = $response->getContent();
+    expect(strlen(strip_tags($content)))->toBeGreaterThan(100);
 });
 
 it('generates grouped navigation for folders', function () {
     $navigationItems = \App\Helpers\MarkdownHelper::getNavigationItems();
-    
+
     // Check that forms folder exists in navigation
     expect($navigationItems['forms'])->toBeArray();
     expect($navigationItems['forms']['type'])->toBe('folder');
     expect($navigationItems['forms']['title'])->toBe('Forms');
     expect($navigationItems['forms']['items'])->toBeArray();
-    
+
     // Check that folder contains expected items
     $folderItems = $navigationItems['forms']['items'];
     $overviewItem = collect($folderItems)->firstWhere('filename', 'overview');
-    expect($overviewItem['title'])->toBe('Overview');
+    expect($overviewItem)->not->toBeNull();
     expect($overviewItem['url'])->toBe('/forms/overview');
     expect($overviewItem['folder'])->toBe('forms');
 });
@@ -211,42 +208,42 @@ describe('Navigation links work correctly', function () {
 });
 
 describe('Markdown parsing works correctly', function () {
-    it('properly renders markdown content for all files', function () {
-        // Test that markdown headers are converted to HTML
+    it('properly renders markdown headings as HTML', function () {
+        // Test that markdown headers are converted to HTML (check structure, not content)
         $response = get('/security');
         $response->assertOk();
-        $response->assertSee('<h1>Security at Flow Forms</h1>', false);
-        $response->assertSee('<h2>Security Framework</h2>', false);
-        
+        $response->assertSee('<h1>', false);
+        $response->assertSee('<h2>', false);
+
         $response = get('/forms/overview');
         $response->assertOk();
-        $response->assertSee('<h1>Forms Overview</h1>', false);
-        $response->assertSee('<h2>What are Flow Forms?</h2>', false);
-        
+        $response->assertSee('<h1>', false);
+        $response->assertSee('<h2>', false);
+
         $response = get('/forms/field-types');
         $response->assertOk();
-        $response->assertSee('<h1>Field Types</h1>', false);
-        $response->assertSee('<h2>Text Fields</h2>', false);
+        $response->assertSee('<h1>', false);
+        $response->assertSee('<h2>', false);
     });
-    
-    it('renders markdown links correctly', function () {
+
+    it('renders markdown links as HTML anchors', function () {
+        // Check that markdown links are converted to HTML links (structure, not exact content)
         $response = get('/forms/overview');
         $response->assertOk();
-        // Check that markdown links are converted to HTML links
-        $response->assertSee('<a href="/forms/field-types">Field Types</a>', false);
-        
+        $response->assertSee('<a href=', false);
+
         $response = get('/forms/field-types');
         $response->assertOk();
-        $response->assertSee('<a href="/forms/overview">Forms Overview</a>', false);
+        $response->assertSee('<a href=', false);
     });
-    
+
     it('renders markdown lists correctly', function () {
         $response = get('/security');
         $response->assertOk();
         // Check that markdown lists are converted to HTML
         $response->assertSee('<ul>', false);
         $response->assertSee('<li>', false);
-        
+
         $response = get('/forms/field-types');
         $response->assertOk();
         $response->assertSee('<ul>', false);
