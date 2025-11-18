@@ -22,3 +22,7 @@ yarn-error.log
 /.zed
 
 .DS_Store
+
+# Obsidian personal settings (but keep snippets)
+resources/markdown/.obsidian/*
+!resources/markdown/.obsidian/snippets/
