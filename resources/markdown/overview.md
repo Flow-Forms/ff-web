@@ -8,7 +8,7 @@ sections:
     items:
       - title: Getting Started Guide
         description: All about signing in and getting going
-        url: /getting-started
+        url: /overview
       - title: Security
         description: Learn about our security practices and compliance
         url: /security
