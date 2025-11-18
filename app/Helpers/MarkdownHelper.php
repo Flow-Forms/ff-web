@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\GithubFlavoredMarkdownConverter;
 use Symfony\Component\Yaml\Yaml;
 
 class MarkdownHelper
@@ -17,8 +17,8 @@ class MarkdownHelper
 
     public static function parse(string $markdown): string
     {
-        $converter = new CommonMarkConverter([
-            'html_input' => 'strip',
+        $converter = new GithubFlavoredMarkdownConverter([
+            'html_input' => 'allow',
             'allow_unsafe_links' => false,
         ]);
 
