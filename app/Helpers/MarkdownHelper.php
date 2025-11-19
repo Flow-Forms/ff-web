@@ -17,6 +17,17 @@ class MarkdownHelper
 
     public static function parse(string $markdown): string
     {
+        // Syntax: {{icon:icon-name}} or {{icon:icon-name size-6 text-blue-500}}
+        $markdown = preg_replace_callback(
+            '/\{\{icon:([a-z0-9-]+)(?:\s+([^\}]+))?\}\}/',
+            function ($matches) {
+                $icon = $matches[1];
+                $classes = $matches[2] ?? 'size-5';
+                return "<flux:icon.$icon class=\"$classes\" />";
+            },
+            $markdown
+        );
+
         $converter = new GithubFlavoredMarkdownConverter([
             'html_input' => 'allow',
             'allow_unsafe_links' => false,
