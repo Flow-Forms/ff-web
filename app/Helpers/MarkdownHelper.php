@@ -2,7 +2,9 @@
 
 namespace App\Helpers;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use League\CommonMark\GithubFlavoredMarkdownConverter;
 use Symfony\Component\Yaml\Yaml;
@@ -17,23 +19,48 @@ class MarkdownHelper
 
     public static function parse(string $markdown): string
     {
-        // Syntax: {{icon:icon-name}} or {{icon:icon-name size-6 text-blue-500}}
-        $markdown = preg_replace_callback(
-            '/\{\{icon:([a-z0-9-]+)(?:\s+([^\}]+))?\}\}/',
-            function ($matches) {
-                $icon = $matches[1];
-                $classes = $matches[2] ?? 'size-5';
-                return "<flux:icon.$icon class=\"$classes\" />";
-            },
-            $markdown
-        );
-
         $converter = new GithubFlavoredMarkdownConverter([
             'html_input' => 'allow',
             'allow_unsafe_links' => false,
         ]);
 
-        return $converter->convert($markdown)->getContent();
+        $html = $converter->convert($markdown)->getContent();
+
+        // Replace icon shortcodes with rendered Flux icon components
+        // Syntax: {{icon:icon-name}} or {{icon:icon-name size-6 text-blue-500}}
+        $html = preg_replace_callback(
+            '/\{\{icon:([a-z0-9-]+)(?:\s+([^\}]+))?\}\}/',
+            function ($matches) {
+                $icon = $matches[1];
+                $classes = $matches[2] ?? 'size-5';
+
+                // Check if icon exists in published views first
+                $publishedPath = resource_path('views/flux/icon/' . $icon . '.blade.php');
+                $vendorPath = base_path('vendor/livewire/flux/stubs/resources/views/flux/icon/' . $icon . '.blade.php');
+
+                $iconPath = File::exists($publishedPath) ? $publishedPath : $vendorPath;
+
+                if (!File::exists($iconPath)) {
+                    return '<span class="text-red-500" title="Icon not found: ' . $icon . '">[icon:' . $icon . ']</span>';
+                }
+
+                try {
+                    // Render the icon with the specified classes
+                    $rendered = app('view')->file($iconPath, [
+                        'attributes' => new \Illuminate\View\ComponentAttributeBag(['class' => $classes]),
+                        'variant' => 'outline'
+                    ])->render();
+
+                    // Remove newlines and extra whitespace to keep icon inline
+                    return preg_replace('/>\s+</', '><', trim($rendered));
+                } catch (\Exception $e) {
+                    return '<span class="text-red-500" title="Error rendering icon: ' . $e->getMessage() . '">[icon:' . $icon . ']</span>';
+                }
+            },
+            $html
+        );
+
+        return $html;
     }
     
     /**
