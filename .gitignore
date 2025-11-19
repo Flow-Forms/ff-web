@@ -26,3 +26,8 @@ yarn-error.log
 # Obsidian personal settings (but keep snippets)
 resources/markdown/.obsidian/*
 !resources/markdown/.obsidian/snippets/
+
+# Laravel Boost generated files
+.junie/
+boost.json
+.mcp.json
