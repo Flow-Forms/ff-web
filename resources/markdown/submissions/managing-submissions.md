@@ -3,7 +3,7 @@ title: Managing Submissions
 order: 1
 ---
 
-# Managing Submissions
+# Somehow I Manage... Submissions
 
 View, organize, and manage form submissions efficiently with Flow Forms' powerful submission management tools.
 
@@ -11,42 +11,52 @@ All form submissions that you have permission to access are available to view fr
 
 *Note - It is also an option to click "clear filters" when accessing the Submissions page from the sidebar. Flow Forms automatically saves and displays your last search and/or filtered result, making for easy access to frequently needed info. If you know you are starting a new search, clicking "clear filters" from the sidebar is a time-saving nicety that prevents having to "Clear Filters" after your submissions page loads.*
 
-## Submissions Page
-At the top of your Submissions Page is the header that will remain at the top of the display as you interact with your submissions down the page. The submissions header contains the search bar and all the filter functions, export and print options, as well as the controls to change the display view.  
+## Management Panel
+At the top of your submissions page is the Submissions Management Panel that will remain at the top of the display as you interact with your submissions down the page. This space contains the search bar and all the filter functions, export and print options, as well as the controls to change the display view. The bottom of the management panel is made up of the "Bulk Actions toolbar" that allows you to take actions for a group of submissions rather than dealing with them individually.  
 
-Below the header, an abbreviated display (20 entries per page) of **all** form submissions you are authorized to interact with is listed, in order, by the submission that has had the most recent action taken. This is by default, and can be filtered for viewing in many ways. This default setting can be changed in *Filters* under *Sort By.*
+Below the management panel, an abbreviated display (20 entries per page) of **all** form submissions you are authorized to interact with is listed, in order, by the submission that has had the most recent action taken. This is by default, and can be filtered for viewing in many ways. You can change the list order in "Filters" under "Sort By."
 
 ### Search Bar
-The search bar "{{icon:magnifying-glass size-4 inline-block align-text-center}} Search submissions (⌘K)" takes up the most space on the submissions page header. To search your submissions for a keyword, phrase or number, click anywhere inside the search bar or press the "Command / ⌘" + "K" keys to see your cursor appear within the search bar and begin typing. 
+The search bar contains these words, "{{icon:magnifying-glass size-4 inline-block align-text-center}} Search submissions (⌘K)," and takes up the most space on the submissions page header. To search your submissions for a keyword, phrase or number, click anywhere inside the search bar or press the "Command / ⌘" + "K" keys to see your cursor appear within the search bar and begin typing. 
 
-When you use the search bar to filter your displayed submissions, the search function compares your input to any one element (or field) that is on a form and displays every submission that contains that matching element, as you typed it, with and teh searched-for portion will appear highlighted in blue. It does not produce any results that are *close* to what you typed if there is a misspelling or if only part of it matches.
+When you use the search bar to filter your displayed submissions, the search function compares your input to any one element (or field) that is on a form and displays every submission that contains that matching element, as you typed it, but is not case-sensitive. The portion you searched for will appear highlighted in blue. Search will not produce any results that are *close* to what you typed if there is a misspelling or if only part matches.
 
 By default, your search results are displayed in order by the submission that has had the last action taken (this can be altered in *Filters*, under *Sort By*). 
 
-If you have other filters, like Status or Form, selected, it will only search and produce results for those filtered categories. (*So, be sure to clear your filters before a new search!*)
+If you have other filters, like *Status* or *Form*, selected, it will only search and produce results for those filtered categories. (*So, be sure to clear your filters before a new search!*)
 
 **Common Search Bar "Gotcha-s"**
 - Commas, decimals, apostrophes, and other punctuation - these are passed over in the search. For instance, searching for 36.00 will also produce results like, 3600 or 3,600.
 - Your search input spans multiple elements of a form. A submission element, or form element, is each individual input box that is on a form to receive the submission data. If you search a phrase that, on the form, is divided out into multiple input boxes, your search may not deliver all the results you are looking for.  
-	*An example of this:* You enter "Billings, MT" into the search bar. Your search results will only include those submissions that have a submission element that contains, "Billings, MT" together, in one input box. But, it would not include those submissions that contain one form element of "Billings" and/or a second form element that is "MT".
+	
+	*An example of this:* You enter "Billings, MT" into the search bar. Your search results will only include those submissions that have a submission element that contains, "Billings, MT" in one input box. But, it would not include those submissions that contain one form element of "Billings" and/or a second form element that is "MT".
 - What you searched for isn't highlighted anywhere on the presented submission results. This is probably because your *Display* option is set to "Collapse All" and the form element that matches your search is only visible in expanded view. Select the "Expand All" display option from the header, or click "show more" on the individual submission.
+- Did we mention that you should make sure your filters are clear before starting a new search? :) The most common reason to not receive the proper search results is that you have a filter set that you didn't realize was still active, therefore limiting your search's data set.
 
 #### Submission Count 
 When viewing your submissions header with the filters cleared, the total number of submissions that include you will be displayed at the right end of the search bar. This "Submission Count" is the total number of submissions that apply to you and are available to you for search/filter. Every filter that is applied that excludes submission criteria from your search will be reflected in the submission count that is displayed. Your submission count is also displayed when accessing the *Filters* menu.
 
 ### Export
 
-The "Export" button, located on the right side of the submissions page, above the search bar, allows you to download any form's submissions as a csv file. In order to initiate an export of data, you must, at minimum, [filter(#filters)] your submissions by form. If any further narrowing of your data set is desired, select those criteria from  "Filters" as well. Once the desired (filtered) data is displayed, click the "Export" link.  If successful, this message will be displayed: 
+The "{{icon:chart-bar size-4 inline-block align-text-center}} Export" button, located on the right side of the Submissions Management Panel, above the search bar, allows you to download any form's submissions as a csv file. In order to initiate an export of data, you must, at minimum, [filter(#filters)] your submissions by form. If any further narrowing of your data set is desired, select those criteria from "Filters" as well. Once the desired data is displayed, click the "Export" link.  If successful, this message will be displayed: 
 >Export started successfully. The result will be emailed upon completion. Check your notification center if you do not see the email.
 
-Your export will not be successful if there is not a form selected as a filter. If that is the case, this message will be displayed:
+Your export will not work if there is not a form selected as a filter. If that is the case, this message will be displayed:
 >Please select at least one form to export
 
-If successful, you will receive an email from Flow Forms, to the email address associated with your Flow Forms account, that contains a link to download your csv file. The size of the file will dictate the speed of its arrival in your inbox. 
+If successful, you will receive an email from Flow Forms, to the email address associated with your Flow Forms account, that contains a link to download your csv file. The size of the file will dictate the speed of its arrival to your inbox. 
 
-All exports you initiate are also available in your Notification Center. These can be accessed by clicking your user name in the upper left hand corner and selecting the Notification Center. Any requested exports that are ready for download will be listed under "Submission Exports" and are available for download from this location.
+All exports you initiate are also available in your Notification Center. These can be accessed by clicking your user name in the upper left hand corner and selecting the Notification Center. Any of your requested exports that are ready for download will be listed under "Submission Exports" and are available for download from this location.
 
-### Print Jobs
+### Print 
+The button for "{{icon:printer size-4 inline-block align-text-center}} Print" (beside "Export" at the top, right corner of the Submissions Management Panel) allows you to download a PDF and print individual, or a selection of, submissions. 
+
+To print a group/category of submissions, use the filtering options to display the desired results, then click the "Print" button to print them all at once. A modal window will appear that displays the number of submissions in that print request along with the options to either "Cancel" or "Start Print Job." To proceed with printing, click the "Start Print Job" button. A download progress bar will keep you informed of the progress of your request and, if successful, a "Download PDF" button will appear. Click to access the PDF and print. The modal also offers access to "Recent Print Jobs" that you have requested with the option to download them again.
+
+To print a single submission, or select submissions, from your search results, select the desired submission/s by clicking their individual select box (to the left of the Form's Title). When what you want is selected (a check-mark is displayed), proceed with clicking "Print" and follow the above instructions. 
+To exclude only a few submissions from a search display for printing, you can "Select All" by checking the same box that is directly above in the "Bulk Actions toolbar" and then unselect those you wish to exclude.
+
+You also have the option to print an individual submission by clicking the gear icon ({{icon:cog-6-tooth size-4 inline-block align-text-center}}), found on the right side of that submission's header and navigate to "Print" or "Download as PDF" from the slide-out menu bar.
 
 ### Filters
 Flow Forms provides comprehensive filtering options to find exactly what you need. 
@@ -102,7 +112,7 @@ Additionally, see "Show More" button and "Show Less" button in the Submission Vi
 
 ### Submission View
 
-Navigate to any of the entries that have populated below the control panel to view a form's submission data. 
+Navigate to any of the entries that have populated below the Submission Page header to view a form's submission data. 
 
 The header of every individual submission displays:
 - Form Title/Name - click to start a new submission of that form type 
