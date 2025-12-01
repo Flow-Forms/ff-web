@@ -23,12 +23,19 @@ class MarkdownHelper
         $markdown = preg_replace_callback(
             '/\[\[([^\]|#]+)(?:#([^\]|]+))?(?:\|([^\]]+))?\]\]/',
             function ($matches) {
-                $path = $matches[1];
+                $path = trim($matches[1]);
                 $heading = $matches[2] ?? '';
                 $displayText = $matches[3] ?? null;
 
-                // Build URL: lowercase, keep slashes
-                $url = '/'.strtolower(trim($path));
+                // Skip empty paths
+                if ($path === '') {
+                    return $matches[0];
+                }
+
+                // Build URL: slug each path segment to handle spaces
+                $segments = explode('/', $path);
+                $sluggedSegments = array_map(fn ($s) => Str::slug($s), $segments);
+                $url = '/'.implode('/', $sluggedSegments);
 
                 // Add heading anchor if present
                 if ($heading) {
