@@ -12,33 +12,33 @@ All form submissions that you have permission to access are available to view fr
 *Note - It is also an option to click "clear filters" when accessing the Submissions page from the sidebar. Flow Forms automatically saves and displays your last search and/or filtered result, making for easy access to frequently needed info. If you know you are starting a new search, clicking "clear filters" from the sidebar is a time-saving nicety that prevents having to "Clear Filters" after your submissions page loads.*
 
 ## Management Panel
-At the top of your submissions page is the Submissions Management Panel that will remain at the top of the display as you interact with your submissions down the page. This space contains the search bar and all the filter functions, export and print options, as well as the controls to change the display view. The bottom of the management panel is made up of the "Bulk Actions toolbar" that allows you to take actions for a group of submissions rather than dealing with them individually.  
+At the top of your submissions page is the Submissions Management Panel that will remain at the top of the display as you interact with your submissions down the page. This space contains the search bar and all the filter functions, export and print options, as well as the controls to change the display view. The bottom of the management panel is made up of the "Bulk Actions Toolbar" that allows you to take actions for a group of submissions rather than dealing with them individually.  
 
-Below the management panel, an abbreviated display (20 entries per page) of **all** form submissions you are authorized to interact with is listed, in order, by the submission that has had the most recent action taken. This is by default, and can be filtered for viewing in many ways. You can change the list order in "Filters" under "Sort By."
+Below the management panel, an abbreviated display (20 entries per page) of **all** form submissions you are authorized to interact with is listed, in order, by the submission that has had the most recent action taken. This is by default, and can be filtered for viewing in many ways. You may change the list order in "Filters" under "Sort By."
 
 ### Search Bar
-The search bar contains these words, "{{icon:magnifying-glass size-4 inline-block align-text-center}} Search submissions (⌘K)," and takes up the most space on the submissions page header. To search your submissions for a keyword, phrase or number, click anywhere inside the search bar or press the "Command / ⌘" + "K" keys to see your cursor appear within the search bar and begin typing. 
+The search bar ("{{icon:magnifying-glass size-4 inline-block align-text-center}} Search submissions (⌘K)") takes up the most space on the submissions management panel. To search your submissions for a keyword, phrase or number, click anywhere inside the search bar or press the "Command / ⌘" + "K" keys to see your cursor appear within the search bar and begin typing. 
 
 When you use the search bar to filter your displayed submissions, the search function compares your input to any one element (or field) that is on a form and displays every submission that contains that matching element, as you typed it, but is not case-sensitive. The portion you searched for will appear highlighted in blue. Search will not produce any results that are *close* to what you typed if there is a misspelling or if only part matches.
 
-By default, your search results are displayed in order by the submission that has had the last action taken (this can be altered in *Filters*, under *Sort By*). 
+By default, your search results are displayed in order by the submission t hat has had the last action taken (this can be altered in "Filters", under "Sort By"). 
 
-If you have other filters, like *Status* or *Form*, selected, it will only search and produce results for those filtered categories. (*So, be sure to clear your filters before a new search!*)
+If you have other filters, like "Status" or "Form," selected, it will only search and produce results for those filtered categories. *So, be sure to clear your filters before a new search.*
 
-**Common Search Bar "Gotcha-s"**
+**Common Search Bar "Gotchas"**
 - Commas, decimals, apostrophes, and other punctuation - these are passed over in the search. For instance, searching for 36.00 will also produce results like, 3600 or 3,600.
 - Your search input spans multiple elements of a form. A submission element, or form element, is each individual input box that is on a form to receive the submission data. If you search a phrase that, on the form, is divided out into multiple input boxes, your search may not deliver all the results you are looking for.  
 	
 	*An example of this:* You enter "Billings, MT" into the search bar. Your search results will only include those submissions that have a submission element that contains, "Billings, MT" in one input box. But, it would not include those submissions that contain one form element of "Billings" and/or a second form element that is "MT".
 - What you searched for isn't highlighted anywhere on the presented submission results. This is probably because your *Display* option is set to "Collapse All" and the form element that matches your search is only visible in expanded view. Select the "Expand All" display option from the header, or click "show more" on the individual submission.
-- Did we mention that you should make sure your filters are clear before starting a new search? :) The most common reason to not receive the proper search results is that you have a filter set that you didn't realize was still active, therefore limiting your search's data set.
+- Did we mention that you should make sure your filters are cleared before starting a new search? :) The most common reason to not receive the proper search results is that you have a filter set that you didn't realize was still active, therefore limiting your search's data set.
 
 #### Submission Count 
-When viewing your submissions header with the filters cleared, the total number of submissions that include you will be displayed at the right end of the search bar. This "Submission Count" is the total number of submissions that apply to you and are available to you for search/filter. Every filter that is applied that excludes submission criteria from your search will be reflected in the submission count that is displayed. Your submission count is also displayed when accessing the *Filters* menu.
+When viewing your submissions management panel with the filters cleared, the total number of submissions that include you will be displayed at the right end of the search bar. This "Submission Count" is the total number of submissions that apply to you and are available to you for search/filter. Every filter that is applied that excludes submission criteria from your search will be reflected in the submission count that is displayed. Your submission count is also displayed when accessing the "Filters" menu.
 
 ### Export
 
-The "{{icon:chart-bar size-4 inline-block align-text-center}} Export" button, located on the right side of the Submissions Management Panel, above the search bar, allows you to download any form's submissions as a csv file. In order to initiate an export of data, you must, at minimum, [filter(#filters)] your submissions by form. If any further narrowing of your data set is desired, select those criteria from "Filters" as well. Once the desired data is displayed, click the "Export" link.  If successful, this message will be displayed: 
+The "{{icon:chart-bar size-4 inline-block align-text-center}} Export" button, located on the right side of the Submissions Management Panel, above the search bar, allows you to download any form's submissions as a csv file. In order to initiate an export of data, you must, at minimum, [[#Filters|filter]] your submissions by form. If any further narrowing of your data set is desired, select those criteria from "Filters" as well. Once the desired data is displayed, click the "Export" link.  If successful, this message will be displayed: 
 >Export started successfully. The result will be emailed upon completion. Check your notification center if you do not see the email.
 
 Your export will not work if there is not a form selected as a filter. If that is the case, this message will be displayed:
@@ -46,27 +46,38 @@ Your export will not work if there is not a form selected as a filter. If that i
 
 If successful, you will receive an email from Flow Forms, to the email address associated with your Flow Forms account, that contains a link to download your csv file. The size of the file will dictate the speed of its arrival to your inbox. 
 
-All exports you initiate are also available in your Notification Center. These can be accessed by clicking your user name in the upper left hand corner and selecting the Notification Center. Any of your requested exports that are ready for download will be listed under "Submission Exports" and are available for download from this location.
+All exports you initiate are also available in your "Notification Center." These can be accessed by clicking your user name, in the upper left corner, and selecting  "Notification Center." Any of your requested exports that are ready for download will be listed under "Submission Exports" and are available for download from this location.
 
 ### Print 
 The button for "{{icon:printer size-4 inline-block align-text-center}} Print" (beside "Export" at the top, right corner of the Submissions Management Panel) allows you to download a PDF and print individual, or a selection of, submissions. 
 
 To print a group/category of submissions, use the filtering options to display the desired results, then click the "Print" button to print them all at once. A modal window will appear that displays the number of submissions in that print request along with the options to either "Cancel" or "Start Print Job." To proceed with printing, click the "Start Print Job" button. A download progress bar will keep you informed of the progress of your request and, if successful, a "Download PDF" button will appear. Click to access the PDF and print. The modal also offers access to "Recent Print Jobs" that you have requested with the option to download them again.
 
-To print a single submission, or select submissions, from your search results, select the desired submission/s by clicking their individual select box (to the left of the Form's Title). When what you want is selected (a check-mark is displayed), proceed with clicking "Print" and follow the above instructions. 
-To exclude only a few submissions from a search display for printing, you can "Select All" by checking the same box that is directly above in the "Bulk Actions toolbar" and then unselect those you wish to exclude.
+To print a single submission, or select submissions, from your search results, select the desired submission/s by clicking their individual select box (to the left of the form's title in the submission's header). When what you want is selected (a check-mark is displayed), proceed with clicking "Print" and follow the above instructions. 
+To exclude only a few submissions from a search display for printing, you can "Select All" by checking the select box that is directly above, in the "Bulk Actions Toolbar," and then unselect those you wish to exclude.
 
 You also have the option to print an individual submission by clicking the gear icon ({{icon:cog-6-tooth size-4 inline-block align-text-center}}), found on the right side of that submission's header and navigate to "Print" or "Download as PDF" from the slide-out menu bar.
 
 ### Filters
 Flow Forms provides comprehensive filtering options to find exactly what you need. 
 
-To access the complete filter menu, click the blue *"Filter"* button in the submissions header. A slide-out menu bar will present from the right side of the screen. If any filters are currently active, there will be a *"Clear Filters"* button available at the top. Always be sure to clear the filters if you are starting a new search. Your Submission Count is displayed at the top of this menu as well, beside "Filters," and will change in accordance with any filters you select. 
+To access the complete filter menu, click the blue "{{icon:adjustments-horizontal size-4 inline-block align-text-center}} Filter" button in the submission management panel. A slide-out menu bar will present from the right side of the screen. If any filters are currently active, there will be a "Clear All" button available at the top. Clear the filters if you are starting a new search. Your [[#Submission Count|Submission Count]] is displayed at the top of this menu as well, beside "Filters," and will adjust in accordance with any filters you select. 
 
 Choose from any of these filtering options:
 
 #### Forms
-Display and search only the submissions from selected forms. Select the form/s to include from the drop down box. When a form is selected as a filter, it will appear in the submissions header as well.
+Display and search only the submissions from selected forms. Select the form/s to include in your search from the drop-down box that says, "Select forms to filter," or type the form's name/title into the search bar, which appears within the drop-down box, and select from the results. A check-mark will appear beside any form that is selected for filtering. To un-select a form, click it a second time and the check-mark indicator will disappear. 
+
+After your desired form/s are selected from the drop-down menu, the number of forms you've selected for search are displayed in the drop-down box.
+
+When a form is selected as a filter, that form's title will also appear on the submission management panel, beside "{{icon:document-duplicate size-4 inline-block align-text-center}} Forms." From the submission management panel, you then have the option to click the "X" listed beside that form to cease filtering by that form.
+
+
+
+#### Terms
+
+When a form is selected by which to filter, "Terms" will appear as a filtering option below, within the "Filters" slide-out menu. When you click, "Add Term," a drop-down box will appear that contains every form element that is included in the forms you have selected. For example, if I have selected the form called, "Client List," every element on that form, such as - Business name, Contact name, Phone number, Address, etc., would appear as an option in the drop-down box for "Terms." When a form element is selected from the drop-down list, you are only searching the selected form element for your specified term. Your search will not include any data that is received from other form elements. 
+If the form element is a text input, a box for you to type the term you wish to filter by will appear. If it is a radio or checkbox style form element, then the box will be a drop-down that contains the options available to that specific form element.
 
 #### Status 
 Display and search submissions that share the status or statuses you select.
