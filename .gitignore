@@ -31,3 +31,4 @@ resources/markdown/.obsidian/*
 .junie/
 boost.json
 .mcp.json
+auth.json
