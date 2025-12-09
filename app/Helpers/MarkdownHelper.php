@@ -244,22 +244,37 @@ class MarkdownHelper
             });
         }
 
-        // Sort folders by order
-        $sortedNavigation = [];
+        // Convert root files to folder-like structure for unified sorting
+        $allItems = [];
 
-        // Add root items first
         if (isset($navigation['_root'])) {
-            $sortedNavigation['_root'] = $navigation['_root'];
+            foreach ($navigation['_root'] as $file) {
+                $allItems[$file['filename']] = [
+                    'title' => $file['title'],
+                    'type' => 'file',
+                    'order' => $file['order'],
+                    'url' => $file['url'],
+                    'filename' => $file['filename'],
+                ];
+            }
             unset($navigation['_root']);
         }
 
-        // Sort remaining folders by order
-        uasort($navigation, function ($a, $b) {
+        // Add folders
+        foreach ($navigation as $key => $folder) {
+            $allItems[$key] = $folder;
+        }
+
+        // Sort everything by order
+        uasort($allItems, function ($a, $b) {
+            if ($a['order'] == $b['order']) {
+                return strcmp($a['title'], $b['title']);
+            }
+
             return $a['order'] - $b['order'];
         });
 
-        // Merge sorted folders back
-        return array_merge($sortedNavigation, $navigation);
+        return $allItems;
     }
 
     public static function filenameToTitle(string $filename): string

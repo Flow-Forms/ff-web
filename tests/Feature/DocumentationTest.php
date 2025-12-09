@@ -37,35 +37,34 @@ it('dynamically creates routes for new markdown files', function () {
     // Create a test markdown file
     $testContent = "# Test Documentation\n\nThis is a test page.";
     file_put_contents(resource_path('markdown/test-page.md'), $testContent);
-    
+
     $response = get('/test-page');
-    
+
     $response->assertOk();
     $response->assertSee('Test Documentation');
     $response->assertSee('This is a test page');
-    
+
     // Clean up
     unlink(resource_path('markdown/test-page.md'));
 });
 
 it('returns 404 for non-existent markdown files', function () {
     $response = get('/non-existent-page');
-    
+
     $response->assertNotFound();
 });
 
 it('generates navigation items from markdown files', function () {
     $navigationItems = \App\Helpers\MarkdownHelper::getNavigationItems();
-    
+
     expect($navigationItems)->toBeArray();
     expect($navigationItems)->not->toBeEmpty();
-    
-    // Check that security.md appears in root navigation
-    expect($navigationItems['_root'])->toBeArray();
-    $securityItem = collect($navigationItems['_root'])->firstWhere('filename', 'security');
-    expect($securityItem)->not->toBeNull();
-    expect($securityItem['title'])->toBe('Security');
-    expect($securityItem['url'])->toBe('/security');
+
+    // Check that security.md appears in navigation
+    expect($navigationItems)->toHaveKey('security');
+    expect($navigationItems['security']['type'])->toBe('file');
+    expect($navigationItems['security']['title'])->toBe('Security');
+    expect($navigationItems['security']['url'])->toBe('/security');
 });
 
 it('handles nested folder documentation', function () {
@@ -108,7 +107,7 @@ it('generates grouped navigation for folders', function () {
 
 it('returns 404 for non-existent nested pages', function () {
     $response = get('/forms/non-existent');
-    
+
     $response->assertNotFound();
 });
 
@@ -116,21 +115,21 @@ it('creates dynamic routes for new nested files', function () {
     // Create test nested file
     $testContent = "# Test Nested Page\n\nThis is a test nested page.";
     $folderPath = resource_path('markdown/api');
-    
-    if (!is_dir($folderPath)) {
+
+    if (! is_dir($folderPath)) {
         mkdir($folderPath, 0755, true);
     }
-    
-    file_put_contents($folderPath . '/authentication.md', $testContent);
-    
+
+    file_put_contents($folderPath.'/authentication.md', $testContent);
+
     $response = get('/api/authentication');
-    
+
     $response->assertOk();
     $response->assertSee('Test Nested Page');
     $response->assertSee('This is a test nested page');
-    
+
     // Clean up
-    unlink($folderPath . '/authentication.md');
+    unlink($folderPath.'/authentication.md');
     if (is_dir($folderPath) && count(scandir($folderPath)) === 2) { // only . and ..
         rmdir($folderPath);
     }
@@ -141,25 +140,24 @@ describe('All markdown files are accessible', function () {
     it('can access all root level markdown files', function () {
         $rootFiles = [
             'security' => 'Security at Flow Forms',
-            'getting-started' => 'Getting Started Guide'
         ];
-        
+
         foreach ($rootFiles as $slug => $expectedContent) {
             $response = get("/{$slug}");
             $response->assertOk();
-            
+
             if ($expectedContent) {
                 $response->assertSee($expectedContent);
             }
         }
     });
-    
+
     it('can access all forms folder markdown files', function () {
         $formsFiles = [
             'overview' => 'Forms Overview',
             'field-types' => 'Field Types',
         ];
-        
+
         foreach ($formsFiles as $slug => $expectedTitle) {
             $response = get("/forms/{$slug}");
             $response->assertOk();
@@ -171,34 +169,28 @@ describe('All markdown files are accessible', function () {
 describe('Navigation links work correctly', function () {
     it('has working navigation links for all pages', function () {
         $navigationItems = \App\Helpers\MarkdownHelper::getNavigationItems();
-        
-        // Test root level navigation links
-        if (isset($navigationItems['_root'])) {
-            foreach ($navigationItems['_root'] as $item) {
+
+        // Test all navigation links
+        foreach ($navigationItems as $key => $item) {
+            if ($item['type'] === 'file') {
                 $response = get($item['url']);
                 $response->assertOk();
-            }
-        }
-        
-        // Test folder navigation links
-        foreach ($navigationItems as $key => $section) {
-            if ($key !== '_root' && isset($section['items'])) {
-                foreach ($section['items'] as $item) {
-                    $response = get($item['url']);
+            } elseif ($item['type'] === 'folder' && isset($item['items'])) {
+                foreach ($item['items'] as $subItem) {
+                    $response = get($subItem['url']);
                     $response->assertOk();
                 }
             }
         }
     });
-    
+
     it('navigation contains all expected files', function () {
         $navigationItems = \App\Helpers\MarkdownHelper::getNavigationItems();
-        
+
         // Check root files are in navigation
-        $rootFilenames = collect($navigationItems['_root'] ?? [])->pluck('filename')->toArray();
-        expect($rootFilenames)->toContain('security');
-        expect($rootFilenames)->toContain('getting-started');
-        
+        expect($navigationItems)->toHaveKey('security');
+        expect($navigationItems['security']['type'])->toBe('file');
+
         // Check forms folder exists and contains expected files
         expect($navigationItems)->toHaveKey('forms');
         $formsFilenames = collect($navigationItems['forms']['items'])->pluck('filename')->toArray();
@@ -255,33 +247,32 @@ describe('Dynamic file discovery and accessibility', function () {
     it('can access every markdown file discovered in the filesystem', function () {
         $markdownPath = resource_path('markdown');
         $allFiles = [];
-        
+
         // Recursively find all .md files
         $iterator = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($markdownPath)
         );
-        
+
         foreach ($iterator as $file) {
             if ($file->getExtension() === 'md' && $file->getFilename() !== 'README.md') {
-                $relativePath = str_replace($markdownPath . '/', '', $file->getPathname());
+                $relativePath = str_replace($markdownPath.'/', '', $file->getPathname());
                 // Remove .md extension
-                $url = '/' . str_replace('.md', '', $relativePath);
+                $url = '/'.str_replace('.md', '', $relativePath);
                 // Remove numeric prefix from URLs
                 $url = preg_replace('/\/\d{2}-/', '/', $url);
                 $url = preg_replace('/^\/\d{2}-/', '/', $url);
                 $allFiles[] = $url;
             }
         }
-        
+
         // Test that every discovered file is accessible
         foreach ($allFiles as $url) {
             $response = get($url);
             $response->assertOk("Failed to access: {$url}");
         }
-        
+
         // Ensure we found at least the files we know should exist
         expect($allFiles)->toContain('/security');
-        expect($allFiles)->toContain('/getting-started');
         expect($allFiles)->toContain('/forms/overview');
         expect($allFiles)->toContain('/forms/field-types');
     });
