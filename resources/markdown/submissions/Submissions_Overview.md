@@ -1,6 +1,6 @@
 ---
-title: Managing Submissions
-order: 2
+title: Submissions Overview
+order: 1
 ---
 
 # Somehow I Manage... Submissions

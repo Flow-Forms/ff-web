@@ -1,3 +1,8 @@
+---
+title: Device Trust & Verification
+order: 2
+---
+
 # Device Trust & Verification  
   
 To help protect your account, we track the devices you use to sign in. This adds an extra layer of security by requiring verification when you (or someone else) attempts to access your account from an unrecognized device.
