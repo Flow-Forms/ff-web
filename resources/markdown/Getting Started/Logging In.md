@@ -31,6 +31,9 @@ sections:
       - title: Validation
         description: Ensure data quality with validation rules
         url: /forms/validation
+      - title: Form Tagging
+        description: Organize forms with tags for easy filtering
+        url: /forms/tagging
   
   - title: Submissions & Data
     items:

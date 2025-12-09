@@ -20,6 +20,9 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         @fluxAppearance
+
+        <!-- Fathom - beautiful, simple website analytics -->
+        <script src="https://cdn.usefathom.com/script.js" data-site="BSFPZJNY" defer></script>
     </head>
 
     <body class="font-sans antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
