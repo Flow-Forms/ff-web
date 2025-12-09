@@ -1,22 +1,12 @@
 ---
-title: Managing Submissions
+title: Managment Panel
 order: 2
 ---
 
-# Somehow I Manage... Submissions
 
-View, organize, and manage form submissions efficiently with Flow Forms' powerful submission management tools.
 
-All form submissions that you have permission to access are available to view from the "Submissions" page. Click "{{icon:paper-clip size-4 inline-block align-text-center}} Submissions" from the sidebar to begin.
 
-*Note - It is also an option to click "clear filters" when accessing the Submissions page from the sidebar. Flow Forms automatically saves and displays your last search and/or filtered result, making for easy access to frequently needed info. If you know you are starting a new search, clicking "clear filters" from the sidebar is a time-saving nicety that prevents having to "Clear Filters" after your submissions page loads.*
-
-## Management Panel
-At the top of your submissions page is the Submissions Management Panel that will remain at the top of the display as you interact with your submissions down the page. This space contains the search bar and all the filter functions, export and print options, as well as the controls to change the display view. The bottom of the management panel is made up of the "Bulk Actions Toolbar" that allows you to take actions for a group of submissions rather than dealing with them individually.  
-
-Below the management panel, an abbreviated display (20 entries per page) of **all** form submissions you are authorized to interact with is listed, in order, by the submission that has had the most recent action taken. This is by default, and can be filtered for viewing in many ways. You may change the list order in "Filters" under "Sort By."
-
-### Search Bar
+## Search Bar
 The search bar ("{{icon:magnifying-glass size-4 inline-block align-text-center}} Search submissions (⌘K)") takes up the most space on the submissions management panel. To search your submissions for a keyword, phrase or number, click anywhere inside the search bar or press the "Command / ⌘" + "K" keys to see your cursor appear within the search bar and begin typing. 
 
 When you use the search bar to filter your displayed submissions, the search function compares your input to any one element (or field) that is on a form and displays every submission that contains that matching element, as you typed it, but is not case-sensitive. The portion you searched for will appear highlighted in blue. Search will not produce any results that are *close* to what you typed if there is a misspelling or if only part matches.

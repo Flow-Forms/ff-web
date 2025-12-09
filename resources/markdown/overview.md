@@ -15,6 +15,6 @@ is_index: true
 
 Our Documentation will walk you through everything you need to know to begin using Flow Forms to improve your communication and data management with simple, secure forms.
 
-Need help? Contact our support team from the "{{icon:lifebuoy size-5 inline-block align-text-center}} Support" section of the menu when [logged in](https://ff.flowforms.app),  or email help@flowforms.io. 
+Need help? Contact our support team from the "{{icon:lifebuoy size-5 inline-block align-text-center}} Support" section of the sidebar menu when [logged in](https://ff.flowforms.app),  or email help@flowforms.io. 
 
 Happy form-building!  🚀
