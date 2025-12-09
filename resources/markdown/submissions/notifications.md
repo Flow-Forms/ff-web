@@ -1,6 +1,6 @@
 ---
 title: Notifications
-order: 2
+order: 20
 ---
 
 # Notifications

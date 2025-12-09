@@ -1,0 +1,193 @@
+---
+title: Filters
+order: 4
+---
+
+# Filters
+Flow Forms provides comprehensive filtering options to find exactly what you need.  
+
+To access the complete filter menu, click the blue "{{icon:adjustments-horizontal size-4 inline-block align-text-center}} Filter" button in the submission management panel. A slide-out menu will present from the right side of the screen. If any filters are currently active, there will be a "Clear All" button available at the top. Clear the filters if you are starting a new search. Your [[#Submission Count|Submission Count]] is displayed at the top of this menu as well, beside "Filters," and will adjust in accordance with any filters you select. 
+
+Apply multiple filters in concert to narrow your search results. Choose from any of these filtering options:
+- Forms
+- Terms
+- Flow Step
+- Date Range
+- Status
+- Submitted By
+- Pending On
+- Participants
+- Submissions Without a Process
+
+### Forms
+Display and search only the submissions from selected forms. Select the form/s to include in your search from the drop-down box that says, "Select forms to filter," or type the form's name/title into the search bar, which will appear within the drop-down box, and select from the results. A check-mark will appear beside any form that is selected for filtering. To un-select a form, click it a second time and the check-mark indicator will disappear. 
+
+After your desired form/s are selected from the drop-down menu, the number of forms you've selected for search are displayed in the drop-down box.
+
+When a form is selected as a filter, that form's title will also appear on the submission management panel, beside "{{icon:document-duplicate size-4 inline-block align-text-center}} Forms." From the submission management panel, you then have the option to click the "X," listed with that form title, to cease filtering by that form. 
+
+Click "Apply Filters" to view your search results.
+
+
+
+### Terms
+
+Choosing to filter by "Terms" allows you to display submissions that have a particular response to a specific form element. 
+To do so, you must first select to filter by that [[#Forms|form]]. When at least one form is selected, "Terms" will appear as a filtering option just below the "Forms" drop-down box. When you click, "Add Term," a new drop-down box presents every form element that is included in the form/s you have selected. 
+
+When a form element is selected from the drop-down list, you will only be searching that selected form element for your specified term. Your search will not include any data that is received from any of the other form elements. 
+
+If the form element is a text input, a box for you to type the term you wish to filter for will appear that says, "Enter search value." 
+If it is a radio, select, or checkbox style form element, then the box will be a drop-down (with search option) that contains the input options available for that specific form element.
+
+Once the term or terms are specified, click the blue "+ Add Term" button and your criteria will be displayed, listing both the form element you selected and the term you entered. These can be cancelled by clicking the "X" beside your term selection, or by clearing the filters.
+
+*For example:  I have selected a form called, "Client List," from the "Forms" filter option. So, when I click "Add Term"  and select the drop-down box, every form element that is on the "Client List" form, such as: Business name, Contact name, Phone number, Address, etc., appears as an option.  If I select the form element, "Address," and then type, "Montana," in the new text box that appears, I am selecting for my search results to display only clients that have "Montana" in the address category.*
+
+
+### Flow Step
+
+
+### Start date / End date
+If you want to display the submissions from a certain period of time, choose to filter by date. From the filter menu, click in the box below "Start Date," where the current date is displayed in gray, and either type in the 8 digit date (2 digit month, 2 digit day, 4 digit year), or select the date from the calendar, that marks the beginning of your search range.
+Repeat that process for the "End Date" of your search and click "Apply Filters" to view your submission results. 
+
+The submissions displayed will be based on the date they were submitted. *If you have a form that has a date as one of its form elements, such as, "Invoice date," and would like to filter for that, you will need to use the "[[Terms]]" filter instead.*
+
+### Sort By
+
+
+### Submission Status 
+Display and search submissions that share the status or statuses you select.
+
+The color-coded bar at the top of each submission indicates the status of that particular submission as it progresses through its workflow toward approval/acceptance. Not every status is utilized in every form, but the exhaustive list is as follows: 
+		
+- Blue - Approved (submission is complete)
+- Yellow- Pending (waiting on another's action)
+- Red - Pending on Me (waiting on your action)
+- Orange - Sent Back (submission has been sent back to the form's originator)
+- Magenta - Info Requested (sent back to any flow-step for additional information)
+- Gray- Denied (submission has been rejected and cannot be continued)
+- Teal - Escalated (skipped flow-step(s) to seek input/approval)
+
+
+Once your filtering selections are complete, click the *"Apply Filters"* button to see your results. For frequently accessed search criteria, you have the option to save a filter and name it accordingly.
+
+
+
+## Clear Filters 
+Any time a filter of any type is active, the option to *"Clear Filters"* will appear on the control panel, to the right of the *"Filters"* button, beside the search bar. This removes **all** active filters and restores the presentation of the full list of submissions available to you.  
+
+
+## Quick-Filters
+Two of the most commonly used filters, *"Forms"* and *"Status,"*  are easily accessible from their links on the control panel. When any of those filters are selected, they will appear on the submissions header, below the search bar, with the option to "X" out of any that you would like to remove from filtering.
+
+
+### Submission View
+
+Navigate to any of the entries that have populated below the Submission Page header to view a form's submission data. 
+
+The header of every individual submission displays:
+- Form Title/Name - click to start a new submission of that form type 
+- Name of the submitter
+- "Edit" icon - if permission to edit is allowed, you may alter the inputs and add data/comments to the submission
+- "History" button - View every action that has been taken on that submission so far. *You may also choose to "show conditional steps" for a more in-depth insight into the flow's parameters (not interesting to most of us)* 
+- Status of the submission - if not "Approved," it will list on whom it is pending
+- Time the submission was created
+- Time the submission was last updated
+- Gear icon for "Options" -
+- "Pop-out" {{icon:arrow-top-right-on-square size-4 inline-block align-text-center}} - fully view a single submission on a reloaded page.
+- "Show More" button - fully view all data/entries on the form while remaining on your "Submissions" page. Also referred to as *Expanded View*
+	- *Most attached documents (ex: .png, .jpeg) will also expand in view. PDFs will display a "view PDF" link in order to view the attachment in a modal window. Alternatively, you can click the attachment's link below it to download the attached document or photo.*
+- "Show Less" button - return to the overview display of that submission (appears when in the expanded/"show more" view). Also referred to as *Collapsed View*
+- "+ Add Note" button - add additional information, comments, or attach files for the record. (Button appears at the bottom of each submission's window and also in the header when in expanded view. When viewing a full submission from the "Pop-out" option, *Notes* appear in a column on the right of the submission data with the most recent at the top. This view also includes the option to "hide notes.") 
+	- *When adding a note, you can optionally select permitted users to be notified of your addition. If you do not wish to notify a user that is selected, click their info from the dropdown to unselect them. If there are no notifications selected, the drop down box will display "No Users." You can also save your note as a draft and close*
+- "View all notes" button - displays all notes submitted along with user name and time stamp (appears beside the "Add Note" button at the bottom of the submission's window when other notes exist).
+
+
+
+
+### Form-Specific Views
+Navigate to any form to see its entries/data:
+- Submission count
+- Recent entries
+- Status overview
+
+## Filtering Submissions
+
+### Available Filters
+- **Submitted By** - Find submissions from specific users
+- **Forms** - Filter by specific forms
+- **Status** - View by submission status
+- **Terms** - Search within field data using `field name: search term`
+- **Date Range** - Filter by submission date
+- **Participants** - Find submissions involving specific users
+- **Pending On** - See submissions awaiting action from specific users
+
+### Using Filters
+1. Click the filter icon in your submissions view
+2. Select your filter criteria
+3. Apply multiple filters to narrow results
+4. Save frequently used filter combinations
+
+### Saved Filters
+Create reusable filters for common searches:
+1. Set up your filter criteria
+2. Click "Save Filter"
+3. Name your filter
+4. Access saved filters from the dropdown menu
+
+## Submission Actions
+
+### Individual Actions
+For each submission, you can:
+- View full details
+- Edit submission data (if permissions allow)
+- Add notes or comments
+- Change submission status
+- Assign to team members
+
+### Bulk Actions
+Select multiple submissions to:
+- Export to CSV
+- Update status in bulk
+- Assign to users
+- Apply tags or categories
+
+## Grouping & Permissions
+
+### Group Access
+Administrators can assign groups to view specific form submissions:
+1. Edit the form
+2. Go to "Additional Form Options"
+3. Assign groups who should have access
+4. Save changes
+
+### Permission Levels
+- **View Only** - See submission data
+- **Edit** - Modify submission content
+- **Manage** - Full control including deletion
+
+## Export Options
+
+### CSV Export
+Export submissions to CSV format:
+1. Apply any filters needed
+2. Click "Export to Excel" button
+3. Choose fields to include
+4. Download your file
+
+### Data Format
+Exported data includes:
+- All form fields
+- Submission metadata
+- Timestamps
+- Status information
+
+## Best Practices
+
+- Use filters to create custom workflows
+- Save commonly used filters
+- Regularly export data for backup
+- Set up group permissions appropriately
+- Use bulk actions to save time
