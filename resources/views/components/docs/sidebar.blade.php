@@ -7,7 +7,7 @@
         <div class="space-y-8">
             {{-- Root level files --}}
             @if(!empty($navigationItems['_root']))
-                <x-docs.nav-section title="Documentation">
+                <x-docs.nav-section>
                     @foreach($navigationItems['_root'] as $item)
                         <flux:navlist.item
                             href="{{ $item['url'] }}"
