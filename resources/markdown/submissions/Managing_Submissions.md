@@ -1,5 +1,5 @@
 ---
-title: Management Panel
+title: Managing Submissions
 order: 1
 ---
 

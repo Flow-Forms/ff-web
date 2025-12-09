@@ -1,5 +1,5 @@
 ---
-title: Managment Panel
+title: Search Bar
 order: 2
 ---
 
