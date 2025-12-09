@@ -59,11 +59,11 @@ To exclude only a few submissions from a search display for printing, you can "S
 You also have the option to print an individual submission by clicking the gear icon ({{icon:cog-6-tooth size-4 inline-block align-text-center}}), found on the right side of that submission's header and navigate to "Print" or "Download as PDF" from the slide-out menu bar.
 
 ### Filters
-Flow Forms provides comprehensive filtering options to find exactly what you need. 
+Flow Forms provides comprehensive filtering options to find exactly what you need.  
 
 To access the complete filter menu, click the blue "{{icon:adjustments-horizontal size-4 inline-block align-text-center}} Filter" button in the submission management panel. A slide-out menu will present from the right side of the screen. If any filters are currently active, there will be a "Clear All" button available at the top. Clear the filters if you are starting a new search. Your [[#Submission Count|Submission Count]] is displayed at the top of this menu as well, beside "Filters," and will adjust in accordance with any filters you select. 
 
-Choose from any of these filtering options:
+Apply multiple filters in concert to narrow your search results. Choose from any of these filtering options:
 - Forms
 - Terms
 - Flow Step
@@ -88,21 +88,26 @@ Click "Apply Filters" to view your search results.
 #### Terms
 
 Choosing to filter by "Terms" allows you to display submissions that have a particular response to a specific form element. 
-To do so, you must first select to filter by that specific [[#Forms|form]]. When at least one form is selected, "Terms" will appear as a filtering option just below the "Forms" drop-down box. When you click, "Add Term," a new drop-down box presents every form element that is included in the form/s you have selected. 
+To do so, you must first select to filter by that [[#Forms|form]]. When at least one form is selected, "Terms" will appear as a filtering option just below the "Forms" drop-down box. When you click, "Add Term," a new drop-down box presents every form element that is included in the form/s you have selected. 
 
 When a form element is selected from the drop-down list, you will only be searching that selected form element for your specified term. Your search will not include any data that is received from any of the other form elements. 
 
 If the form element is a text input, a box for you to type the term you wish to filter for will appear that says, "Enter search value." 
-If it is a radio, select, or checkbox style form element, then the box will be a drop-down (with search option) that contains the input options available to that specific form element.
+If it is a radio, select, or checkbox style form element, then the box will be a drop-down (with search option) that contains the input options available for that specific form element.
 
-Once the term or terms are specified, click the blue "+ Add Term" button and your criteria will be displayed, listing both the form element you selected and the term you chose. These can be cancelled by clicking the "X" beside your term selection, or by clearing the filters.
+Once the term or terms are specified, click the blue "+ Add Term" button and your criteria will be displayed, listing both the form element you selected and the term you entered. These can be cancelled by clicking the "X" beside your term selection, or by clearing the filters.
 
-*For example:  I have selected a form called, "Client List," from the "Forms" filter option. So, when I click "Add Term"  and select the drop-down box, every form element that is on the "Client List" form, such as: Business name, Contact name, Phone number, Address, etc., appears as an option.  If I select the form element, "Address," and then type in, "Montana," in the new text box that appears, I am selecting for my search results to display only clients that have entered "Montana" in their address information.*
+*For example:  I have selected a form called, "Client List," from the "Forms" filter option. So, when I click "Add Term"  and select the drop-down box, every form element that is on the "Client List" form, such as: Business name, Contact name, Phone number, Address, etc., appears as an option.  If I select the form element, "Address," and then type, "Montana," in the new text box that appears, I am selecting for my search results to display only clients that have "Montana" in the address category.*
 
 
 #### Flow Step
 
+
 #### Start date / End date
+If you want to display the submissions from a certain period of time, choose to filter by date. From the filter menu, click in the box below "Start Date," where the current date is displayed in gray, and either type in the 8 digit date (2 digit month, 2 digit day, 4 digit year), or select the date from the calendar, that marks the beginning of your search range.
+Repeat that process for the "End Date" of your search and click "Apply Filters" to view your submission results. 
+
+The submissions displayed will be based on the date they were submitted. *If you have a form that has a date as one of its form elements, such as, "Invoice date," and would like to filter for that, you will need to use the "[[Terms]]" filter instead.*
 
 #### Sort By
 

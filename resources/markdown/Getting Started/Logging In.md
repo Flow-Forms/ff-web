@@ -69,7 +69,11 @@ help:
 
 # Getting Started Guide
 
-Welcome to Flow Forms! This guide will walk you through everything you need to start collecting data with beautiful, secure forms.
+Welcome to Flow Forms! This guide will walk you through everything you need to know to begin using Flow Forms to improve your communication and data management with simple, secure forms.
+
+Need help? Contact our support team through the help menu on your dashboard.
+
+Happy form-building! 🚀
 
 ## Logging In
 
@@ -91,11 +95,11 @@ Forgot your password? No problem:
 
 ### Passwordless Login
 
-Sign in without remembering a password:
+Sign in without a password:
 
 1. Click "Sign in without a password"
 2. Choose email or phone number authentication
-3. Enter your email or phone number
+3. Enter your email or phone number and click "Send Link"
 4. Check for a magic link (email) or text message (SMS)
 5. Click the link to instantly log in (valid for 30 minutes)
 
@@ -103,6 +107,4 @@ Sign in without remembering a password:
 
 If your organization uses SSO (like Google), the password reset option won't be available. Contact your system administrator for password assistance.
 
-Need help? Contact our support team through the help menu on your dashboard.
 
-Happy form building! 🚀
