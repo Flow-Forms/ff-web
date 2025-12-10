@@ -10,6 +10,15 @@ Navigate to any of the entries that have populated below the Submissions Managem
 
 ## Submission Header
 The header of every individual submission displays:
+- Form Status - The color-coded bar across the top of each submission's header indicates the status of that particular submission as it progresses through its workflow toward approval/acceptance. Not every status is utilized in every form, but the exhaustive list is as follows: 
+		
+	- Blue - Approved (submission is complete)
+	- Yellow- Pending (waiting on another's action)
+	- Red - Pending on Me (waiting on your action)
+	- Orange - Sent Back (submission has been sent back to the form's originator)
+	- Magenta - Info Requested (sent back to any flow-step for additional information)
+	- Gray- Denied (submission has been rejected and cannot be continued)
+	- Teal - Escalated (skipped flow-step(s) to seek input/approval)
 - Form Title/Name - click to start a new submission of that form type 
 - Name of the submitter
 - "Edit" icon - if permission to edit is allowed, you may alter the inputs and add data/comments to the submission

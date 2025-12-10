@@ -21,5 +21,9 @@ If you have other filters, like "Status" or "Form," selected, it will only searc
 - Did we mention that you should make sure your filters are cleared before starting a new search? :) The most common reason to not receive the proper search results is that you have a filter set that you didn't realize was still active, therefore limiting your search's data set.
 
 ### Submission Count 
-When viewing the submissions management panel with your filters cleared, the total number of submissions that include you will be displayed at the right end of the search bar. This "Submission Count" is the total number of submissions that apply to you and are available to you for search/filter. Every filter that is applied that excludes submission criteria from your search will be reflected in the submission count that is displayed. Your submission count is also displayed when accessing the "Filters" menu.
+When viewing the submissions management panel with your filters cleared, the total number of submissions that include you will be displayed at the right end of the search bar. This "Submission Count" is the total number of submissions that apply to you and are available to you for search/filter. Every filter that is applied that excludes submission criteria from your search will be reflected in the submission count that is displayed. 
+
+If your submission count displays a "0," there are no submissions to display that fit your criteria. Make sure to "Clear Filters" to be certain previously used filters are not active and limiting your search field. 
+
+Your submission count is also displayed when accessing the "Filters" menu.
 
