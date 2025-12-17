@@ -4,11 +4,10 @@ order: 4
 ---
 
 # Filters
-Flow Forms provides comprehensive filtering options to find exactly what you need.  
+Flow Forms provides comprehensive filtering options to find exactly what you need.  Utilizing filters to limit your displayed submissions allows you to take care of common tasks together, efficiently locate data, run reports, and much more.
+To access the complete filter menu, click the blue "{{icon:adjustments-horizontal size-4 inline-block align-text-center}} Filter" button in the submission management panel. A slide-out menu will present from the right side of the screen. If any filters are currently active, there will be a "Clear All" button available at the top. Clear the filters if you are starting a new search to be certain previous filtering choices are not active and limiting your search results. Your [[#Submission Count|Submission Count]] is also displayed at the top of this menu, beside "Filters," and will adjust in accordance with any filtering options you select. If your submission count displays "0" there are no submissions that fit your search criteria.
 
-To access the complete filter menu, click the blue "{{icon:adjustments-horizontal size-4 inline-block align-text-center}} Filter" button in the submission management panel. A slide-out menu will present from the right side of the screen. If any filters are currently active, there will be a "Clear All" button available at the top. Clear the filters if you are starting a new search. Your [[#Submission Count|Submission Count]] is displayed at the top of this menu as well, beside "Filters," and will adjust in accordance with any filters you select. If your submission count displays "0" there are no submissions that fit your search criteria.
-
-Apply multiple filters simultaneously to narrow your search results. Choose from any of these filtering options:
+Apply multiple filters simultaneously to narrow your search results. Choose to filter with any of these options:
 - Forms
 - Terms
 - Flow Step
@@ -19,14 +18,15 @@ Apply multiple filters simultaneously to narrow your search results. Choose from
 - Participants
 - Submissions Without a Process
 
-Once filters are selected, click, "Apply Filters" to view your selected search results.
+Once all filtering selections are complete, click, "Apply Filters," to view your selected search results.
 
 ### Forms
+
 Display and search only the submissions from selected forms. Select the form/s to include in your search from the drop-down box that says, "Select forms to filter," or type the form's name/title into the search bar, which will appear within the drop-down box, and select from the results. A check-mark will appear beside any form that is selected for filtering. To un-select a form, click it a second time and the check-mark indicator will disappear. 
 
 After your desired form/s are selected from the drop-down menu, the number of forms you've selected for search are displayed in the drop-down box.
 
-When a form is selected as a filter, that form's title will also appear on the submission management panel, beside "{{icon:document-duplicate size-4 inline-block align-text-center}} Forms." From the submission management panel, you then have the option to click the "X," listed with that form title, to cease filtering by that form. 
+*When a form is selected as a filter, that form's title will also appear on the submission management panel, beside "{{icon:document-duplicate size-4 inline-block align-text-center}} Forms." From the submission management panel, you then have the option to click the "X," listed with that form title, to cease filtering by that form.*
 
 
 
@@ -42,18 +42,25 @@ If it is a radio, select, or checkbox style form element, then the box will be a
 
 Once the term or terms are specified, click the blue "+ Add Term" button and your criteria will be displayed, listing both the form element you selected and the term you entered. These can be cancelled by clicking the "X" beside your term selection, or by clearing the filters.
 
-*For example:  I have selected a form called, "Client List," from the "Forms" filter option. So, when I click "Add Term"  and select the drop-down box, every form element that is on the "Client List" form, such as: Business name, Contact name, Phone number, Address, etc., appears as an option.  If I select the form element, "Address," and then type, "Montana," in the new text box that appears, I am selecting for my search results to display only clients that have "Montana" in the address category.*
+*For example:*  I have selected a form called, "Client List," from the "Forms" filter option. So, when I click "Add Term"  and select the drop-down box, every form element that is on the "Client List" form, such as: Business name, Contact name, Phone number, Address, etc., appears as an option.  If I select the form element, "Address," and then type, "Montana," in the new text box that appears, I am selecting for my search results to display only clients that have "Montana" in the address category.
 
 
 
 ### Flow Step
+If you would like to filter to display only the submissions from a form that are on a specific step in their workflow, you will choose to filter by Flow Step. 
+
+First, you must select to filter by [[#Forms|form]]. When at least one form is selected, "Flow Step" will appear below the "Terms" filter option within the "Filters" menu. Clicking the drop down box will present you with a numbered list of every flow step, from the selected form, in the order they occur. Click on a flow step to select it for filtering, and a checkmark will be displayed on its left. Click again to unselect. Multiple flow steps can be selected at the same time. Once selected, the flow step's title will be displayed in the drop down box, or, if two or more are selected, the number of flow steps chosen for filtering will be displayed.
+
 
 
 ### Start date / End date
 If you want to display the submissions from a certain period of time, choose to filter by date. From the filter menu, click in the box below "Start Date," where the current date is displayed in gray, and either type in the 8 digit date (2 digit month, 2 digit day, 4 digit year), or select the date from the calendar, that marks the beginning of your search range.
-Repeat the same process for the "End Date" of your search.
+Repeat the same process in the "End Date" box to mark the end of your desired search range. 
 
-The submissions displayed will be based on the date they were submitted. *If you have a form that has a date as one of its form elements, such as, "Invoice date," and would like to filter for that, you will need to use the "[[Terms]]" filter instead.*
+The submissions displayed will be based on the date they were submitted. 
+
+*If you have a form that has a date as one of its form elements, such as, "Invoice date," and would like to filter for that, you will need to use the "[[#Terms|Terms]]" filter instead.*
+
 
 ### Sort By
 
@@ -78,12 +85,14 @@ Select by clicking in the box beside any status. A checkmark will be displayed w
 
 To display only the submissions submitted by a specified user or users, utilize the "Submitted By" filter option.
 
-From the blue, "Filters" button, scroll down to "Submitted By" and click the drop down menu that says "Search by name or email."  A list of users accessible to you within your organization will load below with a search bar at the top. Begin to type the name or email of a desired user into the search bar and click their info line to select them as it appears. A green checkmark will appear beside their email address if selected, which you may click again to unselect. All selected user names will appear listed just above, along with a red "X" that you can click if you want to remove their submissions from your filtered search results.
+From the blue, "Filters" button, scroll down to "Submitted By" and click the drop down menu that says "Search by name or email."  A list of users accessible to you within your organization will load below with a search bar at the top. Begin to type the name or email of a desired user into the search bar and click their info line to select them as they appear. A green checkmark will appear beside their email address, if selected, which you may click again to unselect. All selected user names will appear listed just above, along with a red "X" that you can click if you want to remove their submissions from your filtered search results.
 
 By default, the list of users that populates in the drop-down will only include those with Flow Forms user accounts within your organization. There is, however, a toggle switch just below the drop down box, with "show external" beside it, that, when selected, allows you to also search and select names and emails of users that have submitted into your Flow Forms data set from an *external* form link. This search option would come in handy if you need to search for data submitted by a user that filled out a public-facing form for your organization.
 
 
 ### Pending On
+
+
 
 
 ### Participated In Submission
@@ -106,7 +115,13 @@ Any time a filter of any type is active, the option to *"Clear Filters"* will ap
 
 
 ## Quick-Filters
-Two of the most commonly used filters, *"Forms"* and *"Status,"*  are easily accessible from their links on the control panel. When any of those filters are selected, they will appear on the submissions header, below the search bar, with the option to "X" out of any that you would like to remove from filtering.
+Two of the most commonly used filters, *"Forms"* and *"Status,"*  are easily accessible from their links on the submission management panel. 
+
+"{{icon:document-duplicate size-4 inline-block align-text-center}} Forms" is located just below the search bar on its left side. To filter by form, click to show a drop down menu with search option. All your forms are listed in alphabetical order and can be scrolled through or found by searching for the form title. Click to select the form or forms you would like to include in your search. A checkmark will appear to the left of any form you have selected. If no form is selected as a filter, submissions from every form will be included in your displayed results.
+
+"{{icon:check-badge size-4 inline-block align-text-center}} Status" is located below the search bar, but on its right side. To filter by a submission's status, click to see every status option listed (color coded) with a select box to the left of each. Click in the box of any status  and a checkmark will indicate its selection. Click the checkmark to unselect that status from your filtered results. If no status is selected, submissions of every status will be included in your displayed results.
+
+When "Forms" or "Status" filters are active, their name will appear listed on the submissions management panel, below the search bar, on their respective sides, with the option to "X" out of any that you would like to remove from filtering.
 
 
 ### Submission View

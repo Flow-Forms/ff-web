@@ -4,9 +4,9 @@ order: 2
 ---
 
 ## Search Bar
-The search bar ("{{icon:magnifying-glass size-4 inline-block align-text-center}} Search submissions (⌘K)") takes up the most space on the submissions management panel. To search your submissions for a keyword, phrase or number, click anywhere inside the search bar or press the "Command / ⌘" + "K" keys to see your cursor appear within the search bar and begin typing. 
+The search bar ("{{icon:magnifying-glass size-4 inline-block align-text-center}} Search submissions (⌘K)") takes up the most space on the submissions management panel. To search your submissions for a keyword, phrase or number, click anywhere inside the search bar or press the "Command / ⌘" + "K" keys to see your cursor appear within the search bar and begin typing. When no other filters are active, all submissions available to you will be included in your search results when utilizing the search bar filter. To search with more specificity, you will likely want to utilize additional [[#filters|filtering]] options. 
 
-When you use the search bar to filter your displayed submissions, the search function compares your input to any one element (or field) that is on a form and displays every submission that contains that matching element, as you typed it, but is not case-sensitive. The portion you searched for will appear highlighted in blue. Search cannot be depended upon to produce any results that are *close* to what you typed if there is a misspelling or if only part matches.
+When you use the search bar to filter your displayed submissions, the search function compares your input to any one element (or field) that is on a form and displays every submission that contains that matching element, as you typed it, but is not case-sensitive. The portion you entered into the search bar will appear highlighted in blue on each submission result. The search function cannot be depended upon to produce any results that are *close* to what you typed if there is a misspelling or if only part matches.
 
 By default, your search results are displayed in order by the submission that has had the last action taken (this can be altered in "Filters", under "Sort By"). 
 
