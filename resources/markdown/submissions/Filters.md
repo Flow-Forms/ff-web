@@ -112,8 +112,8 @@ For frequently accessed search criteria, you have the option to save a filter an
 1. **Make your filtering selections** - Utilize any or all of the above mentioned filters.
 2. **Click "{{icon:bookmark size-4 inline-block align-text-center}} Save Current Filters"** - This option displays at the top of the "Filters" slide-out menu after a filter is selected.
 3. **Name your filter**- Enter your choice for the filter's name in the text box that appears next.
-4. **Click "Save"** (or cancel to exit without saving) - Refresh your page, after saving, to view the newly added filter.
-5. **Access saved filters from the main sidebar** - Your new filter's name will appear under the "{{icon:funnel size-4 inline-block align-text-center}} Filters" section when clicked. The listing of your saved filters is presented alphabetically, is scrollable for users with more than four filters saved, and also contains a search bar. You can dispose of unwanted filters by clicking the red trash can ({{icon:trash size-4 inline-block align-text-center}}) that is to the right of your filter's name. A pop-up window will ask, "Are you sure you want to delete this filter?" Click "OK" to proceed with deletion, or "Cancel" to exit.
+4. **Click "Save"** (or cancel to exit without saving) - Refresh your page, after saving, for the new filter to appear.
+5. **Access saved filters from the sidebar under "{{icon:funnel size-4 inline-block align-text-center}} Filters"** - The list of your saved filters is presented alphabetically, is scrollable for users with more than four filters saved, and also contains a search bar. You can dispose of unwanted filters by clicking the red trash can ({{icon:trash size-4 inline-block align-text-center}}) that is to the right of your filter's name. A pop-up window will ask, "Are you sure you want to delete this filter?" Click "OK" to proceed with deletion, or "Cancel" to exit.
 
 
 ## Clear Filters 
