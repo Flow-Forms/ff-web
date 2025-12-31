@@ -7,7 +7,7 @@ order: 3
 
 Trusted Devices allow administrators to register company-owned devices (like shared iPads or kiosk computers) so that **any user** logging in on those devices can skip the device verification step.
 
-> **Note:** This is different from [per-user device verification](/help/getting-started/device-trust-verification), where each user's devices are tracked individually. Account-wide trusted devices apply to all users in your organization.
+> **Note:** This is different from [per-user device verification](/getting-started/device-trust-verification), where each user's devices are tracked individually. Account-wide trusted devices apply to all users in your organization.
 
 ## Overview
 
