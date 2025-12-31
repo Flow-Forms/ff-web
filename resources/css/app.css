@@ -6,6 +6,15 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 [x-cloak] {
-    display
-    : none;
+    display: none;
+}
+
+/* Hide quotation marks from blockquotes in prose */
+.prose blockquote {
+    quotes: none;
+}
+
+.prose blockquote::before,
+.prose blockquote::after {
+    content: none;
 }
