@@ -50,13 +50,7 @@ if [ ! -z "$CONDUCTOR_WORKSPACE_NAME" ]; then
         exit 1
     fi
 
-    # Update APP_DOMAIN to use workspace name
-    if grep -q "^APP_DOMAIN=" .env; then
-        sed -i '' "s|^APP_DOMAIN=.*|APP_DOMAIN=${CONDUCTOR_WORKSPACE_NAME}.test|" .env
-        echo "✅ APP_DOMAIN set to ${CONDUCTOR_WORKSPACE_NAME}.test"
-    fi
-
-    # Update APP_URL if it exists
+    # Update APP_URL to use workspace name
     if grep -q "^APP_URL=" .env; then
         sed -i '' "s|^APP_URL=.*|APP_URL=http://${CONDUCTOR_WORKSPACE_NAME}.test|" .env
         echo "✅ APP_URL set to http://${CONDUCTOR_WORKSPACE_NAME}.test"
@@ -95,7 +89,7 @@ echo "✅ NPM dependencies installed"
 
 # Run database migrations
 echo "🗄️  Running database migrations..."
-php artisan tenants:artisan 'migrate --database=tenant'
+php artisan migrate --force
 echo "✅ Database migrations complete"
 
 # Build frontend assets

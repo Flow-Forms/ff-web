@@ -3,9 +3,11 @@ title: Device Trust & Verification
 order: 2
 ---
 
-# Device Trust & Verification  
-  
+# Device Trust & Verification (Per-User)
+
 To help protect your account, we track the devices you use to sign in. This adds an extra layer of security by requiring verification when you (or someone else) attempts to access your account from an unrecognized device.
+
+> **For Administrators:** If you need to set up shared devices (like kiosks or front desk iPads) that skip verification for all users, see [Trusted Devices (Account-Wide)](/help/getting-started/trusted-devices-admin).
 
 ## How It Works  
   
