@@ -13,7 +13,9 @@ All form submissions that you have permission to access are available to view fr
 
 
 ## Management Panel
-At the top of your submissions page is the Submissions Management Panel that will remain at the top of the display as you interact with your submissions down the page. This space contains the search bar and all the filter functions, export and print options, as well as the controls to change the display view. The bottom of the management panel is made up of the "Bulk Actions Toolbar" that allows you to take actions for a group of submissions rather than dealing with them individually.  
+At the top of your submissions page is the Submissions Management Panel that will remain at the top of the display as you interact with your submissions down the page. This space contains the search bar and all the filter functions, export and print options, as well as the controls to change the display view and sort order. 
 
-Below the management panel, an abbreviated display (20 entries per page) of **all** form submissions you are authorized to interact with is listed, in order, by the submission that has had the most recent action taken. This is by default, and can be filtered for viewing in many ways. You may change the list order in "Filters" under "Sort By."
+The bottom of the management panel is made up of the "Bulk Actions Toolbar" that allows you to take actions for a group of submissions rather than dealing with them individually.  *(This portion will only remain in view as you scroll down the page if there is at least one submission selected.)*
+
+Below the management panel, an abbreviated display (20 entries per page) of **all** form submissions you are authorized to interact with is listed, in order, by the submission that has had the most recent action taken. This is by default, and can be filtered for viewing in many ways.  
 

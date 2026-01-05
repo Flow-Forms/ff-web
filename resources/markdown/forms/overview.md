@@ -20,7 +20,7 @@ Choose from over 15 field types including:
 - Calculated fields
 - Pre-built field sets for common needs
 
-### Conditional Logic
+### [Conditional Logic](/forms/conditional-logic) 
 Create dynamic forms that adapt based on user responses. Show or hide fields, skip sections, and create personalized experiences.
 
 ### Secure Submissions
