@@ -36,7 +36,7 @@
 
                     <div class="mt-8">
                         <flux:link href="/" class="inline-flex items-center gap-1 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300">
-                            Back to Flow Forms Docs
+                            View Documentation
                             <flux:icon.arrow-right class="size-4" />
                         </flux:link>
                     </div>
