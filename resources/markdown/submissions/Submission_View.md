@@ -21,18 +21,46 @@ The header of every individual submission displays:
 	- Teal - **Escalated** (skipped flow-step(s) to seek input/approval)
 - **Form Title/Name** - Click to start a new submission of that form type. 
 - **Submitted By** - Name of the user that submitted the form, along with a color-coded box (auto-assigned) containing their initials.
-- **{{icon:pencil-square size-4 inline-block align-text-center}} (Edit)** - If permission to edit is allowed, you may alter the inputs and add data/comments to the submission. *If desired, a form's contributors can receive a notification when a form has been edited.*
+- **{{icon:pencil-square size-4 inline-block align-text-center}} (Edit)** - If a form's permissions have been set to allow editing, you may alter the inputs and add data/comments to the input areas of a submission. 
+	- When a submission has been edited, a note is added in that submission's "Notes" log that lists the editor's user name and the time it was edited, along with the message, "This submission has been edited." This is accessible from the submission's "{{icon:document-text size-4 inline-block align-text-center}} View All Notes" button.  
+	- If desired, a form's contributors can receive a notification when a form has been edited.
 - **"History" button** - View every action that has been taken on that submission so far. *You may also choose to "show conditional steps" for a more in-depth insight into the flow's parameters (not interesting to most of us).* 
-- **Final Status or Pending on** - If not listed as "Approved" or "Denied," a color-coded box, or boxes, with the initials of the user/s on whom the submission is pending will appear. If it is pending on a single user, their full name will be presented alongside. If there are multiple user actions pending, you can click the boxes of their initials to view a modal window that lists the full names of the users that have actions still required for the submission to reach approval.
+- **Final Status or Pending on** - If not listed as "Approved" or "Denied," a color-coded box, or boxes, with the initials of the user/s on whom the submission is pending will appear. 
+	- If it is pending on a single user, their full name will be presented alongside. 
+	- If there are multiple user actions pending, you can click the boxes, containing their initials, to view a modal window that lists the full names of the users that have actions still required for the submission to complete the required steps in its flow and be finalized.
 - **Time stamp(s)** -  While still pending, only the date and time the submission was created is listed. When the submission has reached finality, whether through approval or denial, the date and time of its completion, or when it was last edited, is listed as well. 
 - **{{icon:cog-6-tooth size-4 inline-block align-text-center}} (Options)** -
-- **{{icon:arrow-top-right-on-square size-4 inline-block align-text-center}} (Pop-out)** - fully view a single submission on a reloaded page.
-- "Show More" button - fully view all data/entries on the form while remaining on your "Submissions" page. Also referred to as *Expanded View*
-	- *Most attached documents (ex: .png, .jpeg) will also expand in view. PDFs will display a "view PDF" link in order to view the attachment in a modal window. Alternatively, you can click the attachment's link below it to download the attached document or photo.*
-- "Show Less" button - return to the overview display of that submission (appears when in the expanded/"show more" view). Also referred to as *Collapsed View*
-- "+ Add Note" button - add additional information, comments, or attach files for the record. (Button appears at the bottom of each submission's window and also in the header when in expanded view. When viewing a full submission from the "Pop-out" option, *Notes* appear in a column on the right of the submission data with the most recent at the top. This view also includes the option to "hide notes.") 
-	- *When adding a note, you can optionally select permitted users to be notified of your addition. If you do not wish to notify a user that is selected, click their info from the dropdown to unselect them. If there are no notifications selected, the drop down box will display "No Users." You can also save your note as a draft and close*
-- "View all notes" button - displays all notes submitted along with user name and time stamp (appears beside the "Add Note" button at the bottom of the submission's window when other notes exist).
+- **{{icon:arrow-top-right-on-square size-4 inline-block align-text-center}} (Pop-out)** - fully view a single submission on a reloaded page. 
+	- From the reloaded page, you can click the "{{icon:arrow-uturn-left size-4 inline-block align-text-center}} Previous Page" link, just above the submission's header on its left end, to return to your submissions page as you left it.
+- **"{{icon:arrows-pointing-out size-5 inline-block align-text-center}} Show More"** - fully view all data/entries on the form submission while remaining on your "Submissions" page. Also referred to as *Expanded View*
+	- Most attached documents (ex: .png, .jpeg) will also expand in view. PDFs will display a "view PDF" link in order to view the attachment in a modal window. Alternatively, you can click the attachment's link, just below it, to download the attached document or photo.
+- **"{{icon:arrows-pointing-in size-5 inline-block align-text-center}} Show Less"** - return to the overview display of the submission's data. The elements displayed in this view are selected at the time of the form's creation. This view option displays attachments as thumbnails and/or viewing links (This button only appears when in the expanded/"show more" view). Also referred to as *Collapsed View*
+- **"+ Add Note"** - add additional information, comments, or attach files for the record. The "Add Note" button appears at the bottom of each submission's window and also in the header when in expanded view. 
+
+	To add a note:
+	1. Click the "Add Note" button and a modal window will appear over the top of the submission. 
+		- If other notes have already been submitted, the most recent will appear in a grayed out box that says,"Most Recent Note," along with the name of the user that submitted it and how long ago it was added. *If the displayed note is of a certain length, it will appear truncated with the option to select a "+ read more" and, conversely, a "- read less" button for you to toggle between according to your preference.* 
+		- If more than one note has been added, there will be a button at the top of the modal that gives you the option to "View All Notes." This can be selected if you want every note to be displayed for your review. 
+			- When "View All Notes" is selected, a slide-out column will present from the right side of your screen that lists all the notes, along with their submitter's name and the time of the note's addition, in order, with the most recent addition at the top. 
+			- Click the "X  Close" button in the top right corner of the slide-out to return to your "Notes" modal window.
+	2. Next, you can optionally select permitted users to be notified of your notes addition. 
+		- By default, the person that was the form's submitter will be selected for notification when a note is added, and their name and email address will be displayed in the dropdown box under the label, "Notify Selected Users." 
+		- If you click the box, the dropdown will display all users that are included in the flow-steps for that form, along with a search bar. Scroll through, or search, for the user/s you would like to add or remove. 
+		- Clicking any user's name will add a checkmark beside their info to indicate they have been selected for notification.  If you do not wish to notify a user that is selected, click their name to unselect them, and the [[checkmark]] will disappear. 
+		- If there are no users selected for notification, the drop down box will display "No Users." 
+	3. After that, proceed to the "Message" text box and input your note content. 
+		- You can additionally select the "{{icon:folder-plus size-4 inline-block align-text-center}} Attach File" button, located just above the right side of the "Message" text box, and choose files from your device to attach to your note. 
+			- Once an attachment is uploaded, it will appear below the "Message" text box, under "Attachments." The attachment can be downloaded by clicking its link. You also have the option to delete the attachment by clicking the red, trash can ({{icon:trash size-4 inline-block align-text-center}}) icon.
+	4. When your note is complete, click the blue, "Add Note" button to submit. Any users selected for notification will be sent an email notifying them of your note addition at this time. 
+		- If you need to navigate away from the notes modal, and would like to return to submit your note later, click the "Save Draft and Close" button. 
+		- If you have chosen to save your draft, your note, as you left it, will reappear in the "Notes" modal window when you click the "+ Add Note" button on that submission again. 
+		- Clicking out of the modal, or clicking the "X" in the top, right-hand corner of the modal, exits you out of the "Notes" modal without submitting your note. However, your note will still be saved as a draft and accessible in the same manner as a draft. 
+		- To discard/delete a note that you have not submitted, click the "Discard Draft" button in the bottom, left-hand corner of the modal.
+	- When viewing a full submission on its own page (from the "{{icon:arrow-top-right-on-square size-4 inline-block align-text-center}} (Pop-out)" option), "Notes" appear in a column to the right of the submission data window with the most recent note displayed at the top. Click the "+ Add Note" button to contribute a new note. 
+		- This view also includes the option to "hide notes" by clicking that link just above the notes column. When notes are hidden, an "{{icon:eye size-4 inline-block align-text-center}}" button will appear in the upper right corner. Click this button to show the notes column again.
+	
+- **"{{icon:document-text size-4 inline-block align-text-center}} View All Notes"** - displays all notes submitted along with user name and time stamp. This button will appear beside the "+ Add Note" button at the bottom of the submission's window when other notes exist.
+	- DELETING YOUR NOTES - 
 
 
 
