@@ -4,7 +4,11 @@ namespace App\Helpers;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use League\CommonMark\GithubFlavoredMarkdownConverter;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
+use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
+use League\CommonMark\MarkdownConverter;
 use Symfony\Component\Yaml\Yaml;
 
 class MarkdownHelper
@@ -20,31 +24,42 @@ class MarkdownHelper
     {
         // Convert Obsidian wiki-links to standard markdown links
         // Syntax: [[Path]] or [[Path|Display Text]] or [[Path#Heading]] or [[Path#Heading|Display Text]]
+        // Also supports same-page anchors: [[#Heading]] or [[#Heading|Display Text]]
+        // Handles escaped hash: [[Path\#Heading]] (backslash before # is stripped)
         $markdown = preg_replace_callback(
-            '/\[\[([^\]|#]+)(?:#([^\]|]+))?(?:\|([^\]]+))?\]\]/',
+            '/\[\[([^\]|#]*?)(?:\\\\?#([^\]|]+))?(?:\|([^\]]+))?\]\]/',
             function ($matches) {
                 $path = trim($matches[1]);
                 $heading = $matches[2] ?? '';
                 $displayText = $matches[3] ?? null;
 
-                // Skip empty paths
-                if ($path === '') {
-                    return $matches[0];
-                }
+                // Strip trailing backslashes from path (from escaped \# syntax)
+                $path = rtrim($path, '\\');
 
-                // Build URL: slug each path segment to handle spaces
-                $segments = explode('/', $path);
-                $sluggedSegments = array_map(fn ($s) => Str::slug($s), $segments);
-                $url = '/'.implode('/', $sluggedSegments);
+                // Build URL
+                if ($path !== '') {
+                    // Has a path: slug each path segment to handle spaces
+                    $segments = explode('/', $path);
+                    $sluggedSegments = array_map(fn ($s) => Str::slug($s), $segments);
+                    $url = '/'.implode('/', $sluggedSegments);
+                } else {
+                    // Same-page anchor (no path)
+                    $url = '';
+                }
 
                 // Add heading anchor if present
                 if ($heading) {
                     $url .= '#'.Str::slug($heading);
                 }
 
-                // Display text: use custom if provided, otherwise use page name
+                // Skip if no URL generated
+                if ($url === '') {
+                    return $matches[0];
+                }
+
+                // Display text: use custom if provided, otherwise use heading or page name
                 if (! $displayText) {
-                    $displayText = basename($path);
+                    $displayText = $heading !== '' ? $heading : basename($path);
                 }
 
                 return '['.$displayText.']('.$url.')';
@@ -52,10 +67,29 @@ class MarkdownHelper
             $markdown
         );
 
-        $converter = new GithubFlavoredMarkdownConverter([
+        $environment = new Environment([
             'html_input' => 'allow',
             'allow_unsafe_links' => false,
+            'heading_permalink' => [
+                'html_class' => 'heading-permalink',
+                'id_prefix' => '',
+                'apply_id_to_heading' => true,
+                'heading_class' => '',
+                'fragment_prefix' => '',
+                'insert' => 'none', // Don't insert permalink symbol, just add the ID
+                'min_heading_level' => 1,
+                'max_heading_level' => 6,
+                'title' => '',
+                'symbol' => '',
+                'aria_hidden' => true,
+            ],
         ]);
+
+        $environment->addExtension(new CommonMarkCoreExtension);
+        $environment->addExtension(new GithubFlavoredMarkdownExtension);
+        $environment->addExtension(new HeadingPermalinkExtension);
+
+        $converter = new MarkdownConverter($environment);
 
         $html = $converter->convert($markdown)->getContent();
 

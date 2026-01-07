@@ -26,7 +26,7 @@ Display and search only the submissions from selected forms. Select the form/s t
 
 After your desired form/s are selected from the drop-down menu, the number of forms you've selected for search are displayed in the drop-down box.
 
-*The "Forms" and "Status" filters are both enabled with "[[Quick-Filter\#Quick-Filters]]" access. When a form is selected as a filter, that form's title will also appear on the submission management panel, beside "{{icon:document-duplicate size-4 inline-block align-text-center}} Forms," located just below the left end of the search bar. From the submission management panel, you then have the option to click the "X," listed with that form title, to cease filtering by that form.*
+*The "Forms" and "Status" filters are both enabled with "[[#Quick-Filters]]" access. When a form is selected as a filter, that form's title will also appear on the submission management panel, beside "{{icon:document-duplicate size-4 inline-block align-text-center}} Forms," located just below the left end of the search bar. From the submission management panel, you then have the option to click the "X," listed with that form title, to cease filtering by that form.*
 
 
 
@@ -78,7 +78,7 @@ As a submission moves through its workflow toward completion, its status reflect
 
 Select by clicking in the box beside any status. A checkmark will be displayed when a status is selected, and multiple may be selected.  Click the box a second time to unselect. With this filter active, your search results will only display submissions that correlate with the statuses selected.
 
-*"Status" and "Forms" filters are both enabled with "[[Quick-Filter\#Quick-Filters]]" access. When "Status" is selected as a filter, the status' name (along with a corresponding color dot) will appear on the submission management panel, beside "{{icon:funnel size-4 inline-block align-text-center}} Status," located just below the right end of the search bar. From the submission management panel, you then have the option to click the "X," listed with that status, to cease filtering by that form.*
+*"Status" and "Forms" filters are both enabled with "[[#Quick-Filters]]" access. When "Status" is selected as a filter, the status' name (along with a corresponding color dot) will appear on the submission management panel, beside "{{icon:funnel size-4 inline-block align-text-center}} Status," located just below the right end of the search bar. From the submission management panel, you then have the option to click the "X," listed with that status, to cease filtering by that form.*
 
 
 ### Submitted By
