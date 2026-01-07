@@ -7,7 +7,7 @@ it('displays markdown documentation pages', function () {
 
     $response->assertOk();
     // Check that markdown H1 is rendered as HTML
-    $response->assertSee('<h1>', false);
+    $response->assertSee('<h1 ', false);
     // Check that markdown content exists (not empty)
     $content = $response->getContent();
     expect(strlen(strip_tags($content)))->toBeGreaterThan(100);
@@ -72,7 +72,7 @@ it('handles nested folder documentation', function () {
 
     $response->assertOk();
     // Check that markdown is rendered
-    $response->assertSee('<h1>', false);
+    $response->assertSee('<h1 ', false);
     $content = $response->getContent();
     expect(strlen(strip_tags($content)))->toBeGreaterThan(100);
 });
@@ -82,8 +82,8 @@ it('displays nested pages with proper navigation', function () {
 
     $response->assertOk();
     // Check that markdown is rendered
-    $response->assertSee('<h1>', false);
-    $response->assertSee('<h2>', false);
+    $response->assertSee('<h1 ', false);
+    $response->assertSee('<h2 ', false);
     $content = $response->getContent();
     expect(strlen(strip_tags($content)))->toBeGreaterThan(100);
 });
@@ -204,18 +204,18 @@ describe('Markdown parsing works correctly', function () {
         // Test that markdown headers are converted to HTML (check structure, not content)
         $response = get('/security');
         $response->assertOk();
-        $response->assertSee('<h1>', false);
-        $response->assertSee('<h2>', false);
+        $response->assertSee('<h1 ', false);
+        $response->assertSee('<h2 ', false);
 
         $response = get('/forms/overview');
         $response->assertOk();
-        $response->assertSee('<h1>', false);
-        $response->assertSee('<h2>', false);
+        $response->assertSee('<h1 ', false);
+        $response->assertSee('<h2 ', false);
 
         $response = get('/forms/field-types');
         $response->assertOk();
-        $response->assertSee('<h1>', false);
-        $response->assertSee('<h2>', false);
+        $response->assertSee('<h1 ', false);
+        $response->assertSee('<h2 ', false);
     });
 
     it('renders markdown links as HTML anchors', function () {
