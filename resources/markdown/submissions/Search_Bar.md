@@ -14,6 +14,7 @@ If you have other filters, like "Status" or "Form," selected, it will only searc
 
 **Common Search Bar "Gotchas"**
 - Commas, decimals, apostrophes, and other punctuation - these are passed over in the search. For instance, searching for 36.00 will also produce results like, 3600 or 3,600. See if you can further narrow your results with additional filters
+- Commas, decimals, apostrophes, and other punctuation - these are passed over in the search. For instance, searching for 36.00 will also produce results like, 3600 or 3,600. 
 - What you searched for isn't highlighted anywhere on a presented submission result.  This could be because your [[Display_Options|display]] option is set to "Collapse All {{icon:arrows-pointing-in size-5 inline-block align-text-center}}" and the form element that matches your search is only visible in expanded view. Select the "Expand All {{icon:arrows-pointing-out size-5 inline-block align-text-center}}" display option from the submissions management panel, or click "{{icon:arrows-pointing-out size-5 inline-block align-text-center}} show more" in the individual submission's header. Another reason could be that the search result was not an exact match to what you typed in the search bar (like the above mentioned punctuation).
 - Did we mention that you should make sure your filters are cleared before starting a new search? :) The most common reason to not receive the proper search results is that you have a filter set that you didn't realize was still active, therefore limiting your search's data set.
 
@@ -22,5 +23,5 @@ When viewing the submissions management panel with your filters cleared, the tot
 
 If your submission count displays a "0," there are no submissions to display that fit your criteria. Make sure to "Clear Filters" to be certain previously used filters are not active and limiting your search field. 
 
-Your submission count is also displayed when accessing the "Filters" menu.
+Your submission count is also displayed, at the top of the slide-out menu, when accessing the "Filters."
 
