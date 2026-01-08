@@ -22,47 +22,48 @@ class MarkdownHelper
 
     public static function parse(string $markdown): string
     {
-        // Convert Obsidian wiki-links to standard markdown links
-        // Syntax: [[Path]] or [[Path|Display Text]] or [[Path#Heading]] or [[Path#Heading|Display Text]]
-        // Also supports same-page anchors: [[#Heading]] or [[#Heading|Display Text]]
-        // Handles escaped hash: [[Path\#Heading]] (backslash before # is stripped)
+        // Normalize standard markdown links for internal navigation
+        // - Same-page anchors: [text](#Header Name) → [text](#header-name)
+        // - Internal links: [text](path/to/page) → [text](/path/to/page)
+        // - Internal with anchor: [text](path#Header) → [text](/path#header)
+        // - External links (http/https/mailto): left unchanged
         $markdown = preg_replace_callback(
-            '/\[\[([^\]|#]*?)(?:\\\\?#([^\]|]+))?(?:\|([^\]]+))?\]\]/',
+            '/\[([^\]]+)\]\(([^)]+)\)/',
             function ($matches) {
-                $path = trim($matches[1]);
-                $heading = $matches[2] ?? '';
-                $displayText = $matches[3] ?? null;
+                $text = $matches[1];
+                $url = $matches[2];
 
-                // Strip trailing backslashes from path (from escaped \# syntax)
-                $path = rtrim($path, '\\');
-
-                // Build URL
-                if ($path !== '') {
-                    // Has a path: slug each path segment to handle spaces
-                    $segments = explode('/', $path);
-                    $sluggedSegments = array_map(fn ($s) => Str::slug($s), $segments);
-                    $url = '/'.implode('/', $sluggedSegments);
-                } else {
-                    // Same-page anchor (no path)
-                    $url = '';
-                }
-
-                // Add heading anchor if present
-                if ($heading) {
-                    $url .= '#'.Str::slug($heading);
-                }
-
-                // Skip if no URL generated
-                if ($url === '') {
+                // Leave external links unchanged
+                if (preg_match('/^(https?:|mailto:|tel:)/i', $url)) {
                     return $matches[0];
                 }
 
-                // Display text: use custom if provided, otherwise use heading or page name
-                if (! $displayText) {
-                    $displayText = $heading !== '' ? $heading : basename($path);
+                // Parse the URL into path and anchor parts
+                $anchor = '';
+                if (str_contains($url, '#')) {
+                    [$path, $anchor] = explode('#', $url, 2);
+                    // Decode URL-encoded anchor (e.g., %20 → space) then slugify
+                    $anchor = Str::slug(urldecode($anchor));
+                } else {
+                    $path = $url;
                 }
 
-                return '['.$displayText.']('.$url.')';
+                // Build the normalized URL
+                if ($path !== '') {
+                    // Internal page link - ensure leading slash
+                    $path = ltrim($path, '/');
+                    $url = '/'.$path;
+                } else {
+                    // Same-page anchor only
+                    $url = '';
+                }
+
+                // Add the slugified anchor
+                if ($anchor !== '') {
+                    $url .= '#'.$anchor;
+                }
+
+                return '['.$text.']('.$url.')';
             },
             $markdown
         );
