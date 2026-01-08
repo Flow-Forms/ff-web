@@ -243,6 +243,64 @@ describe('Markdown parsing works correctly', function () {
     });
 });
 
+describe('Markdown link normalization', function () {
+    it('normalizes same-page anchor links', function () {
+        $markdown = '[Link to section](#Filters)';
+        $html = \App\Helpers\MarkdownHelper::parse($markdown);
+
+        expect($html)->toContain('href="#filters"');
+    });
+
+    it('normalizes internal page links with leading slash', function () {
+        $markdown = '[Getting Started](api/getting-started)';
+        $html = \App\Helpers\MarkdownHelper::parse($markdown);
+
+        expect($html)->toContain('href="/api/getting-started"');
+    });
+
+    it('normalizes internal links with anchors', function () {
+        $markdown = '[Token Security](api/getting-started#Token%20Security)';
+        $html = \App\Helpers\MarkdownHelper::parse($markdown);
+
+        expect($html)->toContain('href="/api/getting-started#token-security"');
+    });
+
+    it('preserves external http links unchanged', function () {
+        $markdown = '[Google](https://google.com/)';
+        $html = \App\Helpers\MarkdownHelper::parse($markdown);
+
+        expect($html)->toContain('href="https://google.com/"');
+    });
+
+    it('preserves external https links unchanged', function () {
+        $markdown = '[Docs](https://docs.example.com/path#anchor)';
+        $html = \App\Helpers\MarkdownHelper::parse($markdown);
+
+        expect($html)->toContain('href="https://docs.example.com/path#anchor"');
+    });
+
+    it('preserves mailto links unchanged', function () {
+        $markdown = '[Email Us](mailto:support@example.com)';
+        $html = \App\Helpers\MarkdownHelper::parse($markdown);
+
+        expect($html)->toContain('href="mailto:support@example.com"');
+    });
+
+    it('handles links that already have leading slashes', function () {
+        $markdown = '[Overview](/forms/overview)';
+        $html = \App\Helpers\MarkdownHelper::parse($markdown);
+
+        expect($html)->toContain('href="/forms/overview"');
+    });
+
+    it('handles anchor-only links with spaces', function () {
+        $markdown = '[Quick Filters](#Quick%20Filters)';
+        $html = \App\Helpers\MarkdownHelper::parse($markdown);
+
+        expect($html)->toContain('href="#quick-filters"');
+    });
+});
+
 describe('Dynamic file discovery and accessibility', function () {
     it('can access every markdown file discovered in the filesystem', function () {
         $markdownPath = resource_path('markdown');
