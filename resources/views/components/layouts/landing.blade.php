@@ -29,7 +29,8 @@
             <div class="w-full max-w-md">
                 <div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-lg p-12 text-center">
                     <a href="/" class="inline-block mb-8">
-                        <img src="{{ asset('images/flow-forms-logo.png') }}" alt="Flow Forms" class="h-16 w-auto mx-auto" />
+                        <img src="/images/flow-forms-logo.svg" alt="Flow Forms" class="h-16 w-auto mx-auto dark:hidden" />
+                        <img src="/images/flow-forms-logo-dark.svg" alt="Flow Forms" class="h-16 w-auto mx-auto hidden dark:block" />
                     </a>
 
                     {{ $slot }}
