@@ -21,7 +21,7 @@
         x-on:keydown.escape="showResults = false"
         type="search"
         :placeholder="$placeholder"
-        class="w-full min-w-96"
+        class="w-full"
     >
         <x-slot:iconLeading>
             <flux:icon.magnifying-glass class="size-5 text-gray-400" />
