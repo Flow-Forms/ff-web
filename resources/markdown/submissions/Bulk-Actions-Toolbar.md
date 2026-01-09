@@ -1,3 +1,9 @@
+---
+title: Bulk Actions Toolbar
+order: 6
+
+---
+
 # Bulk PDF Print Feature
 
 ## Overview
@@ -15,9 +21,9 @@ The Bulk PDF Print feature allows users to select multiple submissions and gener
 
 ### Printing Selected Submissions
 
-1. Click the **Print** button in the top toolbar
-2. If you have submissions selected, a print job will start automatically
-3. If no submissions are selected, the modal will show your last print job (if any)
+1. Click the [**Print**](Submissions/Export_Print#Print) button on the right end, above the Submissions Toolbar
+2. If you have submissions selected, a modal window will appear that lists the number of submissions you have selected to print with a "Cancel" or "{{icon:printer size-4 inline-block align-text-center}} Start Print Job" button. "Recent Print Jobs" (if any) are also listed here.
+3. If no submissions are selected, the modal will just show your recent print jobs. 
 
 ### Progress Tracking
 

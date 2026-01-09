@@ -6,7 +6,7 @@ order: 4
 # Filters
 Flow Forms provides comprehensive filtering options to find exactly what you need.  Utilizing filters to limit your displayed submissions allows you to take care of common tasks together, efficiently locate data, run reports, and much more.
 
-To access the complete filter menu, start from the "{{icon:paper-clip size-4 inline-block align-text-center}} Submissions" page, and click the blue "{{icon:adjustments-horizontal size-4 inline-block align-text-center}} Filters" button in the submission management panel. A slide-out menu will present from the right side of the screen. If any filters are currently active, there will be a "Clear All" button available at the top. Clear the filters if you are starting a new search to be certain previous filtering choices are not active and limiting your search results. Your [[#Submission Count|Submission Count]] is also displayed at the top of this menu, beside "Filters," and will adjust in accordance with any filtering options you select. If your submission count displays "0" there are no submissions that fit your search criteria.
+To access the complete filter menu, start from the "{{icon:paper-clip size-4 inline-block align-text-center}} Submissions" page, and click the blue "{{icon:adjustments-horizontal size-4 inline-block align-text-center}} Filters" button in the Submissions Control Panel. A slide-out menu will present from the right side of the screen. If any filters are currently active, there will be a "Clear All" button available at the top. Clear the filters if you are starting a new search to be certain previous filtering choices are not active and limiting your search results. Your [Submission Count](submissions/Search_Bar#Submission%20Count) is also displayed at the top of this menu, beside "Filters," and will adjust in accordance with any filtering options you select. If your submission count displays "0" there are no submissions that fit your search criteria.
 
 Apply multiple filters simultaneously to narrow your search results. Choose to filter with any of these options:
 - Forms
@@ -22,18 +22,18 @@ Once all filtering selections are complete, click the blue, "{{icon:funnel size-
 
 ### Forms
 
-Display and search only the submissions from selected forms. Select the form/s to include in your search from the drop-down box that says, "Select forms to filter," or type the form's name/title into the search bar, which will appear within the drop-down box, and select from the results. A check-mark will appear beside any form that is selected for filtering. To un-select a form, click it a second time and the check-mark indicator will disappear. 
+Display and search only the submissions from selected forms. From the "{{icon:adjustments-horizontal size-4 inline-block align-text-center}} Filters" menu, select the form/s to include in your search from the drop-down box that says, "Select forms to filter," or type the form's name/title into the search bar, which will appear within the drop-down box, and select from the results. A check-mark will appear beside any form that is selected for filtering. To un-select a form, click it a second time and the check-mark indicator will disappear. 
 
 After your desired form/s are selected from the drop-down menu, the number of forms you've selected for search are displayed in the drop-down box.
 
-*The "Forms" and "Status" filters are both enabled with "[[#Quick-Filters]]" access. When a form is selected as a filter, that form's title will also appear on the submission management panel, beside "{{icon:document-duplicate size-4 inline-block align-text-center}} Forms," located just below the left end of the search bar. From the submission management panel, you then have the option to click the "X," listed with that form title, to cease filtering by that form.*
+*The "Forms" and "Status" filters are both enabled with "[Quick-Filters](#quick-filters)" access. When a form is selected as a filter, that form's title will also appear on the submission management panel, beside "{{icon:document-duplicate size-4 inline-block align-text-center}} Forms," located just below the left end of the search bar. From the submission management panel, you then have the option to click the "X," listed with that form title, to cease filtering by that form.*
 
 
 
 ### Terms
 
 Choosing to filter by "Terms" allows you to display submissions that have a particular response to a specific form element. 
-To do so, you must first select to filter by that [[#Forms|form]]. When at least one form is selected, "Terms" will appear as a filtering option just below the "Forms" drop-down box. When you click, "Add Term," a new drop-down box presents every form element that is included in the form/s you have selected. 
+To do so, you must first select to filter by that [form](#forms). When at least one form is selected, "Terms" will appear as a filtering option just below the "Forms" drop-down box. When you click, "Add Term," a new drop-down box presents every form element that is included in the form/s you have selected. 
 
 When a form element is selected from the drop-down list, you will only be searching that selected form element for your specified term. Your search will not include any data that is received from any of the other form elements. 
 
@@ -42,7 +42,7 @@ If it is a radio, select, or checkbox style form element, then the box will be a
 
 Once the term or terms are specified, click the blue "+ Add Term" button and your criteria will be displayed, listing both the form element you selected and the term you entered. These can be cancelled by clicking the "X" beside your term selection, or by clearing the filters.
 
-*For example:*  I have selected a form called, "Client List," from the "Forms" filter option. So, when I click "Add Term"  and select the drop-down box, every form element that is on the "Client List" form, such as: Business name, Contact name, Phone number, Address, etc., appears as an option.  If I select the form element, "Address," and then type, "Montana," in the new text box that appears, I am selecting for my search results to display only clients that have "Montana" in the address category.
+*For example:*  I have selected a form used in my organization called, "Client List," from the "Forms" filter option. So, when I click "Add Term," and select the drop-down box, every form element that is on the "Client List" form, such as: Business name, Contact name, Phone number, Address, etc., appears as an option.  If I select the form element, "Address," and then type, "Billings, MT" in the new text box that appears, I am selecting for my search results to display only clients that have "Billings, MT" in the address category.
 
 
 
@@ -78,7 +78,7 @@ As a submission moves through its workflow toward completion, its status reflect
 
 Select by clicking in the box beside any status. A checkmark will be displayed when a status is selected, and multiple may be selected.  Click the box a second time to unselect. With this filter active, your search results will only display submissions that correlate with the statuses selected.
 
-*"Status" and "Forms" filters are both enabled with "[[#Quick-Filters]]" access. When "Status" is selected as a filter, the status' name (along with a corresponding color dot) will appear on the submission management panel, beside "{{icon:funnel size-4 inline-block align-text-center}} Status," located just below the right end of the search bar. From the submission management panel, you then have the option to click the "X," listed with that status, to cease filtering by that form.*
+*"Status" and "Forms" filters are both enabled with "[Quick-Filters](#quick-filters)" access. When "Status" is selected as a filter, the status' name (along with a corresponding color dot) will appear on the submission management panel, beside "{{icon:funnel size-4 inline-block align-text-center}} Status," located just below the right end of the search bar. From the submission management panel, you then have the option to click the "X," listed with that status, to cease filtering by that form.*
 
 
 ### Submitted By

@@ -5,7 +5,7 @@ order: 4
 
 # Conditional Logic
 
-Create dynamic forms that adapt [adapt](api/getting-started#Token%20Security) based on user responses. Show or hide fields, create branching logic, and personalize the form experience.
+Create dynamic forms that adapt based on user responses. Show or hide fields, create branching logic, and personalize the form experience.
 
 ## Understanding Conditional Logic
 
