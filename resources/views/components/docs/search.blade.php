@@ -63,19 +63,19 @@
                         <h3 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider" x-text="group.section"></h3>
                     </div>
 
-                    <template x-for="(result, resultIndex) in group.items" :key="result.id" x-data="{ globalIndex: flatResults.findIndex(item => item.id === result.id) }">
+                    <template x-for="(result, resultIndex) in group.items" :key="result.id">
                         <a
                             :href="result.url"
-                            x-on:mouseenter="selectedIndex = globalIndex"
+                            x-on:mouseenter="selectedIndex = getGlobalIndex(groupIndex, resultIndex)"
                             :class="{
-                                'bg-indigo-50 dark:bg-indigo-900/20': selectedIndex === globalIndex,
-                                'hover:bg-gray-50 dark:hover:bg-gray-700/50': selectedIndex !== globalIndex
+                                'bg-indigo-50 dark:bg-indigo-900/20': selectedIndex === getGlobalIndex(groupIndex, resultIndex),
+                                'hover:bg-gray-50 dark:hover:bg-gray-700/50': selectedIndex !== getGlobalIndex(groupIndex, resultIndex)
                             }"
                             class="block px-4 py-3 border-b border-gray-100 dark:border-gray-700 last:border-0 transition-colors"
                         >
                             <div class="flex items-center justify-between mb-1">
                                 <h4 class="text-sm font-medium text-gray-900 dark:text-gray-100" x-html="highlightMatch(result.title)"></h4>
-                                <flux:icon.arrow-right class="size-4 text-gray-400" x-show="selectedIndex === globalIndex" />
+                                <flux:icon.arrow-right class="size-4 text-gray-400" x-show="selectedIndex === getGlobalIndex(groupIndex, resultIndex)" />
                             </div>
 
                             <p class="text-xs text-gray-500 dark:text-gray-400 mb-1" x-text="result.breadcrumb"></p>

@@ -61,6 +61,14 @@ window.docsSearch = function() {
             return flat;
         },
 
+        getGlobalIndex(groupIndex, resultIndex) {
+            let index = 0;
+            for (let i = 0; i < groupIndex; i++) {
+                index += this.results[i].items.length;
+            }
+            return index + resultIndex;
+        },
+
         navigateDown() {
             const flatResults = this.flatResults;
             if (flatResults.length > 0) {
