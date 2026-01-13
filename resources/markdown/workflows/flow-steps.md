@@ -14,11 +14,11 @@ Flow steps are the basic building blocks of approval workflows. They define who 
 Single-person approval where only one member from the assigned group needs to approve.
 
 **Behavior:**
-- Creates a notification for the first available member of the group
+- Creates a notification for whichever group member is selected on the form
 - Submission advances when that single person approves
 - The `is_ignored` option is automatically disabled for this type
 
-**Use Case:** When you need approval from any one person in a department (e.g., "any manager can approve this expense").
+**Use Case:** When you need approval from a specific person chosen by the submitter (e.g., "select your manager to approve this expense").
 
 ### Multiple (`multiple`)
 
