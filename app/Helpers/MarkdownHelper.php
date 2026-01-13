@@ -341,6 +341,23 @@ class MarkdownHelper
         }
     }
 
+    public static function getRawContent(string $filename, ?string $folder = null): string
+    {
+        return self::getRawContentFromPath(self::getMarkdownPath($filename, $folder));
+    }
+
+    public static function getRawContentFromPath(string $filePath): string
+    {
+        if (! File::exists($filePath)) {
+            return '';
+        }
+
+        $fileContent = File::get($filePath);
+        $extracted = self::extractFrontmatter($fileContent);
+
+        return $extracted['content'];
+    }
+
     public static function getIndexDocumentPath(): ?string
     {
         $markdownPath = resource_path('markdown');
