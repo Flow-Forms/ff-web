@@ -15,120 +15,77 @@ With Flow Forms + Zapier, you can:
 - Create tasks in project management tools
 - Add contacts to your CRM
 - Post to Slack channels
+- Trigger actions at any point in your approval workflow
 - Send data to 8,000+ other apps
 
-### Setting Up Your First Zap
-1. Log in to your Zapier account
-2. Click "Create Zap"
-3. Search for "Flow Forms" as your trigger app
-4. Connect your Flow Forms account
-5. Choose your action app
-6. Map form fields to your destination
+### How It Works
+Zapier integrates with Flow Forms through **triggers** in your approval workflow. You add a Zapier trigger to your form's workflow, and whenever that trigger fires, the data is sent to your connected Zap.
 
-## Available Triggers
+This gives you complete control over when data is sent to Zapier—on submission, after approval, when specific conditions are met, or any other point in your workflow.
 
-### New Form Submission
-Triggers when a new form submission is received:
-- Includes all form field data
-- Submission metadata
-- Real-time updates
+## Managing Integrations
 
-### Updated Submission
-Triggers when a submission status changes:
-- Status updates
-- Assignment changes
-- Completion events
+### Integrations Tab
+All Zapier connections for a form are managed in the dedicated **Integrations** tab within your form's admin panel. This provides a clear overview of:
+- All connected Zaps
+- Webhook health status
+- Which fields are being sent to each Zap
+- When each webhook was last triggered
 
-## Connecting Flow Forms to Zapier
+### Viewing Connected Webhooks
+Each connected webhook displays:
+- **Status badge**: Health indicator showing if the connection is working
+- **Trigger name**: The workflow trigger that fires this webhook
+- **Created date**: When the connection was established
+- **Last triggered**: When the webhook was last invoked
+- **Error count**: Number of failed delivery attempts
+- **Fields**: Which form fields are being sent to Zapier
 
-### Authentication
-1. In Zapier, select Flow Forms
-2. Click "Connect Account"
-3. Enter your API token from Flow Forms
-4. Test the connection
+### Webhook Actions
+For each connected webhook, you can:
+- **Open in Zapier**: Direct link to edit your Zap in Zapier's editor
+- **Enable/Disable**: Temporarily pause a webhook without disconnecting
+- **Reset Errors**: Clear the error count after fixing issues
+- **Disconnect**: Remove the webhook connection entirely
+
+## API Tokens
 
 ### Generating API Tokens
-1. Go to Admin → Account in Flow Forms
+1. Go to **Admin → Account** in Flow Forms
 2. Click "API Tokens"
 3. Create a new token for Zapier
 4. Copy and save securely
 
-## Common Zapier Workflows
+## Webhook Health Status
 
-### Form to Google Sheets
-Automatically log submissions in a spreadsheet:
-1. Trigger: New Form Submission
-2. Action: Create Spreadsheet Row
-3. Map each form field to a column
+Flow Forms tracks the health of each Zapier connection to help you identify and fix issues quickly.
 
-### Form to Slack
-Get instant notifications in Slack:
-1. Trigger: New Form Submission
-2. Action: Send Channel Message
-3. Customize message with form data
+### Status Indicators
+- **Healthy** (green): Webhook is working correctly with no recent errors
+- **Degraded** (yellow): Some delivery failures detected (5-9 failed attempts)
+- **Failing** (red): Multiple delivery failures (10+ failed attempts)
+- **Disabled** (gray): Webhook has been manually paused
 
-### Form to CRM
-Add leads automatically:
-1. Trigger: New Form Submission
-2. Action: Create Contact (Salesforce, HubSpot, etc.)
-3. Map form fields to CRM fields
-
-### Form to Email
-Send custom emails:
-1. Trigger: New Form Submission
-2. Action: Send Email
-3. Use form data in email content
-
-## Field Mapping
-
-### Available Fields
-All form fields are available in Zapier:
-- Text fields
-- Email addresses
-- Dates and times
-- File upload URLs
-- Calculated values
-- All custom fields
-
-### Mapping Best Practices
-- Use descriptive field names
-- Test with sample data
-- Handle optional fields
-- Format dates consistently
-
-## Advanced Features
-
-### Filters
-Add conditions to your Zaps:
-- Only process certain submissions
-- Filter by form values
-- Route based on conditions
-
-### Multi-Step Zaps
-Create complex workflows:
-1. Receive form submission
-2. Look up existing records
-3. Update or create as needed
-4. Send notifications
+### Automatic Error Handling
+- Failed webhook deliveries are automatically retried
+- Error counts track consecutive failures
+- After 10+ consecutive failures, webhooks may be automatically pruned
+- Use "Reset Errors" after fixing issues to restore healthy status
 
 ## Troubleshooting
 
 ### Common Issues
-- **Missing fields**: Ensure fields have data
-- **Connection errors**: Refresh API token
-- **Delayed triggers**: Check Zapier plan limits
 
-### Testing Your Zaps
-1. Submit a test form
-2. Check Zap history
-3. Verify data mapping
-4. Monitor for errors
+**Webhook showing "Degraded" or "Failing" status**
+- Verify your Zap is active in Zapier
+- Click "Reset Errors" in Flow Forms after resolving the issue
 
-## Best Practices
+**Zapier not firing**
+- Verify the trigger is properly configured in your workflow
+- Check that the workflow conditions allow the trigger to fire
+- Test with a new submission
 
-- Name your Zaps clearly
-- Document field mappings
-- Test thoroughly before activating
-- Monitor Zap performance
-- Use Zapier's built-in error handling
-- Keep API tokens secure
+### Getting Help
+If you continue to experience issues:
+- Review the webhook status in your form's Integrations tab
+- Contact support with your form ID and webhook details
