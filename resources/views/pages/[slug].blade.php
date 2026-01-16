@@ -15,8 +15,8 @@ $pageTitle = $frontmatter['title'] ?? MarkdownHelper::filenameToTitle($slug);
 $title = $pageTitle . ' - Flow Forms Documentation';
 ?>
 
-<x-layouts.docs :title="$title">
+<x-layouts.app :title="$title">
     <div class="max-w-4xl mx-auto prose prose-lg dark:prose-invert prose-gray">
         {!! $content !!}
     </div>
-</x-layouts.docs>
+</x-layouts.app>

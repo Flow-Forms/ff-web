@@ -1,11 +1,19 @@
 <?php
 
 use App\Helpers\MarkdownHelper;
+use App\Http\Controllers\BunnyWebhookController;
+use App\Http\Middleware\VerifyBunnyWebhookSignature;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('pages.index');
 });
+
+// Bunny Stream webhook (no CSRF, verified by signature)
+Route::post('/webhooks/bunny', BunnyWebhookController::class)
+    ->name('webhooks.bunny')
+    ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class])
+    ->middleware(VerifyBunnyWebhookSignature::class);
 
 // Raw markdown routes for LLMs
 Route::get('/index.md', function () {
@@ -47,4 +55,8 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::get('/admin/video', function () {
+        return view('admin.video');
+    })->name('admin.video');
 });

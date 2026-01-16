@@ -1,15 +1,11 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+<x-layouts.app :show-sidebar="false" title="Dashboard">
+    <div class="max-w-4xl">
+        <flux:heading size="xl" class="mb-6">Dashboard</flux:heading>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
+        <flux:card>
+            <div class="p-6">
                 <x-welcome />
             </div>
-        </div>
+        </flux:card>
     </div>
-</x-app-layout>
+</x-layouts.app>
