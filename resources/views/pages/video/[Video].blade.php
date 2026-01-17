@@ -153,8 +153,4 @@ render(function (Video $video) {
             </div>
         @endif
     </div>
-
-    @unless($isPreview)
-        <script>window.fathom?.trackEvent('View Video');</script>
-    @endunless
 </x-layouts.app>

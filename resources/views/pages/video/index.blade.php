@@ -62,7 +62,7 @@ $videos = Video::query()->published()->ordered()->get();
                                     {{ $video->title }}
                                 </flux:heading>
                                 @if($video->description)
-                                    <flux:text class="mt-2 line-clamp-2">{{ $video->description }}</flux:text>
+                                    <flux:text class="mt-2 line-clamp-2">{{ strip_tags($video->description) }}</flux:text>
                                 @endif
                             </div>
                         </flux:card>
