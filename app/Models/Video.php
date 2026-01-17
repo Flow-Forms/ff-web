@@ -103,4 +103,30 @@ class Video extends Model
 
         return sprintf('%d:%02d', $minutes, $seconds);
     }
+
+    /**
+     * Get description as inline HTML for excerpts/previews.
+     * Converts block elements to spaces while preserving inline styling.
+     */
+    public function getDescriptionExcerpt(): ?string
+    {
+        if (! $this->description) {
+            return null;
+        }
+
+        // Replace block elements with spaces
+        $text = str_replace(
+            ['<p>', '</p>', '<br>', '<br/>', '<br />', '<div>', '</div>'],
+            ' ',
+            $this->description
+        );
+
+        // Keep only inline styling tags
+        $text = strip_tags($text, '<strong><em><b><i><u><a><span>');
+
+        // Clean up multiple spaces
+        $text = preg_replace('/\s+/', ' ', $text);
+
+        return trim($text);
+    }
 }

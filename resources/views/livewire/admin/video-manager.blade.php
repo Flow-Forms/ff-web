@@ -239,7 +239,7 @@ new class extends Component
                         </div>
 
                         @if($video->description)
-                            <flux:text class="mt-2 line-clamp-2">{{ strip_tags($video->description) }}</flux:text>
+                            <flux:text class="mt-2 line-clamp-2">{!! $video->getDescriptionExcerpt() !!}</flux:text>
                         @endif
 
                         {{-- Actions --}}
