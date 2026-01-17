@@ -335,10 +335,14 @@ new class extends Component
                         x-on:dragover.prevent="dragover = true"
                         x-on:dragleave.prevent="dragover = false"
                         x-on:drop.prevent="handleDrop($event)"
-                        :class="{ 'border-blue-500 bg-blue-50 dark:bg-blue-900/20': dragover }"
+                        :class="{
+                            'border-blue-500 bg-blue-50 dark:bg-blue-900/20': dragover,
+                            'border-green-500 bg-green-50 dark:bg-green-900/20': uploaded && !creating
+                        }"
                         class="mt-2 border-2 border-dashed border-zinc-300 dark:border-zinc-600 rounded-lg p-6 text-center transition-colors"
                     >
-                        <template x-if="!file && !uploading">
+                        {{-- No file selected --}}
+                        <template x-if="!file">
                             <div class="py-4">
                                 <flux:icon.cloud-arrow-up class="size-12 mx-auto text-zinc-400 mb-4" />
                                 <flux:text class="mb-3">Drag and drop your video here, or</flux:text>
@@ -355,11 +359,33 @@ new class extends Component
                             </div>
                         </template>
 
-                        <template x-if="file && !uploading">
+                        {{-- File uploading --}}
+                        <template x-if="file && uploading">
                             <div class="py-4">
-                                <flux:icon.film class="size-12 mx-auto text-green-500 mb-4" />
+                                <flux:icon.arrow-path class="size-12 mx-auto text-blue-500 mb-4 animate-spin" />
+                                <flux:text class="font-medium" x-text="file.name"></flux:text>
+                                <div class="max-w-xs mx-auto mt-3">
+                                    <div class="w-full bg-zinc-200 dark:bg-zinc-700 rounded-full h-2 mb-2">
+                                        <div
+                                            class="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                                            :style="{ width: progress + '%' }"
+                                        ></div>
+                                    </div>
+                                    <flux:text class="text-sm text-zinc-500">
+                                        <span x-text="status"></span>
+                                        <span x-show="progress > 0" x-text="' ' + progress + '%'"></span>
+                                    </flux:text>
+                                </div>
+                            </div>
+                        </template>
+
+                        {{-- File uploaded and ready --}}
+                        <template x-if="file && uploaded && !creating">
+                            <div class="py-4">
+                                <flux:icon.check-circle class="size-12 mx-auto text-green-500 mb-4" />
                                 <flux:text class="font-medium text-lg" x-text="file.name"></flux:text>
                                 <flux:text class="text-zinc-500 mt-1" x-text="formatSize(file.size)"></flux:text>
+                                <flux:badge color="green" class="mt-2">Ready to create</flux:badge>
                                 <div class="mt-4">
                                     <flux:button size="sm" variant="ghost" icon="x-mark" x-on:click="clearFile()">
                                         Remove file
@@ -368,21 +394,11 @@ new class extends Component
                             </div>
                         </template>
 
-                        <template x-if="uploading">
+                        {{-- Creating video record --}}
+                        <template x-if="creating">
                             <div class="py-4">
                                 <flux:icon.arrow-path class="size-12 mx-auto text-blue-500 mb-4 animate-spin" />
-                                <div class="max-w-xs mx-auto">
-                                    <div class="w-full bg-zinc-200 dark:bg-zinc-700 rounded-full h-2 mb-3">
-                                        <div
-                                            class="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                                            :style="{ width: progress + '%' }"
-                                        ></div>
-                                    </div>
-                                    <flux:text class="text-sm">
-                                        <span x-text="status"></span>
-                                        <span x-show="progress > 0 && progress < 100" x-text="'(' + progress + '%)'"></span>
-                                    </flux:text>
-                                </div>
+                                <flux:text class="font-medium">Creating video...</flux:text>
                             </div>
                         </template>
                     </div>
@@ -394,16 +410,16 @@ new class extends Component
             </div>
 
             <div class="flex justify-end gap-3 mt-8">
-                <flux:button variant="ghost" wire:click="closeUploadModal" x-bind:disabled="uploading">
+                <flux:button variant="ghost" wire:click="closeUploadModal" x-bind:disabled="isBusy">
                     Cancel
                 </flux:button>
                 <flux:button
                     variant="primary"
-                    x-on:click="startUpload()"
-                    x-bind:disabled="!file || !$wire.title || uploading"
+                    x-on:click="createVideo()"
+                    x-bind:disabled="!canSubmit"
                 >
-                    <span x-show="!uploading">Upload Video</span>
-                    <span x-show="uploading">Uploading...</span>
+                    <span x-show="!creating">Create Video</span>
+                    <span x-show="creating">Creating...</span>
                 </flux:button>
             </div>
         </div>
@@ -452,6 +468,9 @@ new class extends Component
     Alpine.data('videoUploader', () => ({
         file: null,
         uploading: false,
+        uploaded: false,
+        uploadedPath: null,
+        creating: false,
         progress: 0,
         status: '',
         error: null,
@@ -476,10 +495,17 @@ new class extends Component
             }
             this.file = file;
             this.error = null;
+            // Start uploading immediately
+            this.startFileUpload();
         },
 
         clearFile() {
             this.file = null;
+            this.uploading = false;
+            this.uploaded = false;
+            this.uploadedPath = null;
+            this.progress = 0;
+            this.status = '';
             this.error = null;
         },
 
@@ -490,13 +516,16 @@ new class extends Component
             return (bytes / (1024 * 1024 * 1024)).toFixed(2) + ' GB';
         },
 
-        async startUpload() {
-            if (!this.file || !$wire.title) return;
+        // Upload file to R2 immediately when selected
+        async startFileUpload() {
+            if (!this.file) return;
 
             this.uploading = true;
+            this.uploaded = false;
+            this.uploadedPath = null;
             this.progress = 0;
             this.error = null;
-            this.status = 'Getting upload URL...';
+            this.status = 'Preparing upload...';
 
             try {
                 // Get presigned URL from Livewire
@@ -506,14 +535,31 @@ new class extends Component
                 );
 
                 // Upload to R2
-                this.status = 'Uploading to storage...';
+                this.status = 'Uploading...';
                 await this.uploadToR2(upload_url, this.file);
 
-                // Create video record
-                this.status = 'Processing...';
+                // Mark as uploaded
+                this.uploading = false;
+                this.uploaded = true;
+                this.uploadedPath = path;
                 this.progress = 100;
+                this.status = 'Ready';
 
-                const result = await $wire.createVideo($wire.title, $wire.description, path);
+            } catch (err) {
+                this.error = err.message || 'Upload failed';
+                this.uploading = false;
+            }
+        },
+
+        // Create the video record (called when user clicks "Create Video")
+        async createVideo() {
+            if (!this.uploaded || !this.uploadedPath || !$wire.title) return;
+
+            this.creating = true;
+            this.status = 'Creating video...';
+
+            try {
+                const result = await $wire.createVideo($wire.title, $wire.description, this.uploadedPath);
 
                 if (result.success) {
                     this.status = 'Complete!';
@@ -526,8 +572,8 @@ new class extends Component
                 }
 
             } catch (err) {
-                this.error = err.message || 'Upload failed';
-                this.uploading = false;
+                this.error = err.message || 'Failed to create video';
+                this.creating = false;
             }
         },
 
@@ -537,7 +583,7 @@ new class extends Component
 
                 xhr.upload.addEventListener('progress', (e) => {
                     if (e.lengthComputable) {
-                        this.progress = Math.round((e.loaded / e.total) * 95);
+                        this.progress = Math.round((e.loaded / e.total) * 100);
                     }
                 });
 
@@ -560,10 +606,23 @@ new class extends Component
         reset() {
             this.file = null;
             this.uploading = false;
+            this.uploaded = false;
+            this.uploadedPath = null;
+            this.creating = false;
             this.progress = 0;
             this.status = '';
             this.error = null;
         },
+
+        // Check if form can be submitted
+        get canSubmit() {
+            return this.uploaded && !this.creating && $wire.title;
+        },
+
+        // Check if currently busy
+        get isBusy() {
+            return this.uploading || this.creating;
+        }
     }));
 </script>
 @endscript
