@@ -63,20 +63,6 @@
             @enderror
         </flux:field>
 
-        @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
-            <flux:field>
-                <flux:checkbox name="terms" required>
-                    {!! __('I agree to the :terms_of_service and :privacy_policy', [
-                        'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="underline text-sm hover:text-zinc-900 dark:hover:text-zinc-100">'.__('Terms of Service').'</a>',
-                        'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="underline text-sm hover:text-zinc-900 dark:hover:text-zinc-100">'.__('Privacy Policy').'</a>',
-                    ]) !!}
-                </flux:checkbox>
-                @error('terms')
-                    <flux:error>{{ $message }}</flux:error>
-                @enderror
-            </flux:field>
-        @endif
-
         <flux:button type="submit" variant="primary" class="w-full">
             {{ __('Create account') }}
         </flux:button>

@@ -49,7 +49,6 @@ Route::get('/{folder}/{slug}.md', function (string $folder, string $slug) {
 
 Route::middleware([
     'auth:sanctum',
-    config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {

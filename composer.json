@@ -13,7 +13,6 @@
         "laravel/folio": "^1.1",
         "laravel/fortify": "^1.33",
         "laravel/framework": "^12.0",
-        "laravel/jetstream": "^5.3",
         "laravel/sanctum": "^4.0",
         "laravel/scout": "^10.15",
         "laravel/tinker": "^2.10.1",
