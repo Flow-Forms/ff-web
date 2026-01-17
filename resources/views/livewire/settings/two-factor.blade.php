@@ -7,7 +7,7 @@ use Laravel\Fortify\Actions\ConfirmTwoFactorAuthentication;
 use Laravel\Fortify\Actions\DisableTwoFactorAuthentication;
 use Laravel\Fortify\Actions\EnableTwoFactorAuthentication;
 use Laravel\Fortify\Actions\GenerateNewRecoveryCodes;
-use Livewire\Volt\Component;
+use Livewire\Component;
 
 new class extends Component
 {

@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
-use Livewire\Volt\Component;
+use Livewire\Component;
 
 new class extends Component
 {

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Jenssegers\Agent\Agent;
-use Livewire\Volt\Component;
+use Livewire\Component;
 
 new class extends Component
 {
