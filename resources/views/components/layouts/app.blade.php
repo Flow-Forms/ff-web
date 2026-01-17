@@ -90,7 +90,7 @@
                                 <flux:profile :name="Auth::user()->name" />
 
                                 <flux:menu>
-                                    <flux:menu.item href="{{ route('profile.show') }}" icon="user">Profile</flux:menu.item>
+                                    <flux:menu.item href="{{ route('settings') }}" icon="user">Settings</flux:menu.item>
                                     <flux:menu.separator />
                                     <flux:menu.item
                                         icon="arrow-right-start-on-rectangle"

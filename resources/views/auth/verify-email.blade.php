@@ -16,7 +16,7 @@
         </form>
 
         <div class="flex items-center justify-center gap-4 text-sm">
-            <flux:link :href="route('profile.show')" variant="subtle">
+            <flux:link :href="route('settings')" variant="subtle">
                 {{ __('Edit Profile') }}
             </flux:link>
 
