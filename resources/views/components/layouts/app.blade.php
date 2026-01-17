@@ -52,12 +52,32 @@
                         <img src="/images/flow-forms-logo-dark.svg" alt="Flow Forms" class="h-9 w-auto hidden dark:block" />
                     </a>
 
-                    @if($showSidebar)
-                        {{-- Docs badge --}}
-                        <span class="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400">
+                    {{-- Section switcher --}}
+                    @php
+                        $isVideoSection = request()->routeIs('dashboard', 'admin.video', 'video.*');
+                    @endphp
+                    <nav class="hidden sm:flex items-center gap-1 p-1 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
+                        <a
+                            href="/"
+                            @class([
+                                'px-3 py-1.5 text-sm font-medium rounded-md transition-colors',
+                                'bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 shadow-sm' => !$isVideoSection,
+                                'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100' => $isVideoSection,
+                            ])
+                        >
                             Docs
-                        </span>
-                    @endif
+                        </a>
+                        <a
+                            href="{{ route('dashboard') }}"
+                            @class([
+                                'px-3 py-1.5 text-sm font-medium rounded-md transition-colors',
+                                'bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 shadow-sm' => $isVideoSection,
+                                'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100' => !$isVideoSection,
+                            ])
+                        >
+                            Video
+                        </a>
+                    </nav>
 
                     {{-- Spacer --}}
                     <div class="flex-1"></div>
@@ -86,25 +106,26 @@
                         </a>
 
                         @auth
-                            <flux:dropdown position="bottom" align="end">
-                                <flux:profile :name="Auth::user()->name" />
+                            <div x-data>
+                                <flux:dropdown position="bottom" align="end">
+                                    <flux:profile :name="Auth::user()->name" />
 
-                                <flux:menu>
-                                    <flux:menu.item href="{{ route('settings') }}" icon="user">Settings</flux:menu.item>
-                                    <flux:menu.separator />
-                                    <flux:menu.item
-                                        icon="arrow-right-start-on-rectangle"
-                                        x-data
-                                        x-on:click.prevent="$refs.logoutForm.submit()"
-                                    >
-                                        Logout
-                                    </flux:menu.item>
-                                </flux:menu>
-                            </flux:dropdown>
+                                    <flux:menu>
+                                        <flux:menu.item href="{{ route('settings') }}" icon="user">Settings</flux:menu.item>
+                                        <flux:menu.separator />
+                                        <flux:menu.item
+                                            icon="arrow-right-start-on-rectangle"
+                                            x-on:click.prevent="$refs.logoutForm.submit()"
+                                        >
+                                            Logout
+                                        </flux:menu.item>
+                                    </flux:menu>
+                                </flux:dropdown>
 
-                            <form x-ref="logoutForm" method="POST" action="{{ route('logout') }}" class="hidden">
-                                @csrf
-                            </form>
+                                <form x-ref="logoutForm" method="POST" action="{{ route('logout') }}" class="hidden">
+                                    @csrf
+                                </form>
+                            </div>
                         @endauth
                     </div>
                 </div>
