@@ -4,6 +4,7 @@ use App\Enums\VideoStatus;
 use App\Models\User;
 use App\Models\Video;
 use App\Services\BunnyStreamService;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
 
 use function Pest\Laravel\actingAs;
@@ -328,15 +329,16 @@ describe('Admin Video Manager', function () {
     });
 
     it('can delete a video', function () {
+        Storage::fake('s3');
+
         $user = User::factory()->create();
         $video = Video::factory()->create([
             'bunny_video_id' => null,
+            'r2_path' => 'videos/2026/01/test.mp4',
         ]);
 
-        // Mock R2StorageService since bunny_video_id is null, only R2 delete will be called
-        $r2Mock = Mockery::mock(\App\Services\R2StorageService::class);
-        $r2Mock->shouldReceive('delete')->with($video->r2_path)->once()->andReturn(true);
-        app()->instance(\App\Services\R2StorageService::class, $r2Mock);
+        // Create a fake file at the r2_path
+        Storage::disk('s3')->put($video->r2_path, 'fake video content');
 
         actingAs($user);
 
@@ -345,22 +347,24 @@ describe('Admin Video Manager', function () {
             ->call('deleteVideo');
 
         expect(Video::find($video->id))->toBeNull();
+        Storage::disk('s3')->assertMissing($video->r2_path);
     });
 
     it('can delete a video with external resources', function () {
+        Storage::fake('s3');
+
         $user = User::factory()->create();
         $video = Video::factory()->create([
             'bunny_video_id' => 'test-video-id',
             'r2_path' => 'videos/test.mp4',
         ]);
 
+        // Create a fake file at the r2_path
+        Storage::disk('s3')->put($video->r2_path, 'fake video content');
+
         $bunnyMock = Mockery::mock(\App\Services\BunnyStreamService::class);
         $bunnyMock->shouldReceive('deleteVideo')->with('test-video-id')->once()->andReturn(true);
         app()->instance(\App\Services\BunnyStreamService::class, $bunnyMock);
-
-        $r2Mock = Mockery::mock(\App\Services\R2StorageService::class);
-        $r2Mock->shouldReceive('delete')->with('videos/test.mp4')->once()->andReturn(true);
-        app()->instance(\App\Services\R2StorageService::class, $r2Mock);
 
         actingAs($user);
 
@@ -369,6 +373,7 @@ describe('Admin Video Manager', function () {
             ->call('deleteVideo');
 
         expect(Video::find($video->id))->toBeNull();
+        Storage::disk('s3')->assertMissing($video->r2_path);
     });
 });
 

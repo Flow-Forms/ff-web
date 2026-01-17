@@ -3,7 +3,7 @@
 use App\Enums\VideoStatus;
 use App\Models\Video;
 use App\Services\BunnyStreamService;
-use App\Services\R2StorageService;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
@@ -34,12 +34,23 @@ new class extends Component
 
     public function getPresignedUrl(string $filename, string $contentType): array
     {
-        return app(R2StorageService::class)->generatePresignedUploadUrl($filename, $contentType);
+        $path = $this->generateVideoPath($filename);
+
+        $uploadUrl = Storage::disk('s3')->temporaryUploadUrl(
+            $path,
+            now()->addHour(),
+            ['ContentType' => $contentType]
+        );
+
+        return [
+            'upload_url' => $uploadUrl['url'],
+            'path' => $path,
+            'public_url' => Storage::disk('s3')->url($path),
+        ];
     }
 
     public function createVideo(string $title, string $description, string $r2Path): array
     {
-        $r2 = app(R2StorageService::class);
         $bunny = app(BunnyStreamService::class);
 
         $video = Video::create([
@@ -51,7 +62,7 @@ new class extends Component
             'status' => VideoStatus::Pending,
         ]);
 
-        $sourceUrl = $r2->getPublicUrl($r2Path);
+        $sourceUrl = Storage::disk('s3')->url($r2Path);
         $result = $bunny->createVideoFromUrl($title, $sourceUrl);
 
         if ($result) {
@@ -98,7 +109,7 @@ new class extends Component
             }
 
             if ($video->r2_path) {
-                app(R2StorageService::class)->delete($video->r2_path);
+                Storage::disk('s3')->delete($video->r2_path);
             }
 
             $video->delete();
@@ -110,6 +121,14 @@ new class extends Component
     public function refreshVideos(): void
     {
         unset($this->videos);
+    }
+
+    private function generateVideoPath(string $filename): string
+    {
+        $extension = pathinfo($filename, PATHINFO_EXTENSION) ?: 'mp4';
+        $date = now()->format('Y/m');
+
+        return "videos/{$date}/".uniqid().'.'.$extension;
     }
 };
 ?>

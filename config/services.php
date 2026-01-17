@@ -35,14 +35,6 @@ return [
         ],
     ],
 
-    'r2' => [
-        'key' => env('R2_ACCESS_KEY_ID'),
-        'secret' => env('R2_SECRET_ACCESS_KEY'),
-        'endpoint' => env('R2_ENDPOINT'),
-        'bucket' => env('R2_BUCKET'),
-        'url' => env('R2_URL'),
-    ],
-
     'bunny' => [
         'api_key' => env('BUNNY_STREAM_API_KEY'),
         'library_id' => env('BUNNY_STREAM_LIBRARY_ID'),
