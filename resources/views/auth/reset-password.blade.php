@@ -1,36 +1,50 @@
-<x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
+<x-layouts.auth.card>
+    <x-auth-header :title="__('Reset password')" :description="__('Enter your new password below')" />
 
-        <x-validation-errors class="mb-4" />
+    <form method="POST" action="{{ route('password.update') }}" class="flex flex-col gap-6">
+        @csrf
 
-        <form method="POST" action="{{ route('password.update') }}">
-            @csrf
+        <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
-            <input type="hidden" name="token" value="{{ $request->route('token') }}">
+        <flux:field>
+            <flux:label>{{ __('Email address') }}</flux:label>
+            <flux:input
+                name="email"
+                type="email"
+                :value="old('email', $request->email)"
+                required
+                autofocus
+                autocomplete="email"
+            />
+            <flux:error name="email" />
+        </flux:field>
 
-            <div class="block">
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
-            </div>
+        <flux:field>
+            <flux:label>{{ __('Password') }}</flux:label>
+            <flux:input
+                name="password"
+                type="password"
+                required
+                autocomplete="new-password"
+                viewable
+            />
+            <flux:error name="password" />
+        </flux:field>
 
-            <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            </div>
+        <flux:field>
+            <flux:label>{{ __('Confirm password') }}</flux:label>
+            <flux:input
+                name="password_confirmation"
+                type="password"
+                required
+                autocomplete="new-password"
+                viewable
+            />
+            <flux:error name="password_confirmation" />
+        </flux:field>
 
-            <div class="mt-4">
-                <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <x-button>
-                    {{ __('Reset Password') }}
-                </x-button>
-            </div>
-        </form>
-    </x-authentication-card>
-</x-guest-layout>
+        <flux:button type="submit" variant="primary" class="w-full">
+            {{ __('Reset password') }}
+        </flux:button>
+    </form>
+</x-layouts.auth.card>

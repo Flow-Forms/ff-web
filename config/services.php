@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    'bunny' => [
+        'api_key' => env('BUNNY_STREAM_API_KEY'),
+        'library_id' => env('BUNNY_STREAM_LIBRARY_ID'),
+        'cdn_hostname' => env('BUNNY_STREAM_CDN_HOSTNAME'),
+        'webhook_secret' => env('BUNNY_WEBHOOK_SECRET'),
+    ],
+
 ];
