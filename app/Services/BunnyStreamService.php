@@ -144,6 +144,95 @@ class BunnyStreamService
         return $this->libraryId;
     }
 
+    /**
+     * Trigger transcription for a video with AI-generated metadata.
+     *
+     * @param  array{
+     *     language?: string,
+     *     generateTitle?: bool,
+     *     generateDescription?: bool,
+     *     generateChapters?: bool,
+     *     generateMoments?: bool
+     * }  $options
+     */
+    public function transcribeVideo(string $videoId, array $options = []): bool
+    {
+        $defaults = [
+            'language' => 'en',
+            'generateTitle' => true,
+            'generateDescription' => true,
+            'generateChapters' => true,
+            'generateMoments' => true,
+        ];
+
+        $payload = array_merge($defaults, $options);
+
+        $response = $this->client()->post("{$this->libraryId}/videos/{$videoId}/transcribe", $payload);
+
+        return $response->successful();
+    }
+
+    /**
+     * Get the caption/subtitle content for a video.
+     * Returns the VTT file content as a string.
+     */
+    public function getCaptionContent(string $videoId, string $language = 'en'): ?string
+    {
+        $url = "https://{$this->cdnHostname}/{$videoId}/captions/{$language}.vtt";
+
+        $response = Http::get($url);
+
+        if (! $response->successful()) {
+            return null;
+        }
+
+        return $response->body();
+    }
+
+    /**
+     * Parse VTT caption content into plain text transcript.
+     * Removes timestamps and formatting, returns just the spoken text.
+     */
+    public function parseVttToTranscript(string $vttContent): string
+    {
+        $lines = explode("\n", $vttContent);
+        $transcript = [];
+
+        foreach ($lines as $line) {
+            $line = trim($line);
+
+            // Skip WEBVTT header
+            if ($line === 'WEBVTT' || str_starts_with($line, 'NOTE')) {
+                continue;
+            }
+
+            // Skip empty lines
+            if (empty($line)) {
+                continue;
+            }
+
+            // Skip timestamp lines (contain -->)
+            if (str_contains($line, '-->')) {
+                continue;
+            }
+
+            // Skip cue identifiers (numeric or alphanumeric identifiers before timestamps)
+            if (preg_match('/^[\d\w-]+$/', $line) && strlen($line) < 20) {
+                continue;
+            }
+
+            // This is actual caption text - strip any VTT formatting tags
+            $text = preg_replace('/<[^>]+>/', '', $line);
+            $text = trim($text);
+
+            if (! empty($text)) {
+                $transcript[] = $text;
+            }
+        }
+
+        return implode(' ', $transcript);
+    }
+
     private function client(): PendingRequest
     {
         return Http::baseUrl($this->baseUrl)

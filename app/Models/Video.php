@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\TranscriptionStatus;
 use App\Enums\VideoStatus;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,6 +27,13 @@ class Video extends Model
         'is_published',
         'published_at',
         'order',
+        'transcript',
+        'transcript_language',
+        'chapters',
+        'moments',
+        'transcription_status',
+        'transcribed_at',
+        'captions',
     ];
 
     protected function casts(): array
@@ -36,6 +44,11 @@ class Video extends Model
             'duration_seconds' => 'integer',
             'order' => 'integer',
             'status' => VideoStatus::class,
+            'chapters' => 'array',
+            'moments' => 'array',
+            'transcription_status' => TranscriptionStatus::class,
+            'transcribed_at' => 'datetime',
+            'captions' => 'array',
         ];
     }
 
@@ -81,6 +94,69 @@ class Video extends Model
     public function isProcessing(): bool
     {
         return $this->status === VideoStatus::Processing;
+    }
+
+    public function isTranscribing(): bool
+    {
+        return $this->transcription_status === TranscriptionStatus::Processing;
+    }
+
+    public function isTranscribed(): bool
+    {
+        return $this->transcription_status === TranscriptionStatus::Completed;
+    }
+
+    public function needsTranscription(): bool
+    {
+        return $this->isReady()
+            && $this->transcription_status === TranscriptionStatus::Pending;
+    }
+
+    public function hasChapters(): bool
+    {
+        return ! empty($this->chapters);
+    }
+
+    public function hasTranscript(): bool
+    {
+        return ! empty($this->transcript);
+    }
+
+    /**
+     * Get the combined status label for display.
+     * Shows video processing status until ready, then transcription status.
+     */
+    public function getCombinedStatusLabel(): string
+    {
+        if (! $this->isReady()) {
+            return $this->status->label();
+        }
+
+        return match ($this->transcription_status) {
+            TranscriptionStatus::Pending => 'Awaiting Transcription',
+            TranscriptionStatus::Processing => 'Transcribing',
+            TranscriptionStatus::Completed => 'Ready',
+            TranscriptionStatus::Failed => 'Transcription Failed',
+            default => 'Ready',
+        };
+    }
+
+    /**
+     * Get the combined status color for display.
+     */
+    public function getCombinedStatusColor(): string
+    {
+        if (! $this->isReady()) {
+            return $this->status->color();
+        }
+
+        return match ($this->transcription_status) {
+            TranscriptionStatus::Pending => 'zinc',
+            TranscriptionStatus::Processing => 'yellow',
+            TranscriptionStatus::Completed => 'green',
+            TranscriptionStatus::Failed => 'red',
+            default => 'green',
+        };
     }
 
     public function getEmbedUrl(): ?string
