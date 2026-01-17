@@ -56,7 +56,7 @@ new class extends Component
 
             <flux:field>
                 <flux:label>{{ __('Password') }}</flux:label>
-                <flux:input wire:model="password" type="password" viewable wire:keydown.enter="deleteAccount" />
+                <flux:input wire:model="password" type="password" viewable autocomplete="current-password" wire:keydown.enter="deleteAccount" />
                 <flux:error name="password" />
             </flux:field>
 
