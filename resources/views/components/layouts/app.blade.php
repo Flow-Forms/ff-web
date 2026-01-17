@@ -54,29 +54,45 @@
 
                     {{-- Section switcher --}}
                     @php
-                        $isVideoSection = request()->routeIs('dashboard', 'admin.video', 'video.*');
+                        $isDocsSection = !request()->routeIs('dashboard', 'admin.video', 'video.*');
+                        $isVideoSection = request()->routeIs('dashboard', 'video.*');
+                        $isAdminSection = request()->routeIs('admin.video');
                     @endphp
                     <nav class="hidden sm:flex items-center gap-1 p-1 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
                         <a
                             href="/"
                             @class([
                                 'px-3 py-1.5 text-sm font-medium rounded-md transition-colors',
-                                'bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 shadow-sm' => !$isVideoSection,
-                                'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100' => $isVideoSection,
+                                'bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 shadow-sm' => $isDocsSection,
+                                'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100' => !$isDocsSection,
                             ])
                         >
                             Docs
                         </a>
-                        <a
-                            href="{{ route('dashboard') }}"
-                            @class([
-                                'px-3 py-1.5 text-sm font-medium rounded-md transition-colors',
-                                'bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 shadow-sm' => $isVideoSection,
-                                'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100' => !$isVideoSection,
-                            ])
-                        >
-                            Video
-                        </a>
+                        @if(!app()->environment('production') || auth()->check())
+                            <a
+                                href="{{ route('dashboard') }}"
+                                @class([
+                                    'px-3 py-1.5 text-sm font-medium rounded-md transition-colors',
+                                    'bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 shadow-sm' => $isVideoSection,
+                                    'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100' => !$isVideoSection,
+                                ])
+                            >
+                                Video
+                            </a>
+                        @endif
+                        @can('manage-videos')
+                            <a
+                                href="{{ route('admin.video') }}"
+                                @class([
+                                    'px-3 py-1.5 text-sm font-medium rounded-md transition-colors',
+                                    'bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 shadow-sm' => $isAdminSection,
+                                    'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100' => !$isAdminSection,
+                                ])
+                            >
+                                Admin
+                            </a>
+                        @endcan
                     </nav>
 
                     {{-- Spacer --}}

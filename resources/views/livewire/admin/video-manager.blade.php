@@ -92,10 +92,12 @@ new class extends Component
     public function confirmDelete(int $videoId): void
     {
         $this->deletingVideoId = $videoId;
+        $this->modal('delete-confirm')->show();
     }
 
     public function cancelDelete(): void
     {
+        $this->modal('delete-confirm')->close();
         $this->deletingVideoId = null;
     }
 
@@ -113,6 +115,7 @@ new class extends Component
             }
 
             $video->delete();
+            $this->modal('delete-confirm')->close();
             $this->deletingVideoId = null;
             unset($this->videos);
         }
@@ -120,6 +123,34 @@ new class extends Component
 
     public function refreshVideos(): void
     {
+        unset($this->videos);
+    }
+
+    public function syncStatus(int $videoId): void
+    {
+        $video = Video::findOrFail($videoId);
+
+        if (! $video->bunny_video_id) {
+            return;
+        }
+
+        $bunny = app(BunnyStreamService::class);
+        $bunnyVideo = $bunny->getVideo($video->bunny_video_id);
+
+        if (! $bunnyVideo) {
+            return;
+        }
+
+        $newStatus = $bunny->mapStatus($bunnyVideo['status']);
+
+        $updateData = ['status' => $newStatus];
+
+        if ($newStatus === VideoStatus::Ready) {
+            $updateData['duration_seconds'] = $bunnyVideo['length'] ?? null;
+            $updateData['thumbnail_url'] = $bunny->getThumbnailUrl($video->bunny_video_id);
+        }
+
+        $video->update($updateData);
         unset($this->videos);
     }
 
@@ -198,6 +229,15 @@ new class extends Component
                                     icon="eye"
                                 >
                                     Preview
+                                </flux:button>
+                            @else
+                                <flux:button
+                                    size="sm"
+                                    variant="outline"
+                                    icon="arrow-path"
+                                    wire:click="syncStatus({{ $video->id }})"
+                                >
+                                    Sync Status
                                 </flux:button>
                             @endif
 
@@ -327,7 +367,7 @@ new class extends Component
     </flux:modal>
 
     {{-- Delete Confirmation Modal --}}
-    <flux:modal name="delete-confirm" :show="$deletingVideoId !== null" class="max-w-sm">
+    <flux:modal name="delete-confirm" class="max-w-sm">
         <div class="p-6 text-center">
             <flux:icon.exclamation-triangle class="size-12 mx-auto text-red-500 mb-4" />
             <flux:heading size="lg" class="mb-2">Delete Video?</flux:heading>

@@ -1,60 +1,69 @@
-<x-layouts.app :show-sidebar="false" title="Dashboard">
+<?php
+use App\Models\Video;
+
+$videos = Video::query()->published()->ordered()->get();
+?>
+
+<x-layouts.app :show-sidebar="false" title="Video Tutorials">
     <div class="max-w-4xl mx-auto">
-        <div class="mb-8">
-            <flux:heading size="xl">{{ __('Welcome back, :name', ['name' => Auth::user()->name]) }}</flux:heading>
-            <flux:subheading>{{ __('Manage your account and access tools from your dashboard.') }}</flux:subheading>
+        <div class="text-center mb-10">
+            <flux:heading size="2xl" class="mb-4">Video Tutorials</flux:heading>
+            <flux:subheading size="lg">Learn Flow Forms through step-by-step video guides.</flux:subheading>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {{-- Account Settings --}}
+        @if($videos->isEmpty())
             <flux:card>
-                <div class="p-6">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="p-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
-                            <flux:icon.cog-6-tooth class="size-6 text-zinc-600 dark:text-zinc-400" />
-                        </div>
-                        <flux:heading size="lg">{{ __('Account Settings') }}</flux:heading>
-                    </div>
-                    <flux:text class="mb-4">{{ __('Update your profile, change your password, and manage security settings.') }}</flux:text>
-                    <flux:button href="{{ route('settings') }}" variant="ghost" icon-trailing="arrow-right">
-                        {{ __('Go to Settings') }}
-                    </flux:button>
+                <div class="p-12 text-center">
+                    <flux:icon.film class="size-16 mx-auto text-zinc-300 dark:text-zinc-600 mb-4" />
+                    <flux:heading size="lg" class="mb-2">No videos available yet</flux:heading>
+                    <flux:text>Check back soon for video tutorials.</flux:text>
                 </div>
             </flux:card>
+        @else
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                @foreach($videos as $video)
+                    <a href="/video/{{ $video->slug }}" class="group block">
+                        <flux:card class="overflow-hidden hover:shadow-lg transition-shadow">
+                            {{-- Thumbnail --}}
+                            <div class="aspect-video bg-zinc-100 dark:bg-zinc-800 relative overflow-hidden">
+                                @if($video->thumbnail_url)
+                                    <img
+                                        src="{{ $video->thumbnail_url }}"
+                                        alt="{{ $video->title }}"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                    >
+                                @else
+                                    <div class="w-full h-full flex items-center justify-center">
+                                        <flux:icon.play-circle class="size-16 text-zinc-300 dark:text-zinc-600" />
+                                    </div>
+                                @endif
 
-            {{-- Video Manager - Only shown if user can manage videos --}}
-            @can('manage-videos')
-                <flux:card>
-                    <div class="p-6">
-                        <div class="flex items-center gap-3 mb-4">
-                            <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                                <flux:icon.film class="size-6 text-blue-600 dark:text-blue-400" />
+                                {{-- Duration Badge --}}
+                                @if($video->duration_seconds)
+                                    <div class="absolute bottom-2 right-2 px-2 py-1 bg-black/75 rounded text-white text-xs font-medium">
+                                        {{ $video->getFormattedDuration() }}
+                                    </div>
+                                @endif
+
+                                {{-- Play overlay --}}
+                                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30">
+                                    <flux:icon.play-circle class="size-16 text-white" />
+                                </div>
                             </div>
-                            <flux:heading size="lg">{{ __('Video Manager') }}</flux:heading>
-                        </div>
-                        <flux:text class="mb-4">{{ __('Upload, manage, and publish video content for your documentation.') }}</flux:text>
-                        <flux:button href="{{ route('admin.video') }}" variant="ghost" icon-trailing="arrow-right">
-                            {{ __('Manage Videos') }}
-                        </flux:button>
-                    </div>
-                </flux:card>
-            @endcan
 
-            {{-- Documentation --}}
-            <flux:card>
-                <div class="p-6">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
-                            <flux:icon.book-open class="size-6 text-green-600 dark:text-green-400" />
-                        </div>
-                        <flux:heading size="lg">{{ __('Documentation') }}</flux:heading>
-                    </div>
-                    <flux:text class="mb-4">{{ __('Browse the Flow Forms documentation and guides.') }}</flux:text>
-                    <flux:button href="/" variant="ghost" icon-trailing="arrow-right">
-                        {{ __('View Docs') }}
-                    </flux:button>
-                </div>
-            </flux:card>
-        </div>
+                            {{-- Content --}}
+                            <div class="p-4">
+                                <flux:heading size="lg" class="group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                    {{ $video->title }}
+                                </flux:heading>
+                                @if($video->description)
+                                    <flux:text class="mt-2 line-clamp-2">{{ $video->description }}</flux:text>
+                                @endif
+                            </div>
+                        </flux:card>
+                    </a>
+                @endforeach
+            </div>
+        @endif
     </div>
 </x-layouts.app>
