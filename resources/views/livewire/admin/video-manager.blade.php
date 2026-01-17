@@ -376,6 +376,11 @@ new class extends Component
                                         <span x-show="progress > 0" x-text="' ' + progress + '%'"></span>
                                     </flux:text>
                                 </div>
+                                <div class="mt-4">
+                                    <flux:button size="sm" variant="ghost" icon="x-mark" x-on:click="cancelUpload()">
+                                        Cancel upload
+                                    </flux:button>
+                                </div>
                             </div>
                         </template>
 
@@ -475,6 +480,7 @@ new class extends Component
         status: '',
         error: null,
         dragover: false,
+        xhr: null,
 
         handleFileSelect(event) {
             this.setFile(event.target.files[0]);
@@ -579,31 +585,59 @@ new class extends Component
 
         async uploadToR2(url, file) {
             return new Promise((resolve, reject) => {
-                const xhr = new XMLHttpRequest();
+                this.xhr = new XMLHttpRequest();
 
-                xhr.upload.addEventListener('progress', (e) => {
+                this.xhr.upload.addEventListener('progress', (e) => {
                     if (e.lengthComputable) {
                         this.progress = Math.round((e.loaded / e.total) * 100);
                     }
                 });
 
-                xhr.addEventListener('load', () => {
-                    if (xhr.status >= 200 && xhr.status < 300) {
+                this.xhr.addEventListener('load', () => {
+                    const status = this.xhr?.status;
+                    this.xhr = null;
+                    if (status >= 200 && status < 300) {
                         resolve();
                     } else {
                         reject(new Error('Upload failed'));
                     }
                 });
 
-                xhr.addEventListener('error', () => reject(new Error('Upload failed')));
+                this.xhr.addEventListener('error', () => {
+                    this.xhr = null;
+                    reject(new Error('Upload failed'));
+                });
 
-                xhr.open('PUT', url);
-                xhr.setRequestHeader('Content-Type', file.type || 'video/mp4');
-                xhr.send(file);
+                this.xhr.addEventListener('abort', () => {
+                    this.xhr = null;
+                    reject(new Error('Upload cancelled'));
+                });
+
+                this.xhr.open('PUT', url);
+                this.xhr.setRequestHeader('Content-Type', file.type || 'video/mp4');
+                this.xhr.send(file);
             });
         },
 
+        cancelUpload() {
+            if (this.xhr) {
+                this.xhr.abort();
+                this.xhr = null;
+            }
+            this.file = null;
+            this.uploading = false;
+            this.uploaded = false;
+            this.uploadedPath = null;
+            this.progress = 0;
+            this.status = '';
+            this.error = null;
+        },
+
         reset() {
+            if (this.xhr) {
+                this.xhr.abort();
+                this.xhr = null;
+            }
             this.file = null;
             this.uploading = false;
             this.uploaded = false;
