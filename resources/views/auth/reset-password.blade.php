@@ -16,9 +16,7 @@
                 autofocus
                 autocomplete="email"
             />
-            @error('email')
-                <flux:error>{{ $message }}</flux:error>
-            @enderror
+            <flux:error name="email" />
         </flux:field>
 
         <flux:field>
@@ -30,9 +28,7 @@
                 autocomplete="new-password"
                 viewable
             />
-            @error('password')
-                <flux:error>{{ $message }}</flux:error>
-            @enderror
+            <flux:error name="password" />
         </flux:field>
 
         <flux:field>
@@ -44,9 +40,7 @@
                 autocomplete="new-password"
                 viewable
             />
-            @error('password_confirmation')
-                <flux:error>{{ $message }}</flux:error>
-            @enderror
+            <flux:error name="password_confirmation" />
         </flux:field>
 
         <flux:button type="submit" variant="primary" class="w-full">

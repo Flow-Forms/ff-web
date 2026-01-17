@@ -17,9 +17,7 @@
                 autocomplete="email"
                 placeholder="email@example.com"
             />
-            @error('email')
-                <flux:error>{{ $message }}</flux:error>
-            @enderror
+            <flux:error name="email" />
         </flux:field>
 
         <flux:button type="submit" variant="primary" class="w-full">

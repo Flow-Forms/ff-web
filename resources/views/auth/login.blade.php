@@ -17,9 +17,7 @@
                 autocomplete="email"
                 placeholder="email@example.com"
             />
-            @error('email')
-                <flux:error>{{ $message }}</flux:error>
-            @enderror
+            <flux:error name="email" />
         </flux:field>
 
         <flux:field>
@@ -38,9 +36,7 @@
                 autocomplete="current-password"
                 viewable
             />
-            @error('password')
-                <flux:error>{{ $message }}</flux:error>
-            @enderror
+            <flux:error name="password" />
         </flux:field>
 
         <flux:checkbox name="remember" :label="__('Remember me')" />

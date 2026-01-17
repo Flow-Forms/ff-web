@@ -23,9 +23,7 @@
                         autocomplete="one-time-code"
                         placeholder="000000"
                     />
-                    @error('code')
-                        <flux:error>{{ $message }}</flux:error>
-                    @enderror
+                    <flux:error name="code" />
                 </flux:field>
             </div>
 
@@ -38,9 +36,7 @@
                         x-ref="recovery_code"
                         autocomplete="one-time-code"
                     />
-                    @error('recovery_code')
-                        <flux:error>{{ $message }}</flux:error>
-                    @enderror
+                    <flux:error name="recovery_code" />
                 </flux:field>
             </div>
 

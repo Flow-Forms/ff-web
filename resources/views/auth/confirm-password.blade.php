@@ -14,9 +14,7 @@
                 autocomplete="current-password"
                 viewable
             />
-            @error('password')
-                <flux:error>{{ $message }}</flux:error>
-            @enderror
+            <flux:error name="password" />
         </flux:field>
 
         <flux:button type="submit" variant="primary" class="w-full">
