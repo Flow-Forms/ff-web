@@ -157,6 +157,24 @@ describe('Public Video Pages', function () {
         $response->assertNotFound();
     });
 
+    it('allows admin users to preview unpublished videos', function () {
+        $user = User::factory()->create(['email' => 'admin@flowforms.io']);
+        $video = Video::factory()->create([
+            'title' => 'Preview Video',
+            'slug' => 'preview-video',
+            'is_published' => false,
+            'status' => VideoStatus::Ready,
+        ]);
+
+        actingAs($user);
+
+        $response = get('/video/preview-video');
+
+        $response->assertOk();
+        $response->assertSee('Preview Video');
+        $response->assertSee('Preview Mode');
+    });
+
     it('returns 404 for processing video', function () {
         $video = Video::factory()->processing()->create([
             'slug' => 'processing-video',
@@ -374,6 +392,29 @@ describe('Admin Video Manager', function () {
 
         expect(Video::find($video->id))->toBeNull();
         Storage::disk('s3')->assertMissing($video->r2_path);
+    });
+
+    it('can edit video title and description', function () {
+        $user = User::factory()->create();
+        $video = Video::factory()->create([
+            'title' => 'Original Title',
+            'description' => 'Original description',
+            'status' => VideoStatus::Ready,
+        ]);
+
+        actingAs($user);
+
+        Livewire::test('admin.video-manager')
+            ->call('openEditModal', $video->id)
+            ->assertSet('editTitle', 'Original Title')
+            ->assertSet('editDescription', 'Original description')
+            ->set('editTitle', 'Updated Title')
+            ->set('editDescription', '<p>Updated description with HTML</p>')
+            ->call('saveEdit');
+
+        $video->refresh();
+        expect($video->title)->toBe('Updated Title');
+        expect($video->description)->toBe('<p>Updated description with HTML</p>');
     });
 });
 

@@ -28,4 +28,6 @@ render(function (\Illuminate\View\View $view, string $folder, string $slug) {
     <div class="max-w-4xl mx-auto prose prose-lg dark:prose-invert prose-gray">
         {!! $content !!}
     </div>
+
+    <script>window.fathom?.trackEvent('View Text Doc');</script>
 </x-layouts.app>

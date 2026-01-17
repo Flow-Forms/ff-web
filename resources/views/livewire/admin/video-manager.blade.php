@@ -13,6 +13,9 @@ new class extends Component
     public string $description = '';
     public bool $showUploadModal = false;
     public ?int $deletingVideoId = null;
+    public ?int $editingVideoId = null;
+    public string $editTitle = '';
+    public string $editDescription = '';
 
     #[Computed]
     public function videos()
@@ -154,6 +157,35 @@ new class extends Component
         unset($this->videos);
     }
 
+    public function openEditModal(int $videoId): void
+    {
+        $video = Video::findOrFail($videoId);
+        $this->editingVideoId = $videoId;
+        $this->editTitle = $video->title;
+        $this->editDescription = $video->description ?? '';
+        $this->modal('edit-video')->show();
+    }
+
+    public function cancelEdit(): void
+    {
+        $this->modal('edit-video')->close();
+        $this->reset(['editingVideoId', 'editTitle', 'editDescription']);
+    }
+
+    public function saveEdit(): void
+    {
+        if ($this->editingVideoId) {
+            $video = Video::findOrFail($this->editingVideoId);
+            $video->update([
+                'title' => $this->editTitle,
+                'description' => $this->editDescription ?: null,
+            ]);
+            $this->modal('edit-video')->close();
+            $this->reset(['editingVideoId', 'editTitle', 'editDescription']);
+            unset($this->videos);
+        }
+    }
+
     private function generateVideoPath(string $filename): string
     {
         $extension = pathinfo($filename, PATHINFO_EXTENSION) ?: 'mp4';
@@ -175,12 +207,12 @@ new class extends Component
     {{-- Video List --}}
     <div class="space-y-4" wire:poll.5s="refreshVideos">
         @forelse($this->videos as $video)
-            <flux:card wire:key="video-{{ $video->id }}">
-                <div class="flex items-start gap-4 p-4">
+            <flux:card wire:key="video-{{ $video->id }}" class="!p-4">
+                <div class="flex items-start gap-4">
                     {{-- Thumbnail --}}
-                    <div class="shrink-0 w-40 h-24 bg-zinc-100 dark:bg-zinc-800 rounded-lg overflow-hidden">
+                    <div style="width: 160px; height: 96px; flex-shrink: 0;" class="bg-zinc-100 dark:bg-zinc-800 rounded-lg overflow-hidden">
                         @if($video->thumbnail_url)
-                            <img src="{{ $video->thumbnail_url }}" alt="{{ $video->title }}" class="w-full h-full object-cover">
+                            <img src="{{ $video->thumbnail_url }}" alt="{{ $video->title }}" style="width: 160px; height: 96px; object-fit: cover;">
                         @else
                             <div class="w-full h-full flex items-center justify-center">
                                 <flux:icon.film class="size-8 text-zinc-400" />
@@ -207,7 +239,7 @@ new class extends Component
                         </div>
 
                         @if($video->description)
-                            <flux:text class="mt-2 line-clamp-2">{{ $video->description }}</flux:text>
+                            <flux:text class="mt-2 line-clamp-2">{{ strip_tags($video->description) }}</flux:text>
                         @endif
 
                         {{-- Actions --}}
@@ -240,6 +272,15 @@ new class extends Component
                                     Sync Status
                                 </flux:button>
                             @endif
+
+                            <flux:button
+                                size="sm"
+                                variant="ghost"
+                                icon="pencil"
+                                wire:click="openEditModal({{ $video->id }})"
+                            >
+                                Edit
+                            </flux:button>
 
                             <flux:button
                                 size="sm"
@@ -375,6 +416,30 @@ new class extends Component
             <div class="flex justify-center gap-3">
                 <flux:button variant="ghost" wire:click="cancelDelete">Cancel</flux:button>
                 <flux:button variant="danger" wire:click="deleteVideo">Delete</flux:button>
+            </div>
+        </div>
+    </flux:modal>
+
+    {{-- Edit Video Modal --}}
+    <flux:modal name="edit-video" class="max-w-2xl">
+        <div class="p-6">
+            <flux:heading size="lg" class="mb-6">Edit Video</flux:heading>
+
+            <div class="space-y-4">
+                <flux:field>
+                    <flux:label>Title</flux:label>
+                    <flux:input wire:model="editTitle" placeholder="Video title" />
+                </flux:field>
+
+                <flux:field>
+                    <flux:label>Description</flux:label>
+                    <flux:editor wire:model="editDescription" placeholder="Describe this video..." />
+                </flux:field>
+
+                <div class="flex justify-end gap-3 pt-4">
+                    <flux:button variant="ghost" wire:click="cancelEdit">Cancel</flux:button>
+                    <flux:button variant="primary" wire:click="saveEdit">Save Changes</flux:button>
+                </div>
             </div>
         </div>
     </flux:modal>
