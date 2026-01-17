@@ -309,11 +309,12 @@ new class extends Component
     </div>
 
     {{-- Upload Modal --}}
-    <flux:modal name="upload-modal" :show="$showUploadModal" wire:model="showUploadModal" class="max-w-lg">
-        <div class="p-6">
-            <flux:heading size="lg" class="mb-4">Upload Video</flux:heading>
+    <flux:modal name="upload-modal" :show="$showUploadModal" wire:model="showUploadModal" class="max-w-2xl">
+        <div x-data="videoUploader()">
+            <flux:heading size="lg">Upload Video</flux:heading>
+            <flux:text class="mt-2">Add a new video to your library.</flux:text>
 
-            <div class="space-y-4">
+            <div class="mt-6 space-y-6">
                 <flux:field>
                     <flux:label>Title</flux:label>
                     <flux:input wire:model="title" placeholder="Video title" />
@@ -321,55 +322,56 @@ new class extends Component
 
                 <flux:field>
                     <flux:label>Description (optional)</flux:label>
-                    <flux:textarea wire:model="description" placeholder="Brief description of the video" rows="3" />
+                    <flux:editor wire:model="description" placeholder="Describe what this video covers..." />
                 </flux:field>
+
+                <flux:separator />
 
                 <flux:field>
                     <flux:label>Video File</flux:label>
+                    <flux:description>MP4, MOV, or WebM up to 2GB</flux:description>
+
                     <div
-                        x-data="videoUploader()"
-                        class="space-y-4"
+                        x-on:dragover.prevent="dragover = true"
+                        x-on:dragleave.prevent="dragover = false"
+                        x-on:drop.prevent="handleDrop($event)"
+                        :class="{ 'border-blue-500 bg-blue-50 dark:bg-blue-900/20': dragover }"
+                        class="mt-2 border-2 border-dashed border-zinc-300 dark:border-zinc-600 rounded-lg p-6 text-center transition-colors"
                     >
-                        <div
-                            x-on:dragover.prevent="dragover = true"
-                            x-on:dragleave.prevent="dragover = false"
-                            x-on:drop.prevent="handleDrop($event)"
-                            :class="{ 'border-blue-500 bg-blue-50 dark:bg-blue-900/20': dragover }"
-                            class="border-2 border-dashed border-zinc-300 dark:border-zinc-600 rounded-lg p-8 text-center transition-colors"
-                        >
-                            <template x-if="!file && !uploading">
-                                <div>
-                                    <flux:icon.cloud-arrow-up class="size-10 mx-auto text-zinc-400 mb-3" />
-                                    <flux:text class="mb-2">Drag and drop your video here, or</flux:text>
-                                    <flux:button size="sm" x-on:click="$refs.fileInput.click()">
-                                        Browse Files
+                        <template x-if="!file && !uploading">
+                            <div class="py-4">
+                                <flux:icon.cloud-arrow-up class="size-12 mx-auto text-zinc-400 mb-4" />
+                                <flux:text class="mb-3">Drag and drop your video here, or</flux:text>
+                                <flux:button size="sm" x-on:click="$refs.fileInput.click()">
+                                    Browse Files
+                                </flux:button>
+                                <input
+                                    type="file"
+                                    x-ref="fileInput"
+                                    x-on:change="handleFileSelect($event)"
+                                    accept="video/mp4,video/quicktime,video/webm"
+                                    class="hidden"
+                                >
+                            </div>
+                        </template>
+
+                        <template x-if="file && !uploading">
+                            <div class="py-4">
+                                <flux:icon.film class="size-12 mx-auto text-green-500 mb-4" />
+                                <flux:text class="font-medium text-lg" x-text="file.name"></flux:text>
+                                <flux:text class="text-zinc-500 mt-1" x-text="formatSize(file.size)"></flux:text>
+                                <div class="mt-4">
+                                    <flux:button size="sm" variant="ghost" icon="x-mark" x-on:click="clearFile()">
+                                        Remove file
                                     </flux:button>
-                                    <input
-                                        type="file"
-                                        x-ref="fileInput"
-                                        x-on:change="handleFileSelect($event)"
-                                        accept="video/mp4,video/quicktime,video/webm"
-                                        class="hidden"
-                                    >
-                                    <flux:text class="text-xs text-zinc-500 mt-2">MP4, MOV, or WebM up to 2GB</flux:text>
                                 </div>
-                            </template>
+                            </div>
+                        </template>
 
-                            <template x-if="file && !uploading">
-                                <div>
-                                    <flux:icon.film class="size-10 mx-auto text-zinc-400 mb-3" />
-                                    <flux:text class="font-medium" x-text="file.name"></flux:text>
-                                    <flux:text class="text-sm text-zinc-500" x-text="formatSize(file.size)"></flux:text>
-                                    <div class="mt-3">
-                                        <flux:button size="sm" variant="ghost" x-on:click="clearFile()">
-                                            Remove
-                                        </flux:button>
-                                    </div>
-                                </div>
-                            </template>
-
-                            <template x-if="uploading">
-                                <div>
+                        <template x-if="uploading">
+                            <div class="py-4">
+                                <flux:icon.arrow-path class="size-12 mx-auto text-blue-500 mb-4 animate-spin" />
+                                <div class="max-w-xs mx-auto">
                                     <div class="w-full bg-zinc-200 dark:bg-zinc-700 rounded-full h-2 mb-3">
                                         <div
                                             class="bg-blue-600 h-2 rounded-full transition-all duration-300"
@@ -381,28 +383,28 @@ new class extends Component
                                         <span x-show="progress > 0 && progress < 100" x-text="'(' + progress + '%)'"></span>
                                     </flux:text>
                                 </div>
-                            </template>
-                        </div>
-
-                        <template x-if="error">
-                            <flux:callout variant="danger" x-text="error" />
+                            </div>
                         </template>
-
-                        <div class="flex justify-end gap-3">
-                            <flux:button variant="ghost" wire:click="closeUploadModal" x-bind:disabled="uploading">
-                                Cancel
-                            </flux:button>
-                            <flux:button
-                                variant="primary"
-                                x-on:click="startUpload()"
-                                x-bind:disabled="!file || !$wire.title || uploading"
-                            >
-                                <span x-show="!uploading">Upload</span>
-                                <span x-show="uploading">Uploading...</span>
-                            </flux:button>
-                        </div>
                     </div>
+
+                    <template x-if="error">
+                        <flux:callout variant="danger" class="mt-3" x-text="error" />
+                    </template>
                 </flux:field>
+            </div>
+
+            <div class="flex justify-end gap-3 mt-8">
+                <flux:button variant="ghost" wire:click="closeUploadModal" x-bind:disabled="uploading">
+                    Cancel
+                </flux:button>
+                <flux:button
+                    variant="primary"
+                    x-on:click="startUpload()"
+                    x-bind:disabled="!file || !$wire.title || uploading"
+                >
+                    <span x-show="!uploading">Upload Video</span>
+                    <span x-show="uploading">Uploading...</span>
+                </flux:button>
             </div>
         </div>
     </flux:modal>
