@@ -10,7 +10,6 @@ use Livewire\Component;
 
 new class extends Component
 {
-    public bool $showUploadModal = false;
     public ?int $deletingVideoId = null;
     public ?int $editingVideoId = null;
     public ?int $viewingTranscriptId = null;
@@ -25,12 +24,12 @@ new class extends Component
 
     public function openUploadModal(): void
     {
-        $this->showUploadModal = true;
+        $this->modal('upload-modal')->show();
     }
 
     public function closeUploadModal(): void
     {
-        $this->showUploadModal = false;
+        $this->modal('upload-modal')->close();
     }
 
     public function getPresignedUrl(string $filename, string $contentType): array
@@ -322,7 +321,16 @@ new class extends Component
                                     </flux:button>
                                 @endif
 
-                                @if($video->isTranscribed() || $video->transcription_status === \App\Enums\TranscriptionStatus::Failed)
+                                @if($video->needsTranscription())
+                                    <flux:button
+                                        size="sm"
+                                        variant="filled"
+                                        icon="sparkles"
+                                        wire:click="retranscribe({{ $video->id }})"
+                                    >
+                                        Start Transcription
+                                    </flux:button>
+                                @elseif($video->isTranscribed() || $video->transcription_status === \App\Enums\TranscriptionStatus::Failed)
                                     <flux:button
                                         size="sm"
                                         variant="ghost"
@@ -344,14 +352,16 @@ new class extends Component
                                 </flux:button>
                             @endif
 
-                            <flux:button
-                                size="sm"
-                                variant="ghost"
-                                icon="pencil"
-                                wire:click="openEditModal({{ $video->id }})"
-                            >
-                                Edit
-                            </flux:button>
+                            @if($video->isReady() && $video->isTranscribed())
+                                <flux:button
+                                    size="sm"
+                                    variant="ghost"
+                                    icon="pencil"
+                                    wire:click="openEditModal({{ $video->id }})"
+                                >
+                                    Edit
+                                </flux:button>
+                            @endif
 
                             <flux:button
                                 size="sm"
@@ -380,7 +390,7 @@ new class extends Component
     </div>
 
     {{-- Upload Modal --}}
-    <flux:modal name="upload-modal" :show="$showUploadModal" wire:model="showUploadModal" class="max-w-2xl">
+    <flux:modal name="upload-modal" class="max-w-2xl">
         <div x-data="videoUploader()">
             <flux:heading size="lg">Upload Video</flux:heading>
             <flux:text class="mt-2">Upload a video file. Title and description will be generated automatically from the video content.</flux:text>
@@ -443,21 +453,6 @@ new class extends Component
                             </div>
                         </template>
 
-                        {{-- File uploaded and ready --}}
-                        <template x-if="file && uploaded && !creating">
-                            <div class="py-4">
-                                <flux:icon.check-circle class="size-12 mx-auto text-green-500 mb-4" />
-                                <flux:text class="font-medium text-lg" x-text="file.name"></flux:text>
-                                <flux:text class="text-zinc-500 mt-1" x-text="formatSize(file.size)"></flux:text>
-                                <flux:badge color="green" class="mt-2">Ready to create</flux:badge>
-                                <div class="mt-4">
-                                    <flux:button size="sm" variant="ghost" icon="x-mark" x-on:click="clearFile()">
-                                        Remove file
-                                    </flux:button>
-                                </div>
-                            </div>
-                        </template>
-
                         {{-- Creating video record --}}
                         <template x-if="creating">
                             <div class="py-4">
@@ -473,19 +468,6 @@ new class extends Component
                 </flux:field>
             </div>
 
-            <div class="flex justify-end gap-3 mt-8">
-                <flux:button variant="ghost" wire:click="closeUploadModal" x-bind:disabled="isBusy">
-                    Cancel
-                </flux:button>
-                <flux:button
-                    variant="primary"
-                    x-on:click="createVideo()"
-                    x-bind:disabled="!canSubmit"
-                >
-                    <span x-show="!creating">Create Video</span>
-                    <span x-show="creating">Creating...</span>
-                </flux:button>
-            </div>
         </div>
     </flux:modal>
 
@@ -607,16 +589,6 @@ new class extends Component
             this.startFileUpload();
         },
 
-        clearFile() {
-            this.file = null;
-            this.uploading = false;
-            this.uploaded = false;
-            this.uploadedPath = null;
-            this.progress = 0;
-            this.status = '';
-            this.error = null;
-        },
-
         formatSize(bytes) {
             if (bytes < 1024) return bytes + ' B';
             if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
@@ -646,12 +618,15 @@ new class extends Component
                 this.status = 'Uploading...';
                 await this.uploadToR2(upload_url, this.file);
 
-                // Mark as uploaded
+                // Upload complete - automatically create the video
                 this.uploading = false;
                 this.uploaded = true;
                 this.uploadedPath = path;
                 this.progress = 100;
-                this.status = 'Ready';
+                this.status = 'Creating video...';
+
+                // Auto-trigger video creation
+                await this.createVideo();
 
             } catch (err) {
                 this.error = err.message || 'Upload failed';
@@ -659,7 +634,7 @@ new class extends Component
             }
         },
 
-        // Create the video record (called when user clicks "Create Video")
+        // Create the video record (called automatically after upload)
         async createVideo() {
             if (!this.uploaded || !this.uploadedPath || !this.file) return;
 
@@ -733,6 +708,8 @@ new class extends Component
             this.progress = 0;
             this.status = '';
             this.error = null;
+            // Also close the modal
+            $wire.closeUploadModal();
         },
 
         reset() {
@@ -748,16 +725,6 @@ new class extends Component
             this.progress = 0;
             this.status = '';
             this.error = null;
-        },
-
-        // Check if form can be submitted
-        get canSubmit() {
-            return this.uploaded && !this.creating;
-        },
-
-        // Check if currently busy
-        get isBusy() {
-            return this.uploading || this.creating;
         }
     }));
 </script>
