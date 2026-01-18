@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\TranscriptionStatus;
 use App\Enums\VideoStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -69,6 +70,37 @@ class VideoFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'is_published' => false,
             'published_at' => null,
+        ]);
+    }
+
+    public function transcribing(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => VideoStatus::Ready,
+            'transcription_status' => TranscriptionStatus::Processing,
+        ]);
+    }
+
+    public function transcribed(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => VideoStatus::Ready,
+            'transcription_status' => TranscriptionStatus::Completed,
+            'transcribed_at' => now(),
+            'transcript' => fake()->paragraphs(3, true),
+            'chapters' => [
+                ['title' => 'Introduction', 'start' => 0, 'end' => 60],
+                ['title' => 'Main Content', 'start' => 60, 'end' => 300],
+                ['title' => 'Conclusion', 'start' => 300, 'end' => 360],
+            ],
+        ]);
+    }
+
+    public function transcriptionFailed(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => VideoStatus::Ready,
+            'transcription_status' => TranscriptionStatus::Failed,
         ]);
     }
 }

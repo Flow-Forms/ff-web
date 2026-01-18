@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\VideoStatus;
+use App\Jobs\TriggerVideoTranscription;
 use App\Models\Video;
 use App\Services\BunnyStreamService;
 use Illuminate\Support\Facades\Storage;
@@ -9,11 +10,10 @@ use Livewire\Component;
 
 new class extends Component
 {
-    public string $title = '';
-    public string $description = '';
     public bool $showUploadModal = false;
     public ?int $deletingVideoId = null;
     public ?int $editingVideoId = null;
+    public ?int $viewingTranscriptId = null;
     public string $editTitle = '';
     public string $editDescription = '';
 
@@ -25,14 +25,12 @@ new class extends Component
 
     public function openUploadModal(): void
     {
-        $this->reset(['title', 'description']);
         $this->showUploadModal = true;
     }
 
     public function closeUploadModal(): void
     {
         $this->showUploadModal = false;
-        $this->reset(['title', 'description']);
     }
 
     public function getPresignedUrl(string $filename, string $contentType): array
@@ -52,14 +50,16 @@ new class extends Component
         ];
     }
 
-    public function createVideo(string $title, string $description, string $r2Path): array
+    public function createVideo(string $filename, string $r2Path): array
     {
         $bunny = app(BunnyStreamService::class);
+
+        // Generate placeholder title from filename (will be replaced by AI)
+        $title = $this->generateTitleFromFilename($filename);
 
         $video = Video::create([
             'title' => $title,
             'slug' => Video::generateUniqueSlug($title),
-            'description' => $description ?: null,
             'r2_path' => $r2Path,
             'bunny_library_id' => $bunny->getLibraryId(),
             'status' => VideoStatus::Pending,
@@ -80,6 +80,22 @@ new class extends Component
         unset($this->videos);
 
         return ['success' => (bool) $result, 'video' => $video->toArray()];
+    }
+
+    private function generateTitleFromFilename(string $filename): string
+    {
+        // Remove extension
+        $name = pathinfo($filename, PATHINFO_FILENAME);
+
+        // Replace common separators with spaces
+        $name = str_replace(['-', '_', '.'], ' ', $name);
+
+        // Clean up multiple spaces and trim
+        $name = preg_replace('/\s+/', ' ', $name);
+        $name = trim($name);
+
+        // Title case
+        return ucwords(strtolower($name));
     }
 
     public function togglePublish(int $videoId): void
@@ -186,6 +202,38 @@ new class extends Component
         }
     }
 
+    public function openTranscriptModal(int $videoId): void
+    {
+        $this->viewingTranscriptId = $videoId;
+        $this->modal('view-transcript')->show();
+    }
+
+    public function closeTranscriptModal(): void
+    {
+        $this->modal('view-transcript')->close();
+        $this->viewingTranscriptId = null;
+    }
+
+    #[Computed]
+    public function viewingVideo(): ?Video
+    {
+        return $this->viewingTranscriptId
+            ? Video::find($this->viewingTranscriptId)
+            : null;
+    }
+
+    public function retranscribe(int $videoId): void
+    {
+        $video = Video::findOrFail($videoId);
+
+        if (! $video->bunny_video_id || ! $video->isReady()) {
+            return;
+        }
+
+        TriggerVideoTranscription::dispatch($video);
+        unset($this->videos);
+    }
+
     private function generateVideoPath(string $filename): string
     {
         $extension = pathinfo($filename, PATHINFO_EXTENSION) ?: 'mp4';
@@ -235,7 +283,7 @@ new class extends Component
                             </div>
 
                             {{-- Status Badge --}}
-                            <flux:badge :color="$video->status->color()">{{ $video->status->label() }}</flux:badge>
+                            <flux:badge :color="$video->getCombinedStatusColor()">{{ $video->getCombinedStatusLabel() }}</flux:badge>
                         </div>
 
                         @if($video->description)
@@ -262,6 +310,29 @@ new class extends Component
                                 >
                                     Preview
                                 </flux:button>
+
+                                @if($video->isTranscribed() && $video->hasTranscript())
+                                    <flux:button
+                                        size="sm"
+                                        variant="ghost"
+                                        icon="document-text"
+                                        wire:click="openTranscriptModal({{ $video->id }})"
+                                    >
+                                        Transcript
+                                    </flux:button>
+                                @endif
+
+                                @if($video->isTranscribed() || $video->transcription_status === \App\Enums\TranscriptionStatus::Failed)
+                                    <flux:button
+                                        size="sm"
+                                        variant="ghost"
+                                        icon="arrow-path"
+                                        wire:click="retranscribe({{ $video->id }})"
+                                        wire:confirm="This will re-generate the transcript, title, and description. Continue?"
+                                    >
+                                        Re-transcribe
+                                    </flux:button>
+                                @endif
                             @else
                                 <flux:button
                                     size="sm"
@@ -312,21 +383,9 @@ new class extends Component
     <flux:modal name="upload-modal" :show="$showUploadModal" wire:model="showUploadModal" class="max-w-2xl">
         <div x-data="videoUploader()">
             <flux:heading size="lg">Upload Video</flux:heading>
-            <flux:text class="mt-2">Add a new video to your library.</flux:text>
+            <flux:text class="mt-2">Upload a video file. Title and description will be generated automatically from the video content.</flux:text>
 
             <div class="mt-6 space-y-6">
-                <flux:field>
-                    <flux:label>Title</flux:label>
-                    <flux:input wire:model="title" placeholder="Video title" />
-                </flux:field>
-
-                <flux:field>
-                    <flux:label>Description (optional)</flux:label>
-                    <flux:editor wire:model="description" placeholder="Describe what this video covers..." />
-                </flux:field>
-
-                <flux:separator />
-
                 <flux:field>
                     <flux:label>Video File</flux:label>
                     <flux:description>MP4, MOV, or WebM up to 2GB</flux:description>
@@ -466,6 +525,49 @@ new class extends Component
             </div>
         </div>
     </flux:modal>
+
+    {{-- View Transcript Modal --}}
+    <flux:modal name="view-transcript" class="max-w-3xl">
+        <div class="p-6">
+            @if($this->viewingVideo)
+                <flux:heading size="lg" class="mb-2">{{ $this->viewingVideo->title }}</flux:heading>
+                <flux:text class="text-zinc-500 mb-6">Transcript and chapters</flux:text>
+
+                @if($this->viewingVideo->hasChapters())
+                    <div class="mb-6">
+                        <flux:heading size="sm" class="mb-3 text-zinc-500 uppercase tracking-wide">Chapters</flux:heading>
+                        <div class="space-y-2">
+                            @foreach($this->viewingVideo->chapters as $chapter)
+                                <div class="flex items-center gap-3 p-2 rounded bg-zinc-50 dark:bg-zinc-800">
+                                    <span class="text-sm font-mono text-zinc-500">
+                                        {{ gmdate('H:i:s', $chapter['start']) }}
+                                    </span>
+                                    <span class="font-medium">{{ $chapter['title'] }}</span>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+
+                @if($this->viewingVideo->hasTranscript())
+                    <div>
+                        <flux:heading size="sm" class="mb-3 text-zinc-500 uppercase tracking-wide">Transcript</flux:heading>
+                        <div class="max-h-96 overflow-y-auto p-4 bg-zinc-50 dark:bg-zinc-800 rounded-lg">
+                            <flux:text class="whitespace-pre-wrap">{{ $this->viewingVideo->transcript }}</flux:text>
+                        </div>
+                    </div>
+                @else
+                    <flux:callout variant="warning">
+                        No transcript available for this video.
+                    </flux:callout>
+                @endif
+
+                <div class="flex justify-end gap-3 pt-6">
+                    <flux:button variant="ghost" wire:click="closeTranscriptModal">Close</flux:button>
+                </div>
+            @endif
+        </div>
+    </flux:modal>
 </div>
 
 @script
@@ -559,13 +661,13 @@ new class extends Component
 
         // Create the video record (called when user clicks "Create Video")
         async createVideo() {
-            if (!this.uploaded || !this.uploadedPath || !$wire.title) return;
+            if (!this.uploaded || !this.uploadedPath || !this.file) return;
 
             this.creating = true;
             this.status = 'Creating video...';
 
             try {
-                const result = await $wire.createVideo($wire.title, $wire.description, this.uploadedPath);
+                const result = await $wire.createVideo(this.file.name, this.uploadedPath);
 
                 if (result.success) {
                     this.status = 'Complete!';
@@ -650,7 +752,7 @@ new class extends Component
 
         // Check if form can be submitted
         get canSubmit() {
-            return this.uploaded && !this.creating && $wire.title;
+            return this.uploaded && !this.creating;
         },
 
         // Check if currently busy

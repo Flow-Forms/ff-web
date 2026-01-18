@@ -21,6 +21,7 @@ class BunnyWebhookRequest extends FormRequest
         return [
             'VideoId' => ['required', 'string'],
             'Status' => ['nullable', 'integer'],
+            'VideoLibraryId' => ['nullable', 'integer'],
         ];
     }
 

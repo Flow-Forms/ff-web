@@ -56,9 +56,10 @@ render(function (Video $video) {
         </nav>
 
         {{-- Video Player --}}
-        <div class="relative w-full rounded-xl overflow-hidden shadow-lg mb-8" style="padding-bottom: 56.25%;">
+        <div class="relative w-full rounded-xl overflow-hidden shadow-lg mb-8" style="padding-bottom: 56.25%;" x-data="videoPlayer()">
             @if($video->getEmbedUrl())
                 <iframe
+                    x-ref="videoFrame"
                     src="{{ $video->getEmbedUrl() }}?autoplay=false&preload=true"
                     loading="lazy"
                     style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
@@ -74,6 +75,38 @@ render(function (Video $video) {
                 </div>
             @endif
         </div>
+
+        {{-- Chapters --}}
+        @if($video->hasChapters())
+            <div class="mb-8" x-data="{ expanded: false }">
+                <div class="flex items-center justify-between mb-4">
+                    <flux:heading size="lg">Chapters</flux:heading>
+                    @if(count($video->chapters) > 5)
+                        <flux:button size="sm" variant="ghost" x-on:click="expanded = !expanded">
+                            <span x-show="!expanded">Show all</span>
+                            <span x-show="expanded">Show less</span>
+                        </flux:button>
+                    @endif
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    @foreach($video->chapters as $index => $chapter)
+                        <button
+                            type="button"
+                            x-show="expanded || {{ $index }} < 6"
+                            x-on:click="$dispatch('seek-video', { time: {{ $chapter['start'] }} })"
+                            class="flex items-center gap-3 p-3 rounded-lg bg-zinc-50 dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors text-left group"
+                        >
+                            <span class="flex-shrink-0 w-16 text-sm font-mono text-zinc-500 dark:text-zinc-400">
+                                {{ gmdate($chapter['start'] >= 3600 ? 'H:i:s' : 'i:s', $chapter['start']) }}
+                            </span>
+                            <span class="font-medium text-zinc-900 dark:text-zinc-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                {{ $chapter['title'] }}
+                            </span>
+                        </button>
+                    @endforeach
+                </div>
+            </div>
+        @endif
 
         {{-- Video Info --}}
         <div class="mb-12">
@@ -153,4 +186,28 @@ render(function (Video $video) {
             </div>
         @endif
     </div>
+
+    @if($video->hasChapters())
+        <script>
+            document.addEventListener('alpine:init', () => {
+                Alpine.data('videoPlayer', () => ({
+                    init() {
+                        this.$el.addEventListener('seek-video', (event) => {
+                            this.seekTo(event.detail.time);
+                        });
+                    },
+                    seekTo(seconds) {
+                        const iframe = this.$refs.videoFrame;
+                        if (iframe) {
+                            // Bunny Stream player supports postMessage API for seeking
+                            iframe.contentWindow.postMessage({
+                                event: 'seek',
+                                time: seconds
+                            }, 'https://iframe.mediadelivery.net');
+                        }
+                    }
+                }));
+            });
+        </script>
+    @endif
 </x-layouts.app>

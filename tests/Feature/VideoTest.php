@@ -4,6 +4,7 @@ use App\Enums\VideoStatus;
 use App\Models\User;
 use App\Models\Video;
 use App\Services\BunnyStreamService;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
 
@@ -213,6 +214,9 @@ describe('Bunny Webhook', function () {
         // Set up webhook secret for testing
         config(['services.bunny.webhook_secret' => 'test-secret']);
 
+        // Fake the queue so transcription jobs don't run synchronously
+        Queue::fake();
+
         // Mock BunnyStreamService for webhook tests
         $mock = Mockery::mock(BunnyStreamService::class);
         $mock->shouldReceive('mapStatus')->with(4)->andReturn(VideoStatus::Ready);
@@ -281,6 +285,27 @@ describe('Bunny Webhook', function () {
 
         $response->assertNotFound();
         $response->assertJson(['error' => 'Video not found']);
+    });
+
+    it('returns 400 for missing Status', function () {
+        $video = Video::factory()->processing()->create([
+            'bunny_video_id' => 'status-test-video',
+        ]);
+
+        $payload = json_encode([
+            'VideoId' => 'status-test-video',
+        ]);
+        $signature = hash('sha256', $payload.'test-secret');
+
+        $response = $this->withHeaders([
+            'X-Bunny-Signature' => $signature,
+            'Content-Type' => 'application/json',
+        ])->postJson('/webhooks/bunny', [
+            'VideoId' => 'status-test-video',
+        ]);
+
+        $response->assertStatus(400);
+        $response->assertJson(['error' => 'Missing status']);
     });
 
     it('maps bunny status codes correctly', function () {
