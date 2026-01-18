@@ -343,14 +343,16 @@ new class extends Component
                                 </flux:button>
                             @endif
 
-                            <flux:button
-                                size="sm"
-                                variant="ghost"
-                                icon="pencil"
-                                wire:click="openEditModal({{ $video->id }})"
-                            >
-                                Edit
-                            </flux:button>
+                            @if($video->isReady() && $video->isTranscribed())
+                                <flux:button
+                                    size="sm"
+                                    variant="ghost"
+                                    icon="pencil"
+                                    wire:click="openEditModal({{ $video->id }})"
+                                >
+                                    Edit
+                                </flux:button>
+                            @endif
 
                             <flux:button
                                 size="sm"
