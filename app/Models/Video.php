@@ -205,4 +205,50 @@ class Video extends Model
 
         return trim($text);
     }
+
+    /**
+     * Get first 1-2 sentences of description as a teaser.
+     */
+    public function getSummaryTeaser(): ?string
+    {
+        if (! $this->description) {
+            return null;
+        }
+
+        // Strip HTML and get plain text
+        $text = strip_tags($this->description);
+        $text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
+        $text = preg_replace('/\s+/', ' ', $text);
+        $text = trim($text);
+
+        if (empty($text)) {
+            return null;
+        }
+
+        // Extract first 1-2 sentences (up to ~200 chars or 2 sentence endings)
+        $sentences = preg_split('/(?<=[.!?])\s+/', $text, 3, PREG_SPLIT_NO_EMPTY);
+
+        if (count($sentences) <= 2) {
+            return $text;
+        }
+
+        $teaser = $sentences[0];
+        if (strlen($teaser) < 100 && isset($sentences[1])) {
+            $teaser .= ' '.$sentences[1];
+        }
+
+        return $teaser;
+    }
+
+    /**
+     * Check if the description has more content than the teaser.
+     */
+    public function hasSummaryBeyondTeaser(): bool
+    {
+        $teaser = $this->getSummaryTeaser();
+        $full = strip_tags($this->description ?? '');
+        $full = preg_replace('/\s+/', ' ', $full);
+
+        return strlen(trim($full)) > strlen($teaser ?? '');
+    }
 }

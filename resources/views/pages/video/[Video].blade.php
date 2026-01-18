@@ -93,26 +93,37 @@ render(function (Video $video) {
             <div class="mb-8" x-data="{ expanded: false }">
                 <flux:card>
                     <div class="p-6">
-                        <button
-                            type="button"
-                            x-on:click="expanded = !expanded"
-                            x-bind:aria-expanded="expanded"
-                            class="w-full flex items-center justify-between text-left"
-                        >
-                            <flux:heading size="sm" class="text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">Summary</flux:heading>
-                            <flux:icon.chevron-down
-                                class="size-5 text-zinc-400 transition-transform duration-200"
-                                x-bind:class="{ 'rotate-180': expanded }"
-                            />
-                        </button>
+                        <flux:heading size="sm" class="text-zinc-500 dark:text-zinc-400 uppercase tracking-wide mb-4">Summary</flux:heading>
+
+                        {{-- Teaser (always visible) --}}
+                        <div x-show="!expanded" class="text-zinc-700 dark:text-zinc-300">
+                            {{ $video->getSummaryTeaser() }}
+                            @if($video->hasSummaryBeyondTeaser())
+                                <button
+                                    type="button"
+                                    x-on:click="expanded = true"
+                                    class="text-blue-600 dark:text-blue-400 hover:underline ml-1"
+                                >
+                                    Read more
+                                </button>
+                            @endif
+                        </div>
+
+                        {{-- Full content (when expanded) --}}
                         <div
                             x-show="expanded"
                             x-collapse
-                            class="mt-4"
                         >
                             <div class="prose prose-zinc dark:prose-invert max-w-none">
                                 {!! $video->description !!}
                             </div>
+                            <button
+                                type="button"
+                                x-on:click="expanded = false"
+                                class="text-blue-600 dark:text-blue-400 hover:underline mt-3 text-sm"
+                            >
+                                Show less
+                            </button>
                         </div>
                     </div>
                 </flux:card>
