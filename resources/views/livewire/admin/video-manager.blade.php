@@ -349,12 +349,16 @@ new class extends Component
                                     <flux:button
                                         size="sm"
                                         variant="outline"
-                                        icon="arrow-path"
                                         wire:click="syncTranscription({{ $video->id }})"
+                                        wire:loading.attr="disabled"
+                                        wire:target="syncTranscription({{ $video->id }})"
                                     >
-                                        Sync Transcription
+                                        <flux:icon.arrow-path class="size-4" wire:loading.remove wire:target="syncTranscription({{ $video->id }})" />
+                                        <flux:icon.arrow-path class="size-4 animate-spin" wire:loading wire:target="syncTranscription({{ $video->id }})" />
+                                        <span wire:loading.remove wire:target="syncTranscription({{ $video->id }})">Sync Transcription</span>
+                                        <span wire:loading wire:target="syncTranscription({{ $video->id }})">Syncing...</span>
                                     </flux:button>
-                                @elseif($video->isTranscribed() || $video->transcription_status === \App\Enums\TranscriptionStatus::Failed)
+                                @elseif($video->isTranscribed() || $video->transcription_status === TranscriptionStatus::Failed)
                                     <flux:button
                                         size="sm"
                                         variant="ghost"

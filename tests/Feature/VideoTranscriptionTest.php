@@ -328,6 +328,51 @@ describe('Admin Video Manager Transcription', function () {
         });
     });
 
+    it('can sync transcription for transcribing video', function () {
+        $vttContent = "WEBVTT\n\n00:00:00.000 --> 00:00:05.000\nHello world";
+
+        Http::fake([
+            'video.bunnycdn.com/*' => Http::response([
+                'guid' => 'test-video-123',
+                'title' => 'Synced Title',
+                'chapters' => [
+                    ['title' => 'Intro', 'start' => 0, 'end' => 60],
+                ],
+            ], 200),
+            '*.b-cdn.net/*' => Http::response($vttContent, 200),
+        ]);
+
+        $user = User::factory()->create();
+        $video = Video::factory()->transcribing()->create([
+            'bunny_video_id' => 'test-video-123',
+        ]);
+
+        actingAs($user);
+
+        Livewire::test('admin.video-manager')
+            ->call('syncTranscription', $video->id);
+
+        $video->refresh();
+        expect($video->transcription_status)->toBe(TranscriptionStatus::Completed);
+        expect($video->transcript)->toContain('Hello world');
+        expect($video->transcribed_at)->not->toBeNull();
+    });
+
+    it('does not sync transcription for video without bunny_video_id', function () {
+        $user = User::factory()->create();
+        $video = Video::factory()->transcribing()->create([
+            'bunny_video_id' => null,
+        ]);
+
+        actingAs($user);
+
+        Livewire::test('admin.video-manager')
+            ->call('syncTranscription', $video->id);
+
+        $video->refresh();
+        expect($video->transcription_status)->toBe(TranscriptionStatus::Processing);
+    });
+
     it('creates video with filename-based title', function () {
         Http::fake([
             'video.bunnycdn.com/*' => Http::response([
