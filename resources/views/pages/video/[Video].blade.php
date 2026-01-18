@@ -76,6 +76,49 @@ render(function (Video $video) {
             @endif
         </div>
 
+        {{-- Video Title & Duration --}}
+        <div class="mb-6">
+            <flux:heading size="2xl" class="mb-3">{{ $video->title }}</flux:heading>
+
+            @if($video->duration_seconds)
+                <div class="flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
+                    <flux:icon.clock class="size-4" />
+                    <span>{{ $video->getFormattedDuration() }}</span>
+                </div>
+            @endif
+        </div>
+
+        {{-- Summary --}}
+        @if($video->description)
+            <div class="mb-8" x-data="{ expanded: false }">
+                <flux:card>
+                    <div class="p-6">
+                        <button
+                            type="button"
+                            x-on:click="expanded = !expanded"
+                            x-bind:aria-expanded="expanded"
+                            class="w-full flex items-center justify-between text-left"
+                        >
+                            <flux:heading size="sm" class="text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">Summary</flux:heading>
+                            <flux:icon.chevron-down
+                                class="size-5 text-zinc-400 transition-transform duration-200"
+                                x-bind:class="{ 'rotate-180': expanded }"
+                            />
+                        </button>
+                        <div
+                            x-show="expanded"
+                            x-collapse
+                            class="mt-4"
+                        >
+                            <div class="prose prose-zinc dark:prose-invert max-w-none">
+                                {!! $video->description !!}
+                            </div>
+                        </div>
+                    </div>
+                </flux:card>
+            </div>
+        @endif
+
         {{-- Chapters --}}
         @if($video->hasChapters())
             <div class="mb-8" x-data="{ expanded: false }">
@@ -108,56 +151,34 @@ render(function (Video $video) {
             </div>
         @endif
 
-        {{-- Video Info --}}
-        <div class="mb-12">
-            <flux:heading size="2xl" class="mb-3">{{ $video->title }}</flux:heading>
-
-            @if($video->duration_seconds)
-                <div class="flex items-center gap-2 text-zinc-500 dark:text-zinc-400 mb-4">
-                    <flux:icon.clock class="size-4" />
-                    <span>{{ $video->getFormattedDuration() }}</span>
-                </div>
-            @endif
-
-            @if($video->description)
-                <flux:card class="mt-6">
+        {{-- Transcript --}}
+        @if($video->hasTranscript())
+            <div class="mb-12" x-data="{ expanded: false }">
+                <flux:card>
                     <div class="p-6">
-                        <flux:heading size="sm" class="mb-3 text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">Summary</flux:heading>
-                        <div class="prose prose-zinc dark:prose-invert max-w-none">
-                            {!! $video->description !!}
+                        <button
+                            type="button"
+                            x-on:click="expanded = !expanded"
+                            x-bind:aria-expanded="expanded"
+                            class="w-full flex items-center justify-between text-left"
+                        >
+                            <flux:heading size="sm" class="text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">Transcript</flux:heading>
+                            <flux:icon.chevron-down
+                                class="size-5 text-zinc-400 transition-transform duration-200"
+                                x-bind:class="{ 'rotate-180': expanded }"
+                            />
+                        </button>
+                        <div
+                            x-show="expanded"
+                            x-collapse
+                            class="mt-4"
+                        >
+                            <div class="prose prose-zinc dark:prose-invert max-w-none whitespace-pre-wrap">{{ $video->transcript }}</div>
                         </div>
                     </div>
                 </flux:card>
-            @endif
-
-            @if($video->hasTranscript())
-                <div class="mt-6" x-data="{ expanded: false }">
-                    <flux:card>
-                        <div class="p-6">
-                            <button
-                                type="button"
-                                x-on:click="expanded = !expanded"
-                                x-bind:aria-expanded="expanded"
-                                class="w-full flex items-center justify-between text-left"
-                            >
-                                <flux:heading size="sm" class="text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">Transcript</flux:heading>
-                                <flux:icon.chevron-down
-                                    class="size-5 text-zinc-400 transition-transform duration-200"
-                                    x-bind:class="{ 'rotate-180': expanded }"
-                                />
-                            </button>
-                            <div
-                                x-show="expanded"
-                                x-collapse
-                                class="mt-4"
-                            >
-                                <div class="prose prose-zinc dark:prose-invert max-w-none whitespace-pre-wrap">{{ $video->transcript }}</div>
-                            </div>
-                        </div>
-                    </flux:card>
-                </div>
-            @endif
-        </div>
+            </div>
+        @endif
 
         {{-- More Videos --}}
         @if($otherVideos->isNotEmpty())
