@@ -1,6 +1,8 @@
 <?php
 
+use App\Enums\TranscriptionStatus;
 use App\Enums\VideoStatus;
+use App\Jobs\SyncVideoTranscription;
 use App\Jobs\TriggerVideoTranscription;
 use App\Models\Video;
 use App\Services\BunnyStreamService;
@@ -233,6 +235,19 @@ new class extends Component
         unset($this->videos);
     }
 
+    public function syncTranscription(int $videoId): void
+    {
+        $video = Video::findOrFail($videoId);
+
+        if (! $video->bunny_video_id) {
+            return;
+        }
+
+        // Dispatch synchronously so we see the result immediately
+        SyncVideoTranscription::dispatchSync($video);
+        unset($this->videos);
+    }
+
     private function generateVideoPath(string $filename): string
     {
         $extension = pathinfo($filename, PATHINFO_EXTENSION) ?: 'mp4';
@@ -329,6 +344,15 @@ new class extends Component
                                         wire:click="retranscribe({{ $video->id }})"
                                     >
                                         Start Transcription
+                                    </flux:button>
+                                @elseif($video->isTranscribing())
+                                    <flux:button
+                                        size="sm"
+                                        variant="outline"
+                                        icon="arrow-path"
+                                        wire:click="syncTranscription({{ $video->id }})"
+                                    >
+                                        Sync Transcription
                                     </flux:button>
                                 @elseif($video->isTranscribed() || $video->transcription_status === \App\Enums\TranscriptionStatus::Failed)
                                     <flux:button
