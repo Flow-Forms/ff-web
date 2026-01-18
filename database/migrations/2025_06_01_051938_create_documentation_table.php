@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('url');
             $table->string('file_path');
             $table->timestamps();
-            
+
             $table->index(['section', 'slug']);
             $table->index('url');
         });

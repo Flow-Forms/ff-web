@@ -11,7 +11,7 @@ class DocumentationSearchController extends Controller
     public function search(Request $request)
     {
         $query = $request->get('q', '');
-        
+
         if (strlen($query) < 2) {
             return response()->json([
                 'results' => [],
@@ -57,30 +57,30 @@ class DocumentationSearchController extends Controller
     {
         $queryLower = strtolower($query);
         $contentLower = strtolower($content);
-        
+
         // Find the position of the search term
         $position = strpos($contentLower, $queryLower);
-        
+
         if ($position === false) {
             // If not found, return the beginning of the content
-            return strlen($content) > $snippetLength 
-                ? substr($content, 0, $snippetLength) . '...'
+            return strlen($content) > $snippetLength
+                ? substr($content, 0, $snippetLength).'...'
                 : $content;
         }
-        
+
         // Calculate snippet start position
         $start = max(0, $position - ($snippetLength / 2));
         $snippet = substr($content, $start, $snippetLength);
-        
+
         // Clean up snippet boundaries
         if ($start > 0) {
             $firstSpace = strpos($snippet, ' ');
             if ($firstSpace !== false) {
                 $snippet = substr($snippet, $firstSpace + 1);
             }
-            $snippet = '...' . $snippet;
+            $snippet = '...'.$snippet;
         }
-        
+
         if (strlen($content) > $start + $snippetLength) {
             $lastSpace = strrpos($snippet, ' ');
             if ($lastSpace !== false) {
@@ -88,7 +88,7 @@ class DocumentationSearchController extends Controller
             }
             $snippet .= '...';
         }
-        
+
         return $snippet;
     }
 }
