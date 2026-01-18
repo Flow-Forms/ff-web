@@ -122,12 +122,40 @@ render(function (Video $video) {
             @if($video->description)
                 <flux:card class="mt-6">
                     <div class="p-6">
-                        <flux:heading size="sm" class="mb-3 text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">About this video</flux:heading>
+                        <flux:heading size="sm" class="mb-3 text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">Summary</flux:heading>
                         <div class="prose prose-zinc dark:prose-invert max-w-none">
                             {!! $video->description !!}
                         </div>
                     </div>
                 </flux:card>
+            @endif
+
+            @if($video->hasTranscript())
+                <div class="mt-6" x-data="{ expanded: false }">
+                    <flux:card>
+                        <div class="p-6">
+                            <button
+                                type="button"
+                                x-on:click="expanded = !expanded"
+                                x-bind:aria-expanded="expanded"
+                                class="w-full flex items-center justify-between text-left"
+                            >
+                                <flux:heading size="sm" class="text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">Transcript</flux:heading>
+                                <flux:icon.chevron-down
+                                    class="size-5 text-zinc-400 transition-transform duration-200"
+                                    x-bind:class="{ 'rotate-180': expanded }"
+                                />
+                            </button>
+                            <div
+                                x-show="expanded"
+                                x-collapse
+                                class="mt-4"
+                            >
+                                <div class="prose prose-zinc dark:prose-invert max-w-none whitespace-pre-wrap">{{ $video->transcript }}</div>
+                            </div>
+                        </div>
+                    </flux:card>
+                </div>
             @endif
         </div>
 
