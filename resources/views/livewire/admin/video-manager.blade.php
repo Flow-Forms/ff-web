@@ -1,6 +1,8 @@
 <?php
 
+use App\Enums\TranscriptionStatus;
 use App\Enums\VideoStatus;
+use App\Jobs\SyncVideoTranscription;
 use App\Jobs\TriggerVideoTranscription;
 use App\Models\Video;
 use App\Services\BunnyStreamService;
@@ -233,6 +235,19 @@ new class extends Component
         unset($this->videos);
     }
 
+    public function syncTranscription(int $videoId): void
+    {
+        $video = Video::findOrFail($videoId);
+
+        if (! $video->bunny_video_id) {
+            return;
+        }
+
+        // Dispatch synchronously so we see the result immediately
+        SyncVideoTranscription::dispatchSync($video);
+        unset($this->videos);
+    }
+
     private function generateVideoPath(string $filename): string
     {
         $extension = pathinfo($filename, PATHINFO_EXTENSION) ?: 'mp4';
@@ -330,7 +345,20 @@ new class extends Component
                                     >
                                         Start Transcription
                                     </flux:button>
-                                @elseif($video->isTranscribed() || $video->transcription_status === \App\Enums\TranscriptionStatus::Failed)
+                                @elseif($video->isTranscribing())
+                                    <flux:button
+                                        size="sm"
+                                        variant="outline"
+                                        wire:click="syncTranscription({{ $video->id }})"
+                                        wire:loading.attr="disabled"
+                                        wire:target="syncTranscription({{ $video->id }})"
+                                    >
+                                        <flux:icon.arrow-path class="size-4" wire:loading.remove wire:target="syncTranscription({{ $video->id }})" />
+                                        <flux:icon.arrow-path class="size-4 animate-spin" wire:loading wire:target="syncTranscription({{ $video->id }})" />
+                                        <span wire:loading.remove wire:target="syncTranscription({{ $video->id }})">Sync Transcription</span>
+                                        <span wire:loading wire:target="syncTranscription({{ $video->id }})">Syncing...</span>
+                                    </flux:button>
+                                @elseif($video->isTranscribed() || $video->transcription_status === TranscriptionStatus::Failed)
                                     <flux:button
                                         size="sm"
                                         variant="ghost"
