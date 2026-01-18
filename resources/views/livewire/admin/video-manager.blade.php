@@ -321,7 +321,16 @@ new class extends Component
                                     </flux:button>
                                 @endif
 
-                                @if($video->isTranscribed() || $video->transcription_status === \App\Enums\TranscriptionStatus::Failed)
+                                @if($video->needsTranscription())
+                                    <flux:button
+                                        size="sm"
+                                        variant="filled"
+                                        icon="sparkles"
+                                        wire:click="retranscribe({{ $video->id }})"
+                                    >
+                                        Start Transcription
+                                    </flux:button>
+                                @elseif($video->isTranscribed() || $video->transcription_status === \App\Enums\TranscriptionStatus::Failed)
                                     <flux:button
                                         size="sm"
                                         variant="ghost"
