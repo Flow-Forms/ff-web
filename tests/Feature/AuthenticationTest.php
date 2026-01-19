@@ -30,3 +30,20 @@ test('users cannot authenticate with invalid password', function () {
 
     $this->assertGuest();
 });
+
+test('failed login shows error message', function () {
+    $user = User::factory()->create();
+
+    // Simulate real browser flow: visit login page first, then submit with wrong password
+    // The from() helper sets the previous URL so redirect()->back() works correctly
+    $response = $this->from('/login')->post('/login', [
+        'email' => $user->email,
+        'password' => 'wrong-password',
+    ]);
+
+    $response->assertSessionHasErrors('email');
+    $response->assertRedirect('/login');
+
+    // Follow the redirect and verify error message is displayed
+    $this->followRedirects($response)->assertSee(__('auth.failed'));
+});

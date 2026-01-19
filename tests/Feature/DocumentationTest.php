@@ -335,3 +335,61 @@ describe('Dynamic file discovery and accessibility', function () {
         expect($allFiles)->toContain('/forms/field-types');
     });
 });
+
+describe('Raw markdown for LLMs', function () {
+    it('returns raw markdown for root level pages with .md extension', function () {
+        $response = get('/security.md');
+
+        $response->assertOk();
+        $response->assertHeader('Content-Type', 'text/markdown; charset=UTF-8');
+
+        // Should contain raw markdown, not HTML
+        $content = $response->getContent();
+        expect($content)->toContain('# Security');
+        expect($content)->not->toContain('<!DOCTYPE html>');
+        expect($content)->not->toContain('<html');
+    });
+
+    it('returns raw markdown for nested folder pages with .md extension', function () {
+        $response = get('/forms/overview.md');
+
+        $response->assertOk();
+        $response->assertHeader('Content-Type', 'text/markdown; charset=UTF-8');
+
+        // Should contain raw markdown, not HTML
+        $content = $response->getContent();
+        expect($content)->toContain('# Forms Overview');
+        expect($content)->not->toContain('<!DOCTYPE html>');
+        expect($content)->not->toContain('<html');
+    });
+
+    it('returns raw markdown for index page', function () {
+        $response = get('/index.md');
+
+        $response->assertOk();
+        $response->assertHeader('Content-Type', 'text/markdown; charset=UTF-8');
+
+        // Should contain raw markdown content
+        $content = $response->getContent();
+        expect($content)->not->toContain('<!DOCTYPE html>');
+        expect($content)->not->toContain('<html');
+    });
+
+    it('strips frontmatter from raw markdown', function () {
+        $response = get('/security.md');
+
+        $response->assertOk();
+        $content = $response->getContent();
+
+        // Should NOT contain YAML frontmatter markers
+        expect($content)->not->toMatch('/^---\s*\n/');
+    });
+
+    it('returns 404 for non-existent raw markdown files', function () {
+        $response = get('/non-existent-page.md');
+        $response->assertNotFound();
+
+        $response = get('/forms/non-existent.md');
+        $response->assertNotFound();
+    });
+});

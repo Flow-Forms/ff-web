@@ -21,7 +21,7 @@ if (!$indexPath) {
 }
 ?>
 
-<x-layouts.docs>
+<x-layouts.app>
     <x-slot name="title">{{ $title }}</x-slot>
     
 <div class="max-w-6xl mx-auto">
@@ -68,4 +68,4 @@ if (!$indexPath) {
         @endif
     </div>
 </div>
-</x-layouts.docs>
+</x-layouts.app>
