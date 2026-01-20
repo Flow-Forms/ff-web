@@ -51,10 +51,12 @@ Clicking the gear icon presents you with a side-bar from the right of your scree
 
 - **+ Add Note** - Selecting to add a note from the Options menu opens directly to the notes creation modal. *See  ["+ Add Note"](#+ Add-Note) for more in depth information on adding notes.*
 
-- **{{icon:calendar size-4 inline-block align-text-center}} Reminders** - If you would like a message to be sent to you, at a specific time, in relation to a submission, select "Reminders" from the Options menu of that submission. A modal appear with these options:
+- **{{icon:share size-4 inline-block align-text-center}} Share** - 
+
+- **{{icon:calendar size-4 inline-block align-text-center}} Reminders** - If you would like a message to be sent to you, at a specific time, in relation to a submission, select "{{icon:calendar size-4 inline-block align-text-center}} Reminders" from the Options menu of that submission. A modal will appear with these options:
 	- When - set the date for the reminder, or for when the reminders are to begin
 	- Frequency - 
-		- One Time - for one reminder, set on one specific date
+		- One Time - for one reminder, sent one time (on date set above)
 		- Recurring - Select for reminders to be sent at an interval of your choosing
 			- Interval - number of units between reminders
 			- Frequency - unit of time (day, week, month, year)
@@ -62,11 +64,17 @@ Clicking the gear icon presents you with a side-bar from the right of your scree
 				- Never - Select to have reminders continue in perpetuity
 				- On - Select to end reminders on a specified date (date selection box appears when "On" is selected)
 				- After - Select for reminders to end after a certain number have been sent. When selected, an "Occurrences" box appears to allow the number of reminders to be selected.
-	- Trigger - A trigger is an actionIf at the time of the form's flow design, a trigger has been created
+	- Trigger - A trigger is an action that is auto-deployed at the time of a set occurrence in a form's flow. If, at the time of the form's flow design, a trigger has been created, it will appear here as an option to deploy that trigger at the time specified by your reminder. Both the trigger's action and your reminder communication will occur when this is selected from reminders.
+	- Message - Type your desired communication for the reminder in this section. It will be sent as your reminder message via email, and SMS if selected.
+	- Send SMS - Toggle button is off by default. Click to turn on if a text message reminder is desired in addition to the default email notification.
+	- Current Reminders - If any reminders are already set on the the submission, they will appear here, listed with their Type and Message. If there are none, "No reminders set" will appear.
+	- Click "Cancel" to exit reminders or click "Add Reminder" to set your reminder with the parameters you have selected.
 
 - **{{icon:printer size-4 inline-block align-text-center}} Print**- If you select to print from the Options menu, the submission will be reloaded on its own page, from which you see the full, individual submission for printing. 
 
-- 
+- **{{icon:document-text size-4 inline-block align-text-center}} Download as PDF** - instantly download the submission to your computer as a PDF
+
+- **{{icon:document-duplicate size-4 inline-block align-text-center}} Copy Submission** - 
 
 ### {{icon:arrow-top-right-on-square size-4 inline-block align-text-center}} (Pop-out) - 
 Fully view a single submission on a reloaded page.  
