@@ -200,32 +200,7 @@ render(function (Video $video) {
                     @foreach($otherVideos as $otherVideo)
                         <a href="/video/{{ $otherVideo->slug }}" class="group block">
                             <flux:card class="overflow-hidden hover:shadow-lg transition-shadow h-full">
-                                {{-- Thumbnail --}}
-                                <div class="aspect-video bg-zinc-100 dark:bg-zinc-800 relative overflow-hidden">
-                                    @if($otherVideo->thumbnail_url)
-                                        <img
-                                            src="{{ $otherVideo->thumbnail_url }}"
-                                            alt="{{ $otherVideo->title }}"
-                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                        >
-                                    @else
-                                        <div class="w-full h-full flex items-center justify-center">
-                                            <flux:icon.play-circle class="size-10 text-zinc-300 dark:text-zinc-600" />
-                                        </div>
-                                    @endif
-
-                                    {{-- Duration Badge --}}
-                                    @if($otherVideo->duration_seconds)
-                                        <div class="absolute bottom-2 right-2 px-1.5 py-0.5 bg-black/75 rounded text-white text-xs font-medium">
-                                            {{ $otherVideo->getFormattedDuration() }}
-                                        </div>
-                                    @endif
-
-                                    {{-- Play overlay --}}
-                                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30">
-                                        <flux:icon.play-circle class="size-10 text-white" />
-                                    </div>
-                                </div>
+                                <x-video-thumbnail :video="$otherVideo" size="sm" />
 
                                 {{-- Content --}}
                                 <div class="p-3">
