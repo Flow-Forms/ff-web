@@ -4,6 +4,7 @@ use App\Enums\VideoStatus;
 use App\Models\User;
 use App\Models\Video;
 use App\Services\BunnyStreamService;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
@@ -440,6 +441,176 @@ describe('Admin Video Manager', function () {
         $video->refresh();
         expect($video->title)->toBe('Updated Title');
         expect($video->description)->toBe('<p>Updated description with HTML</p>');
+    });
+
+    it('can upload a custom thumbnail successfully', function () {
+        Storage::fake('s3');
+        Http::fake([
+            'video.bunnycdn.com/*' => Http::response(['success' => true], 200),
+        ]);
+
+        $user = User::factory()->create();
+        $video = Video::factory()->create([
+            'bunny_video_id' => 'test-video-123',
+            'status' => VideoStatus::Ready,
+            'thumbnail_url' => 'https://example.com/old-thumb.jpg',
+        ]);
+
+        actingAs($user);
+
+        $thumbnailFile = \Illuminate\Http\UploadedFile::fake()->image('thumbnail.jpg', 1920, 1080);
+
+        Livewire::test('admin.video-manager')
+            ->set('uploadingThumbnailForVideoId', $video->id)
+            ->set('thumbnailFile', $thumbnailFile)
+            ->assertDispatched('toast-show');
+
+        $video->refresh();
+        expect($video->thumbnail_url)->toContain('thumbnail.jpg');
+
+        // Verify the thumbnail was stored in R2
+        expect(Storage::disk('s3')->allFiles('thumbnails'))->not->toBeEmpty();
+
+        Http::assertSent(function ($request) {
+            return str_contains($request->url(), '/thumbnail?thumbnailUrl=');
+        });
+    });
+
+    it('shows error and cleans up file when Bunny API fails', function () {
+        Storage::fake('s3');
+        Http::fake([
+            'video.bunnycdn.com/*' => Http::response(['error' => 'Failed'], 500),
+        ]);
+
+        $user = User::factory()->create();
+        $video = Video::factory()->create([
+            'bunny_video_id' => 'test-video-123',
+            'status' => VideoStatus::Ready,
+            'thumbnail_url' => 'https://example.com/old-thumb.jpg',
+        ]);
+        $originalThumbnailUrl = $video->thumbnail_url;
+
+        actingAs($user);
+
+        $thumbnailFile = \Illuminate\Http\UploadedFile::fake()->image('thumbnail.jpg', 1920, 1080);
+
+        Livewire::test('admin.video-manager')
+            ->set('uploadingThumbnailForVideoId', $video->id)
+            ->set('thumbnailFile', $thumbnailFile)
+            ->assertDispatched('toast-show');
+
+        $video->refresh();
+        // Thumbnail URL should remain unchanged
+        expect($video->thumbnail_url)->toBe($originalThumbnailUrl);
+
+        // Verify the orphaned file was cleaned up from R2
+        expect(Storage::disk('s3')->allFiles('thumbnails'))->toBeEmpty();
+    });
+
+    it('validates thumbnail file type', function () {
+        Storage::fake('s3');
+
+        $user = User::factory()->create();
+        $video = Video::factory()->create([
+            'bunny_video_id' => 'test-video-123',
+            'status' => VideoStatus::Ready,
+        ]);
+
+        actingAs($user);
+
+        $invalidFile = \Illuminate\Http\UploadedFile::fake()->create('document.pdf', 1024);
+
+        Livewire::test('admin.video-manager')
+            ->set('uploadingThumbnailForVideoId', $video->id)
+            ->set('thumbnailFile', $invalidFile)
+            ->assertHasErrors(['thumbnailFile']);
+    });
+
+    it('validates thumbnail file size', function () {
+        Storage::fake('s3');
+
+        $user = User::factory()->create();
+        $video = Video::factory()->create([
+            'bunny_video_id' => 'test-video-123',
+            'status' => VideoStatus::Ready,
+        ]);
+
+        actingAs($user);
+
+        // Create a file larger than 10MB
+        $largeFile = \Illuminate\Http\UploadedFile::fake()->image('large.jpg')->size(11000);
+
+        Livewire::test('admin.video-manager')
+            ->set('uploadingThumbnailForVideoId', $video->id)
+            ->set('thumbnailFile', $largeFile)
+            ->assertHasErrors(['thumbnailFile']);
+    });
+
+    it('does not upload thumbnail for video without bunny_video_id', function () {
+        Storage::fake('s3');
+        Http::fake();
+
+        $user = User::factory()->create();
+        $video = Video::factory()->create([
+            'bunny_video_id' => null,
+            'status' => VideoStatus::Ready,
+        ]);
+
+        actingAs($user);
+
+        $thumbnailFile = \Illuminate\Http\UploadedFile::fake()->image('thumbnail.jpg', 1920, 1080);
+
+        Livewire::test('admin.video-manager')
+            ->set('uploadingThumbnailForVideoId', $video->id)
+            ->set('thumbnailFile', $thumbnailFile);
+
+        // No HTTP requests should have been made
+        Http::assertNothingSent();
+    });
+});
+
+describe('BunnyStreamService setThumbnail', function () {
+    it('sends thumbnail URL as query parameter', function () {
+        Http::fake([
+            'video.bunnycdn.com/*' => Http::response(['success' => true], 200),
+        ]);
+
+        $service = app(BunnyStreamService::class);
+        $result = $service->setThumbnail('test-video-123', 'https://r2.example.com/thumb.jpg');
+
+        expect($result)->toBeTrue();
+
+        Http::assertSent(function ($request) {
+            $url = $request->url();
+
+            return str_contains($url, '/thumbnail?thumbnailUrl=')
+                && str_contains($url, urlencode('https://r2.example.com/thumb.jpg'));
+        });
+    });
+
+    it('returns false when API call fails', function () {
+        Http::fake([
+            'video.bunnycdn.com/*' => Http::response(['error' => 'Failed'], 500),
+        ]);
+
+        $service = app(BunnyStreamService::class);
+        $result = $service->setThumbnail('test-video-123', 'https://r2.example.com/thumb.jpg');
+
+        expect($result)->toBeFalse();
+    });
+
+    it('URL encodes the thumbnail URL parameter', function () {
+        Http::fake([
+            'video.bunnycdn.com/*' => Http::response(['success' => true], 200),
+        ]);
+
+        $service = app(BunnyStreamService::class);
+        $thumbnailUrl = 'https://r2.example.com/path with spaces/thumb.jpg';
+        $service->setThumbnail('test-video-123', $thumbnailUrl);
+
+        Http::assertSent(function ($request) use ($thumbnailUrl) {
+            return str_contains($request->url(), urlencode($thumbnailUrl));
+        });
     });
 });
 

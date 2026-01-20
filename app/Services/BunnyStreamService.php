@@ -119,6 +119,18 @@ class BunnyStreamService
     }
 
     /**
+     * Set a custom thumbnail for a video from an external URL.
+     */
+    public function setThumbnail(string $videoId, string $thumbnailUrl): bool
+    {
+        $response = $this->client()->post(
+            "{$this->libraryId}/videos/{$videoId}/thumbnail?thumbnailUrl=".urlencode($thumbnailUrl)
+        );
+
+        return $response->successful();
+    }
+
+    /**
      * Map Bunny Stream status code to VideoStatus enum.
      *
      * Bunny statuses:
