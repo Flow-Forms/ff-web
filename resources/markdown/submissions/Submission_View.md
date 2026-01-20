@@ -11,7 +11,7 @@ Navigate to any of the entries that have populated below the Submissions Control
 ## Submission Header
 The header of each submission contains all of the controls, status indicators and options available for you to understand and directly interact with a submission. 
 
-These can all be found in the Submission Header:
+These include:
 
 
 ### Form Status - 
@@ -27,16 +27,15 @@ The color-coded bar across the top of each submission's header indicates the sta
 
 ### Form Title/Name - 
 Click to start a new submission of that form type. 
+
 ### Submitted By - 
 Name of the user that submitted the form, along with a color-coded box (auto-assigned) containing their initials.
+
 ### {{icon:pencil-square size-4 inline-block align-text-center}} (Edit) -
 If a form's permissions have been set to allow editing, you may alter the inputs and add data/comments to the input areas of a submission that has already been submitted. 
-- When a submission has been edited, a note is added in that submission's "Notes" log that lists the editor's user name and the time it was edited, along with the message, "This submission has been edited." This is accessible from the submission's "{{icon:document-text size-4 inline-block align-text-center}} View All Notes" button.  
 - When a submission has been edited, a note is added in that submission's "Notes" log that lists the editor's user name and the time it was edited, along with the message, "This submission has been edited." This is accessible from the submission's "{{icon:document-text size-4 inline-block align-text-center}} View All Notes" button or while fully viewing a single submission via the "{{icon:arrow-top-right-on-square size-4 inline-block align-text-center}} pop-out " button.
 - If desired, a form's contributors can receive a notification when a form has been edited.
 
-### "History" button- 
-View every action that has been taken on that submission so far. When selected, a modal will display the "Process History." First, with "Action By," for the user's name, "Action," for the kind of action they took on the form, and "Date," for the date and timestamp of that action. *You may also choose to "show conditional steps" for a more in-depth insight into the flow's parameters (not interesting to most of us).* 
 ### History - 
 View every action that has been taken on that submission so far. When selected, a modal will display the "Process History." "Action By," lists the user's name, "Action," displays the kind of action they took on the form, and under "Date," is  the date and timestamp of that action. *You may also choose to "show conditional steps" for a more in-depth insight into the flow's parameters (not interesting to most of us).* 
 ### Final Status or Pending on - 
@@ -46,10 +45,28 @@ If not listed as "Approved" or "Denied," a color-coded box, or boxes, with the i
 	- 
 ### Time stamp(s) -  
 While still pending, only the date and time the submission was created is listed. When the submission has reached finality, whether through approval or denial, the date and time of its completion, or when it was last edited, is listed as well. 
+
 ### {{icon:cog-6-tooth size-4 inline-block align-text-center}} (Options) -
-Clicking the gear icon presents a side-bar from the right side of your screen that   lists available options for interacting with a submission. Some of these, like ["+ Add Note"](Submissions/Submission_View#Add%20Note) are available in other places on the submission. 
+Clicking the gear icon presents you with a side-bar from the right of your screen that lists available options for interacting with a submission. 
 
+- **+ Add Note** - Selecting to add a note from the Options menu opens directly to the notes creation modal. *See  ["+ Add Note"](#+ Add-Note) for more in depth information on adding notes.*
 
+- **{{icon:calendar size-4 inline-block align-text-center}} Reminders** - If you would like a message to be sent to you, at a specific time, in relation to a submission, select "Reminders" from the Options menu of that submission. A modal appear with these options:
+	- When - set the date for the reminder, or for when the reminders are to begin
+	- Frequency - 
+		- One Time - for one reminder, set on one specific date
+		- Recurring - Select for reminders to be sent at an interval of your choosing
+			- Interval - number of units between reminders
+			- Frequency - unit of time (day, week, month, year)
+			- Ends - 
+				- Never - Select to have reminders continue in perpetuity
+				- On - Select to end reminders on a specified date (date selection box appears when "On" is selected)
+				- After - Select for reminders to end after a certain number have been sent. When selected, an "Occurrences" box appears to allow the number of reminders to be selected.
+	- Trigger - A trigger is an actionIf at the time of the form's flow design, a trigger has been created
+
+- **{{icon:printer size-4 inline-block align-text-center}} Print**- If you select to print from the Options menu, the submission will be reloaded on its own page, from which you see the full, individual submission for printing. 
+
+- 
 
 ### {{icon:arrow-top-right-on-square size-4 inline-block align-text-center}} (Pop-out) - 
 Fully view a single submission on a reloaded page.  
@@ -62,14 +79,12 @@ Fully view all data/entries on the form submission while remaining on your "Subm
 Return to the overview display of the submission's data. The elements displayed in this view are selected at the time of the form's creation. This view option displays attachments as thumbnails and/or viewing links. This button only appears when in the expanded, or, "show more" view, and is also referred to as *Collapsed View.*
 
 ### + Add Note - 
-Add additional information, comments, or attach files for the record. The "+ Add Note" button appears at the bottom of each submission's window and also in the header when in expanded view. 
+Add additional information, comments, or attach files for the record. Notes are visible to anyone with access to the submission, but can be set to "protected" when you need only a group of users to be able to view them. The "+ Add Note" button appears at the bottom of each submission's window and also in the header when in expanded view. 
 
 To add a note:
 1. Click the "+ Add Note" button and a modal window will appear over the top of the submission. 
 	- If other notes have already been submitted, the most recent will appear in a grayed out box that says, "Most Recent Note," along with the name of the user that submitted it and how long ago it was added. *If the displayed note is of a certain length, it will appear truncated with the option to select a "+ read more" and, conversely, a "- read less" button for you to toggle between according to your preference.* 
-	- If more than one note has been added, there will be a button at the top of the modal that gives you the option to "{{icon:document-text size-4 inline-block align-text-center}} View All Notes." This can be selected if you want every note to be displayed for your review. 
-		- When "{{icon:document-text size-4 inline-block align-text-center}} View All Notes" is selected, a slide-out column will present from the right side of your screen that lists all the notes, along with their submitter's name and the time of the note's addition, in order, with the most recent addition at the top. 
-		- Click the "X  Close" button in the top right corner of the slide-out to return to your "Notes" modal window.
+	- If more than one note has been added, there will be a button at the top of the modal that gives you the option to "{{icon:document-text size-4 inline-block align-text-center}} View All Notes." If you want every note to be displayed for your review, click "{{icon:document-text size-4 inline-block align-text-center}} View All Notes." A slide-out column will present from the right side of your screen that lists all the notes, along with their submitter's name and the time of the note's addition, in order, with the most recent addition at the top.  Click the "X  Close" button in the top right corner of the slide-out to return to your "Notes" modal window.
 2. Next, you can optionally select permitted users to be notified of your notes addition. 
 	- By default, the person that was the form's submitter will be selected for notification when a note is added, and their name and email address will be displayed in the dropdown box under the label, "Notify Selected Users." 
 	- If you click the box, the dropdown will display all users that are included in the flow-steps for that form, along with a search bar. Scroll through, or search, for the user/s you would like to add or remove. 
@@ -90,7 +105,7 @@ To add a note:
 	
 - **{{icon:document-text size-4 inline-block align-text-center}} View All Notes** - displays all notes submitted along with user name and time stamp. This button will appear beside the "+ Add Note" button at the bottom of the submission's window when other notes exist.
 
-- DELETING YOUR NOTES - 
+- **Deleting Your Notes** -  When viewing all notes from the slide-out column or "{{icon:arrow-top-right-on-square size-4 inline-block align-text-center}} (Pop-out)" view, any note you contributed will appear with a trash can ({{icon:trash size-4 inline-block align-text-center}}) icon beside it that allows you to delete any note you contributed. Admin can also delete notes added by any user. 
 
 
 
