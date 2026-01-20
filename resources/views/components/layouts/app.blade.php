@@ -128,6 +128,10 @@
 
                                     <flux:menu>
                                         <flux:menu.item href="{{ route('settings') }}" icon="user">Settings</flux:menu.item>
+                                        @can('manage-videos')
+                                            <flux:menu.separator />
+                                            <flux:menu.item href="https://dash.bunny.net" target="_blank" icon="server-stack">Bunny CDN</flux:menu.item>
+                                        @endcan
                                         <flux:menu.separator />
                                         <flux:menu.item
                                             icon="arrow-right-start-on-rectangle"
