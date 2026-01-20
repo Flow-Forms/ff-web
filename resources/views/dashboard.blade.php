@@ -24,32 +24,7 @@ $videos = Video::query()->published()->ordered()->get();
                 @foreach($videos as $video)
                     <a href="/video/{{ $video->slug }}" class="group block">
                         <flux:card class="overflow-hidden hover:shadow-lg transition-shadow">
-                            {{-- Thumbnail --}}
-                            <div class="aspect-video bg-zinc-100 dark:bg-zinc-800 relative overflow-hidden">
-                                @if($video->thumbnail_url)
-                                    <img
-                                        src="{{ $video->thumbnail_url }}"
-                                        alt="{{ $video->title }}"
-                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                    >
-                                @else
-                                    <div class="w-full h-full flex items-center justify-center">
-                                        <flux:icon.play-circle class="size-16 text-zinc-300 dark:text-zinc-600" />
-                                    </div>
-                                @endif
-
-                                {{-- Duration Badge --}}
-                                @if($video->duration_seconds)
-                                    <div class="absolute bottom-2 right-2 px-2 py-1 bg-black/75 rounded text-white text-xs font-medium">
-                                        {{ $video->getFormattedDuration() }}
-                                    </div>
-                                @endif
-
-                                {{-- Play overlay --}}
-                                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30">
-                                    <flux:icon.play-circle class="size-16 text-white" />
-                                </div>
-                            </div>
+                            <x-video-thumbnail :video="$video" />
 
                             {{-- Content --}}
                             <div class="p-4">
