@@ -6,17 +6,24 @@ use App\Jobs\SyncVideoTranscription;
 use App\Jobs\TriggerVideoTranscription;
 use App\Models\Video;
 use App\Services\BunnyStreamService;
+use Flux\Flux;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+use Livewire\WithFileUploads;
 
 new class extends Component
 {
+    use WithFileUploads;
+
     public ?int $deletingVideoId = null;
     public ?int $editingVideoId = null;
     public ?int $viewingTranscriptId = null;
     public string $editTitle = '';
     public string $editDescription = '';
+    public ?int $uploadingThumbnailForVideoId = null;
+    public $thumbnailFile = null;
 
     #[Computed]
     public function videos()
@@ -255,6 +262,51 @@ new class extends Component
 
         return "videos/{$date}/".uniqid().'.'.$extension;
     }
+
+    public function updatedThumbnailFile(): void
+    {
+        if (! $this->thumbnailFile instanceof TemporaryUploadedFile) {
+            return;
+        }
+
+        $this->validate([
+            'thumbnailFile' => ['image', 'max:10240', 'mimes:jpeg,png,webp'],
+        ]);
+
+        $videoId = $this->uploadingThumbnailForVideoId;
+        if (! $videoId) {
+            return;
+        }
+
+        $video = Video::find($videoId);
+        if (! $video || ! $video->bunny_video_id) {
+            $this->reset(['thumbnailFile', 'uploadingThumbnailForVideoId']);
+
+            return;
+        }
+
+        // Store to R2
+        $path = $this->thumbnailFile->store('thumbnails/'.now()->format('Y/m'), 's3');
+
+        // Send to Bunny
+        $bunny = app(BunnyStreamService::class);
+        $thumbnailUrl = Storage::disk('s3')->url($path);
+        $success = $bunny->setThumbnail($video->bunny_video_id, $thumbnailUrl);
+
+        if ($success) {
+            $video->update([
+                'thumbnail_url' => $bunny->getThumbnailUrl($video->bunny_video_id),
+            ]);
+            unset($this->videos);
+            Flux::toast('Thumbnail updated successfully.', variant: 'success');
+        } else {
+            // Cleanup the orphaned file from R2
+            Storage::disk('s3')->delete($path);
+            Flux::toast('Failed to update thumbnail. Please try again.', variant: 'danger');
+        }
+
+        $this->reset(['thumbnailFile', 'uploadingThumbnailForVideoId']);
+    }
 };
 ?>
 
@@ -272,7 +324,12 @@ new class extends Component
             <flux:card wire:key="video-{{ $video->id }}" class="!p-4">
                 <div class="flex items-start gap-4">
                     {{-- Thumbnail --}}
-                    <div style="width: 160px; height: 96px; flex-shrink: 0;" class="bg-zinc-100 dark:bg-zinc-800 rounded-lg overflow-hidden">
+                    @php $isUploadingThis = $uploadingThumbnailForVideoId === $video->id; @endphp
+                    <label
+                        style="width: 160px; height: 96px; flex-shrink: 0;"
+                        class="bg-zinc-100 dark:bg-zinc-800 rounded-lg overflow-hidden relative block {{ $video->isReady() ? 'cursor-pointer group' : '' }}"
+                        @if($video->isReady()) title="Click to change thumbnail" @endif
+                    >
                         @if($video->thumbnail_url)
                             <img src="{{ $video->thumbnail_url }}" alt="{{ $video->title }}" style="width: 160px; height: 96px; object-fit: cover;">
                         @else
@@ -280,7 +337,30 @@ new class extends Component
                                 <flux:icon.film class="size-8 text-zinc-400" />
                             </div>
                         @endif
-                    </div>
+
+                        @if($video->isReady())
+                            {{-- Hover overlay --}}
+                            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center {{ $isUploadingThis ? '!opacity-0' : '' }}">
+                                <flux:icon.camera class="size-6 text-white" />
+                            </div>
+
+                            {{-- Upload loading overlay --}}
+                            @if($isUploadingThis)
+                                <div class="absolute inset-0 bg-black/60 flex items-center justify-center">
+                                    <flux:icon.arrow-path class="size-6 text-white animate-spin" />
+                                </div>
+                            @endif
+
+                            {{-- Hidden file input --}}
+                            <input
+                                type="file"
+                                wire:model="thumbnailFile"
+                                x-on:change="if ($event.target.files.length > 0) $wire.set('uploadingThumbnailForVideoId', {{ $video->id }})"
+                                accept="image/jpeg,image/png,image/webp"
+                                class="hidden"
+                            >
+                        @endif
+                    </label>
 
                     {{-- Info --}}
                     <div class="flex-1 min-w-0">
