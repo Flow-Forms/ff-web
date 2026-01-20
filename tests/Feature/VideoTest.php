@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\VideoStatus;
+use App\Jobs\UpdateVideoThumbnail;
 use App\Models\User;
 use App\Models\Video;
 use App\Services\BunnyStreamService;
@@ -610,6 +611,91 @@ describe('BunnyStreamService setThumbnail', function () {
 
         Http::assertSent(function ($request) use ($thumbnailUrl) {
             return str_contains($request->url(), urlencode($thumbnailUrl));
+        });
+    });
+});
+
+describe('UpdateVideoThumbnail Job', function () {
+    it('updates video thumbnail on success', function () {
+        Http::fake([
+            'video.bunnycdn.com/*' => Http::response(['success' => true], 200),
+        ]);
+
+        Storage::fake('s3');
+        Storage::disk('s3')->put('thumbnails/2026/01/test.jpg', 'fake-image-content');
+
+        $video = Video::factory()->create([
+            'bunny_video_id' => 'test-video-123',
+            'thumbnail_url' => null,
+        ]);
+
+        $job = new UpdateVideoThumbnail($video, 'thumbnails/2026/01/test.jpg');
+        $job->handle(app(BunnyStreamService::class));
+
+        $video->refresh();
+        expect($video->thumbnail_url)->not->toBeNull();
+        expect($video->thumbnail_url)->toContain('test-video-123');
+    });
+
+    it('cleans up S3 file on failure after max retries', function () {
+        Http::fake([
+            'video.bunnycdn.com/*' => Http::response(['error' => 'Failed'], 500),
+        ]);
+
+        Storage::fake('s3');
+        Storage::disk('s3')->put('thumbnails/2026/01/test.jpg', 'fake-image-content');
+
+        $video = Video::factory()->create([
+            'bunny_video_id' => 'test-video-123',
+        ]);
+
+        $job = new UpdateVideoThumbnail($video, 'thumbnails/2026/01/test.jpg');
+
+        // Simulate being on the final attempt
+        $reflection = new ReflectionClass($job);
+        $method = $reflection->getMethod('failed');
+        $method->invoke($job, new Exception('Test failure'));
+
+        Storage::disk('s3')->assertMissing('thumbnails/2026/01/test.jpg');
+    });
+
+    it('does not update thumbnail when video has no bunny_video_id', function () {
+        Storage::fake('s3');
+        Storage::disk('s3')->put('thumbnails/2026/01/test.jpg', 'fake-image-content');
+
+        $video = Video::factory()->create([
+            'bunny_video_id' => null,
+            'thumbnail_url' => null,
+        ]);
+
+        $job = new UpdateVideoThumbnail($video, 'thumbnails/2026/01/test.jpg');
+        $job->handle(app(BunnyStreamService::class));
+
+        $video->refresh();
+        expect($video->thumbnail_url)->toBeNull();
+        Storage::disk('s3')->assertMissing('thumbnails/2026/01/test.jpg');
+    });
+
+    it('dispatches job when thumbnail is uploaded via Livewire', function () {
+        Queue::fake();
+        Storage::fake('s3');
+        Http::fake();
+
+        $user = User::factory()->create(['email' => 'admin@flowforms.io']);
+        $video = Video::factory()->create([
+            'bunny_video_id' => 'test-video-123',
+        ]);
+
+        $thumbnailFile = \Illuminate\Http\UploadedFile::fake()->image('thumbnail.jpg', 1920, 1080);
+
+        actingAs($user);
+
+        Livewire::test('admin.video-manager')
+            ->set('uploadingThumbnailForVideoId', $video->id)
+            ->set('thumbnailFile', $thumbnailFile);
+
+        Queue::assertPushed(UpdateVideoThumbnail::class, function ($job) use ($video) {
+            return $job->video->id === $video->id;
         });
     });
 });

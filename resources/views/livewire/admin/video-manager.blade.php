@@ -4,6 +4,7 @@ use App\Enums\TranscriptionStatus;
 use App\Enums\VideoStatus;
 use App\Jobs\SyncVideoTranscription;
 use App\Jobs\TriggerVideoTranscription;
+use App\Jobs\UpdateVideoThumbnail;
 use App\Models\Video;
 use App\Services\BunnyStreamService;
 use Flux\Flux;
@@ -288,23 +289,11 @@ new class extends Component
         // Store to R2
         $path = $this->thumbnailFile->store('thumbnails/'.now()->format('Y/m'), 's3');
 
-        // Send to Bunny
-        $bunny = app(BunnyStreamService::class);
-        $thumbnailUrl = Storage::disk('s3')->url($path);
-        $success = $bunny->setThumbnail($video->bunny_video_id, $thumbnailUrl);
+        // Dispatch job to update thumbnail asynchronously
+        // This avoids timeout issues when Bunny CDN fetches and processes the image
+        UpdateVideoThumbnail::dispatch($video, $path);
 
-        if ($success) {
-            $video->update([
-                'thumbnail_url' => $bunny->getThumbnailUrl($video->bunny_video_id),
-            ]);
-            unset($this->videos);
-            Flux::toast('Thumbnail updated successfully.', variant: 'success');
-        } else {
-            // Cleanup the orphaned file from R2
-            Storage::disk('s3')->delete($path);
-            Flux::toast('Failed to update thumbnail. Please try again.', variant: 'danger');
-        }
-
+        Flux::toast('Thumbnail upload started. It will be updated shortly.', variant: 'success');
         $this->reset(['thumbnailFile', 'uploadingThumbnailForVideoId']);
     }
 };

@@ -120,12 +120,15 @@ class BunnyStreamService
 
     /**
      * Set a custom thumbnail for a video from an external URL.
+     *
+     * Note: This operation can be slow as Bunny CDN must fetch and process
+     * the image from the provided URL. Uses an extended timeout.
      */
     public function setThumbnail(string $videoId, string $thumbnailUrl): bool
     {
-        $response = $this->client()->post(
-            "{$this->libraryId}/videos/{$videoId}/thumbnail?thumbnailUrl=".urlencode($thumbnailUrl)
-        );
+        $response = $this->client()
+            ->timeout(90)
+            ->post("{$this->libraryId}/videos/{$videoId}/thumbnail?thumbnailUrl=".urlencode($thumbnailUrl));
 
         return $response->successful();
     }
