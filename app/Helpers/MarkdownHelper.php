@@ -84,6 +84,10 @@ class MarkdownHelper
                 'symbol' => '',
                 'aria_hidden' => true,
             ],
+            // Use Laravel's Str::slug() for heading IDs to match anchor link normalization
+            'slug_normalizer' => [
+                'instance' => new LaravelSlugNormalizer,
+            ],
         ]);
 
         $environment->addExtension(new CommonMarkCoreExtension);

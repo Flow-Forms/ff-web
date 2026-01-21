@@ -299,6 +299,26 @@ describe('Markdown link normalization', function () {
 
         expect($html)->toContain('href="#quick-filters"');
     });
+
+    it('generates heading IDs that match anchor link normalization', function () {
+        $markdown = <<<'MD'
+## My Complex Heading Name
+
+Some content here.
+
+[Jump to heading](#My Complex Heading Name)
+MD;
+
+        $html = \App\Helpers\MarkdownHelper::parse($markdown);
+
+        // Extract the heading ID
+        preg_match('/id="([^"]+)"/', $html, $idMatch);
+        // Extract the anchor href
+        preg_match('/href="#([^"]+)"/', $html, $hrefMatch);
+
+        expect($idMatch[1])->toBe($hrefMatch[1])
+            ->and($idMatch[1])->toBe('my-complex-heading-name');
+    });
 });
 
 describe('Dynamic file discovery and accessibility', function () {
