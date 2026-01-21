@@ -8,15 +8,15 @@ Flow Forms provides comprehensive filtering options to find exactly what you nee
 
 To access the complete filter menu, start from the "{{icon:paper-clip size-4 inline-block align-text-center}} Submissions" page, and click the blue "{{icon:adjustments-horizontal size-4 inline-block align-text-center}} Filters" button in the Submissions Control Panel. A slide-out menu will present from the right side of the screen. If any filters are currently active, there will be a "Clear All" button available at the top. Clear the filters if you are starting a new search to be certain previous filtering choices are not active and limiting your search results. Your [Submission Count](submissions/Search_Bar#Submission%20Count) is also displayed at the top of this menu, beside "Filters," and will adjust in accordance with any filtering options you select. If your submission count displays "0" there are no submissions that fit your search criteria.
 
-Apply multiple filters simultaneously to narrow your search results. Choose to filter with any of these options:
-- Forms
-- Terms
-- Flow Step
-- Date Range
-- Status
-- Submitted By
-- Pending On
-- Participants
+Apply multiple filters simultaneously to narrow your displayed search results. Choose to filter by any of these form criteria:
+- [Forms](#Forms)
+- [Terms](#Terms)
+- [Flow Step](#Flow Step)
+- [Date Range](#Start date / End date)
+- [Status](Submission Status)
+- [Submitted By](#Submitted by)
+- [Pending On](#Pending on)
+- [Participants](Participated in Submission)
 
 Once all filtering selections are complete, click the blue, "{{icon:funnel size-4 inline-block align-text-center}} Apply Filters" button at the bottom of the menu. Either click on the submissions page that is in the background (off of the slide-out menu), or click the "X" in its top right corner, to exit the "Filters" menu and view your specified submission results.
 
@@ -106,7 +106,7 @@ By default, the list of users that populates in the drop-down will only include 
 
 
 
-### Saved Filters
+## Saved Filters
 
 For frequently accessed search criteria, you have the option to save a filter and name it accordingly. Follow these steps to create reusable filters:
 1. **Make your filtering selections** - Utilize any or all of the above mentioned filters.
@@ -117,41 +117,21 @@ For frequently accessed search criteria, you have the option to save a filter an
 
 
 ## Clear Filters 
-Any time a filter of any type is active, the option to *"Clear Filters"* will appear on the submission management panel, to the right of the *"Filters"* button, beside the search bar. Clicking this removes **all** active filters (including in your search bar) and restores the presentation of the full list of submissions available to you. 
+Any time a filter of any type is active, the option to *"Clear Filters"* will appear on the Submissions Control Panel, to the right of the *"Filters"* button, beside the search bar. Clicking this removes **all** active filters (including in your search bar) and restores the presentation of the full list of submissions available to you. 
 
 Since Flow Forms saves and displays your last filter selections on your "Submissions" page, the option to "Clear filters" is also available from the main sidebar, beside "{{icon:paper-clip size-4 inline-block align-text-center}} Submissions," if you wish to clear your filters at the onset of loading your submission page.
 
 
 ## Quick-Filters
-Two of the most commonly used filters, *"Forms"* and *"Status,"*  are easily accessible from their links on the submission management panel. 
+Two of the most commonly used filters, *"Forms"* and *"Status,"*  are easily accessible from their links on the Submissions Control Panel. 
 
 "{{icon:document-duplicate size-4 inline-block align-text-center}} Forms" is located just below the search bar on its left side. To filter by form, click to show a drop down menu with search option. All your forms are listed in alphabetical order and can be scrolled through or found by searching for the form title. Click to select the form or forms you would like to include in your search. A checkmark will appear to the left of any form you have selected. If no form is selected as a filter, submissions from every form will be included in your displayed results.
 
-"{{icon:check-badge size-4 inline-block align-text-center}} Status" is located below the search bar, but on its right side. To filter by a submission's status, click to see every status option listed (color coded) with a select box to the left of each. Click in the box of any status, and a checkmark will indicate its selection. Click the checkmark to unselect that status from your filtered results. If no status is selected, submissions of every status will be included in your displayed results.
+"{{icon:check-badge size-4 inline-block align-text-center}} Status" is located below the search bar, but on its right side. To filter by a submission's status, click to see every status option listed (color coded) with a select box to the left of each. Click in the box of any status, and a checkmark will indicate its selection. Click the checkmark again to unselect that status from your filtered results. If no status is selected, submissions with every status will be included in your displayed results.
 
-When "Forms" or "Status" filters are active, their name will appear listed on the submissions management panel, below the search bar, on their respective sides, with the option to "X" out of any that you would like to remove from filtering.
+When "Forms" or "Status" filters are active, their name will appear listed on the Submissions Control Panel, below the search bar, on their respective sides, with the option to "X" out of any that you would like to remove from filtering.
 
 
-### Submission View
-
-Navigate to any of the entries that have populated below the Submission Page header to view a form's submission data. 
-
-The header of every individual submission displays:
-- Form Title/Name - click to start a new submission of that form type 
-- Name of the submitter
-- "Edit" icon - if permission to edit is allowed, you may alter the inputs and add data/comments to the submission
-- "History" button - View every action that has been taken on that submission so far. *You may also choose to "show conditional steps" for a more in-depth insight into the flow's parameters (not interesting to most of us)* 
-- Status of the submission - if not "Approved," it will list on whom it is pending
-- Time the submission was created
-- Time the submission was last updated
-- Gear icon for "Options" -
-- "Pop-out" {{icon:arrow-top-right-on-square size-4 inline-block align-text-center}} - fully view a single submission on a reloaded page.
-- "Show More" button - fully view all data/entries on the form while remaining on your "Submissions" page. Also referred to as *Expanded View*
-	- *Most attached documents (ex: .png, .jpeg) will also expand in view. PDFs will display a "view PDF" link in order to view the attachment in a modal window. Alternatively, you can click the attachment's link below it to download the attached document or photo.*
-- "Show Less" button - return to the overview display of that submission (appears when in the expanded/"show more" view). Also referred to as *Collapsed View*
-- "+ Add Note" button - add additional information, comments, or attach files for the record. (Button appears at the bottom of each submission's window and also in the header when in expanded view. When viewing a full submission from the "Pop-out" option, *Notes* appear in a column on the right of the submission data with the most recent at the top. This view also includes the option to "hide notes.") 
-	- *When adding a note, you can optionally select permitted users to be notified of your addition. If you do not wish to notify a user that is selected, click their info from the dropdown to unselect them. If there are no notifications selected, the drop down box will display "No Users." You can also save your note as a draft and close*
-- "View all notes" button - displays all notes submitted along with user name and time stamp (appears beside the "Add Note" button at the bottom of the submission's window when other notes exist).
 
 
 
