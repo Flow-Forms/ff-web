@@ -6,7 +6,7 @@ order: 6
 
 # Submission View
 
-From the, "{{icon:paper-clip size-4 inline-block align-text-center}} Submissions" page, navigate to any of the entries that have populated below the Control Panel to view individual form submissions. Submissions are listed with up to 20 per page. There is a forward/backward button at the bottom of the page to allow for access to any additional pages of filtered results and submissions.
+From the "{{icon:paper-clip size-4 inline-block align-text-center}} Submissions" page, navigate to any of the entries that have populated below the Control Panel to view individual form submissions. Submissions are listed with up to 20 per page. There is a forward/backward button at the bottom of the page for access to any additional pages of filtered results/submissions.
 
 ## Submission Header
 The header of each submission contains all of the controls, status indicators, and options available for you to understand and directly interact with a submission. 
@@ -37,88 +37,107 @@ If a form's permissions have been set to allow editing, you may alter the inputs
 - If desired, a form's contributors can receive a notification when a form has been edited.
 
 ### History - 
-View every action that has been taken on that submission so far. When selected, a modal will display the "Process History." "Action By," lists the user's name, "Action," displays the kind of action they took on the form, and "Date" specifies is date and timestamp of that action. *You may also choose to "show conditional steps" for a more in-depth insight into the flow's parameters (not interesting to most of us).* 
+View every action that has been taken on that submission so far. When selected, a modal will display the "Process History." 
+- "Action By"- lists the user's name
+- "Action"- displays the kind of action they took on the form
+- "Date"- specifies the date and timestamp of that action
+
+*You may also choose to "show conditional steps" for a more in-depth insight into the flow's parameters (not interesting to most of us).*
+
 ### Final Status or Pending on - 
 If not listed as "Approved" or "Denied," a color-coded box, or boxes, with the initials of the user/s on whom the submission is pending will appear. 
-	- If it is pending on a single user, their full name will be presented alongside. 
-	- If there are multiple user actions pending, you can click the boxes, containing their initials, to view a modal window that lists the full names of the users that have actions still required for the submission to complete the required steps in its flow and be finalized.
+- If it is pending on a single user, their full name will be presented alongside. 
+- If there are multiple user actions pending, you can click the boxes, containing their initials, to view a modal window that lists the full names of the users that have actions still required for the submission to complete the required steps in its flow and be finalized.
 
 ### Time stamp(s) -  
 While still pending, only the date and time the submission was created is listed. When the submission has reached finality, whether through approval or denial, the date and time of its completion, or when it was last edited, is listed as well. 
 
 ### {{icon:cog-6-tooth size-4 inline-block align-text-center}} (Options) -
-Clicking the gear icon in a submission's header presents you with a side-bar from the right of your screen that lists available options for interacting with a submission. These vary greatly by the user's permissions and the form submission selected. Options you may be presented with are as follows: 
+Clicking the gear icon in a submission's header presents you with a side-bar from the right of your screen that says, "Submission Options." Just below that, the name/title of the form is listed along with its Submission ID (starts with "#sub_" followed by a string of letters and numbers that are unique to that submission). The menu below that lists the available options you have for interacting with that submission. These vary greatly by the user's permissions and the submission selected. Options you may be presented with are as follows: 
 
 - #### + Add Note
-Selecting to add a note from the Options menu opens directly to the notes creation modal. *See  ["+ Add Note"](#+ Add-Note) for more information on adding notes.*
+	Selecting to add a note from the Options menu opens directly to the notes creation modal. *See  ["+ Add Note"](#+ Add-Note) for more information on adding notes.*
 
 - #### {{icon:share size-4 inline-block align-text-center}} Share
-Unless a form is set up as "private," as the owner/submitter of a form, or as an administrator, you have the ability to share a particular submission, or all your submissions on a particular form, with another Flow Forms user. 
+	Unless a form is set up as "private," as the owner/submitter of a form, or as an administrator, you have the ability to share a particular submission, or all your submissions on a particular form, with another Flow Forms user. 
 
-Choosing "{{icon:share size-4 inline-block align-text-center}} Share," under "{{icon:cog-6-tooth size-4 inline-block align-text-center}} (Options)," opens a modal that presents you with a searchable drop-down box of users that says "Select User to Share Submissions With." Select a user's name and a checkmark will appear beside their info and their name and email address will appear in the drop-down box. 
+	Choosing "{{icon:share size-4 inline-block align-text-center}} Share" under the "{{icon:cog-6-tooth size-4 inline-block align-text-center}} (Options)" menu opens a modal that presents you with a searchable, drop-down box of users that says "Select User to Share Submissions With." Select a user's name and a checkmark will appear beside their info and their name and email address will appear in the drop-down box. 
 
-Under this, there is a select-box that lets you choose from two ways of sharing: 
-- "Only this submission" - Allows your selected user to view *only the single submission* from which you navigated.
-- "All submissions on this form" - Choosing this will allow your selected user to view *every submission* you have made to the form from which you navigated, not just the single submission. 
+	Under this, there is a select-box that lets you choose from two ways of sharing: 
+	- "Only this submission" - Allows your selected user to view *only the single submission* from which you navigated.
+	- "All submissions on this form" - Choosing this will allow your selected user to view *every submission* you have made to the form from which you navigated, not just the single submission. 
 
-If previous sharing has been set, that info is presented at the bottom of the modal with a differentiation made between the two types of sharing: "This submission only," or "All submissions on this form." If none exist, "Not shared with anyone" will be displayed. 
-Once you click the blue, "Share" button, your new sharing setting will appear in this section. Other users can be added, one at a time, for additional sharing. If you would like to remove access that you have granted in this manner, select the "{{icon:trash size-4 inline-block align-text-center}}(trash)" icon beside their user info and a prompt will appear that asks, "Are you sure you want to remove sharing with this user?" Click "Cancel" to exit without removing or "OK" to remove and stop allowing that user to view a submission or all your submissions for that form.
+	If previous sharing has been set, that info is presented at the bottom of the modal with a differentiation made between the two types of sharing: "This submission only," or "All submissions on this form." If none exist, "Not shared with anyone" will be displayed.
+	
+	Once you click the blue, "Share" button, your new sharing setting will appear in this section. Other users can be added, one at a time, for additional sharing. If you would like to remove access that you have granted in this manner, select the "{{icon:trash size-4 inline-block align-text-center}}(trash)" icon beside their user info and a prompt will appear that asks, "Are you sure you want to remove sharing with this user?" Click "Cancel" to exit without removing or "OK" to remove and stop allowing that user to view a submission or all your submissions for that form.
+	
 
-*Advanced Sharing:* Clicking the blue, "Advanced sharing," link under the sharing options select-box takes you to the advanced sharing options for you as a user. 
+	***Advanced Sharing:*** Clicking the blue, "Advanced sharing" link under the sharing options select-box takes you to the advanced sharing options for you as a user. 
 
-From the "Sharing" modal, you may select to turn on a toggle switch that says "All Submissions." Do this if you would like to designate a user to be allowed to view all your submissions to all of your forms. If this is turned "on," the only remaining selection is a drop-down box, with search capability, labeled, "Share with Selected Users." From this, you may select the user's name with whom you would like to share your viewing permissions. A checkmark will appear beside their name once selected, and their name will also appear in the drop-down box. Click the blue, "Save" button to submit this new share or "X" our of the modal to exit without saving.
+	From the "Sharing" modal, you may select to turn on a toggle switch that says "All Submissions." Do this if you would like to designate a user to be allowed to view all your submissions to all of your forms. If this is turned "on," the only remaining selection is a drop-down box, with search capability, labeled, "Share with Selected Users." From this, you may select the user's name with whom you would like to share your viewing permissions. A checkmark will appear beside their name once selected, and their name will also appear in the drop-down box. Click the blue, "Save" button to submit this new share or "X" our of the modal to exit without saving.
 
-If you select for the "All Submissions" switch to be "off," you are left with two, searchable, drop-down boxes. The first says, 'Submissions From Selected Forms," and lists all the forms you are included in. Select the form you'd like to share, a checkmark will appear beside it, and the form name will appear in the drop-down box. Repeat the process of selecting the user under the, "Share with Selected Users" drop-down, for the user you'd like to grant access to that form, and their name will appear in the box. This allows the user viewing access to all your submissions, but only on the specified form. Click the blue, "Save" to activate the new share, or "X" to exit without saving.
+	If you select for the "All Submissions" switch to be "off," you are left with two, searchable, drop-down boxes. The first says, 'Submissions From Selected Forms," and lists all the forms you are included in. Select the form you'd like to share, a checkmark will appear beside it, and the form name will appear in the drop-down box. Under the, "Share with Selected Users" drop-down, select the user you'd like to grant access to that form, and their name will appear in the box. This allows the user viewing access to all your submissions, but only on the specified form. Click the blue, "Save" to activate the new share, or "X" to exit without saving.
 
-Any prior selections of sharing will appear at the bottom of the modal under their category of either an "Individual Shared Submission" or "Submissions Shared by Form." These are listed with the user's name that is being shared with, and the number of Forms that are being shared with them.  To see the listing of forms shared, click the user's name and the form name/s will populate below with the "{{icon:trash size-4 inline-block align-text-center}}(trash)" icon beside them. Click the trash icon to delete the sharing for that form. A window will appear asking, "Are you sure you want to delete this share?" Click "Cancel" to exit without deleting the share or "OK" to proceed with deleting. 
+	Any prior selections of sharing will appear at the bottom of the modal under their category of either an "Individual Shared Submission" or "Submissions Shared by Form." These are listed with the user's name that is being shared with, and the number of Forms that are being shared with them.  To see the listing of forms shared, click the user's name and the form name/s will populate below with the "{{icon:trash size-4 inline-block align-text-center}}(trash)" icon beside each of them. Click the trash icon to delete the sharing for that form. A window will appear asking, "Are you sure you want to delete this share?" Click "Cancel" to exit without deleting the share or "OK" to proceed with deleting and cease sharing on that form. 
 
-When there is no sharing set up on any of your forms, in the modal, under "Individual Shared Submissions" it will say, "No submissions individually." And under "Submissions Shared by Form" it will say, "No submissions shared by form."
+	When there is no sharing set up on any of your forms, in the modal, under "Individual Shared Submissions" it will say, "No submissions individually." And under "Submissions Shared by Form" it will say, "No submissions shared by form."
+
 
 
 
 - #### {{icon:calendar size-4 inline-block align-text-center}} Reminders  
-If you would like an email and/or text message to be sent to you, at a specific time, linking to a submission, select "{{icon:calendar size-4 inline-block align-text-center}} Reminders" from the Options menu of that submission. A modal will appear with these options:
+	If you would like an email and/or text message to be sent to you, at a specific time, linking to a submission, select "{{icon:calendar size-4 inline-block align-text-center}} Reminders" from the Options menu of that submission. A modal will appear with these options:
 	- **When** - set the date for the reminder, or for when the reminders are to begin
 	- **Frequency** - 
 		- One Time - for one reminder, sent one time (on date set above)
-		-  Recurring - Select for reminders to be sent at an interval of your choosing
+		- Recurring - Select for reminders to be sent at an interval of your choosing
 			- Interval - number of units between reminders
 			- Frequency - unit of time (day, week, month, year)
-				- Ends - 
-					- Never - Select to have reminders continue in perpetuity
-					- On - Select to end reminders on a specified date (date selection box appears when "On" is selected)
-					- After - Select for reminders to end after a certain number have been sent. When selected, an "Occurrences" box appears to allow the number of reminders to be selected.
-	- **Trigger** - A trigger is an action that is auto-deployed at the time of a set occurrence in a form's flow. If, at the time of the form's flow design, a trigger has been created, it will appear here as an option to deploy that trigger at the time specified by your reminder. Both the trigger's action and your reminder communication will occur when this is selected from reminders.
-	- **Message** - Type your desired communication for the reminder in this section. It will be sent as your reminder message via email, and SMS if selected, along with abbreviated submission info and a link to the submission.
-	- **Send SMS** - Toggle button is off by default. Click to turn on if a text message reminder is desired, in addition to the default email notification. 
+			- Ends - 
+				- Never - Select to have reminders continue in perpetuity
+				- On - Select to end reminders on a specified date (date selection box appears when "On" is selected)
+				- After - Select for reminders to end after a certain number have been sent. When selected, an "Occurrences" box appears to allow the number of reminders to be selected.
+	-  **Trigger** - A trigger is an action that is auto-deployed at the time of a set occurrence in a form's flow. If, at the time of the form's flow design, a trigger has been created, it will appear here as an option to deploy that trigger at the time specified by your reminder. Both the trigger's action and your reminder communication will occur when this is selected from reminders.
+	-  **Message** - Type your desired communication for the reminder in this section. It will be sent as your reminder message via email, and SMS if selected, along with abbreviated submission info and a link to the submission.
+	-  **Send SMS** - Toggle button is off by default. Click to turn on if a text message reminder is desired, in addition to the default email notification. 
 	- **Current Reminders** - If any reminders are already set on the submission, they will appear here, listed with their "Type" and "Message." If there are none, "No reminders set" will appear.
 	- Click "Cancel" to exit reminders or click "Add Reminder" to set your reminder with the parameters you have selected.
 
 
 - #### {{icon:printer size-4 inline-block align-text-center}} Print
-If you select to print from the Options menu, the submission will be reloaded on its own page, from which you see the full, individual submission for printing. 
+	If you select to print from the Options menu, the submission will be reloaded on its own page, from which you see the full, individual submission for printing. 
 
 - #### {{icon:document-text size-4 inline-block align-text-center}} Download as PDF 
-Instantly downloads the submission, to your device, as a PDF
+	Instantly downloads the submission, to your device, as a PDF
 
 - #### {{icon:document-duplicate size-4 inline-block align-text-center}} Copy Submission 
-Selecting to copy a submission loads the same form on a new page with a copy of that submission's data already loaded. The submission is then ready for any alterations or additions for it to be submitted anew as its own new submission. This is convenient if you have multiple very similar form submissions to create and don't want to have to enter redundant information.
+	Selecting to copy a submission loads the same form on a new page with a copy of that submission's data already loaded. The submission is then ready for any alterations or additions for it to be submitted anew as its own submission. This is convenient if you have multiple very similar form submissions to create and don't want to have to enter redundant information.
 
 - #### {{icon:arrow-path size-4 inline-block align-text-center}} Restart Submission 
-If you are the owner/submitter of a form, or an administrator, you have the option to restart a submission. This takes you to a page with the selected form submission reloaded, but not yet submitted. If you have any alterations or additions to make, you can do so before clicking the blue, "Submit" button at the bottom. This restarts your submission at the beginning of its flow and any actions that had already been taken will have to be completed again for it to reach approval/completion.
+	If you are the owner/submitter of a form, or an administrator, you have the option to restart a submission. This takes you to a page with the selected form submission reloaded, but not yet submitted. If you have any alterations or additions to make, you can do so before clicking the blue, "Submit" button at the bottom. This restarts your submission at the beginning of its flow and any actions that had already been taken will have to be completed again for it to reach approval/completion.
 
 - #### {{icon:trash size-4 inline-block align-text-center}} Delete Submission
-As the owner/submitter of a form, or an administrator, you may delete a submission by selecting "{{icon:trash size-4 inline-block align-text-center}} Delete Submission" from the "{{icon:cog-6-tooth size-4 inline-block align-text-center}} (Options)" menu of that submission. A modal will appear that says, "Are you sure you want to delete this submission? This action cannot be undone." It then lists the name of the form, its ID and the time it was created. Select "Cancel" to exit without deleting, or the red, "Delete Submission" button to delete the submission. Choosing to delete is a permanent action, and that submission with its ID and data will be unable to be recovered.
+	As the owner/submitter of a form, or an administrator, you may delete a submission by selecting "{{icon:trash size-4 inline-block align-text-center}} Delete Submission" from the "{{icon:cog-6-tooth size-4 inline-block align-text-center}} (Options)" menu of that submission. A modal will appear that says, "Are you sure you want to delete this submission? This action cannot be undone." It then lists the name of the form, its submission ID, and the time it was created. Select "Cancel" to exit without deleting, or the red, "Delete Submission," button to delete the submission. Choosing to delete is a permanent action, and that submission ID and data will be unable to be recovered.
 
- - #### #### {{icon:envelope size-4 inline-block align-text-center}} Resend Email
+- #### Undo Approval / Denial
+	This is used to reverse an approved or denied decision. This is an Admin-only emergency function to reverse terminal state (approved/denied) decisions. The last action is undone and the submission will be pending on the user responsible for the last flow-step again.
+	
+	*Use Case*- A submission was approved/denied by mistake and needs to be reversed.
+
+ - #### {{icon:envelope size-4 inline-block align-text-center}} Resend Email
+	 Select this to resend a notification email to the currently assigned user/s. This sends to all users that have active notifies on this submission, but has a rate limit to prevent redundancy/abuse. 
+	 
+	 *Use Case*- The assigned users didn't receive the email or it was lost/deleted.
+	 
+	 
 
 ### {{icon:arrow-top-right-on-square size-4 inline-block align-text-center}} (Pop-out) - 
-Fully view a single submission on a reloaded page.  
-	- From the reloaded page, you can click the "{{icon:arrow-uturn-left size-4 inline-block align-text-center}} Previous Page" link, just above the submission's header on its left end, to return to your submissions page as you left it.
+Fully view a single submission on a reloaded page.  From the reloaded page, you can click the "{{icon:arrow-uturn-left size-4 inline-block align-text-center}} Previous Page" link, just above the submission's header on its left end, to return to your submissions page as you left it.
+
 ### {{icon:arrows-pointing-out size-5 inline-block align-text-center}} Show More - 
 Fully view all data/entries on the form submission while remaining on your "Submissions" page. Also referred to as *Expanded View.*
-	- Most attached documents (ex: .png, .jpeg) will also expand in view. PDFs will display a "view PDF" link in order to view the attachment in a modal window. Alternatively, you can click the attachment's link, just below it, to download the attached document or photo.
-	
+- Most attached documents (ex: .png, .jpeg) will also expand in view. PDFs will display a "view PDF" link in order to view the attachment in a modal window. Alternatively, you can click the attachment's link, just below it, to download the attached document or photo.
+
 ### {{icon:arrows-pointing-in size-5 inline-block align-text-center}} Show Less - 
 Return to the overview display of the submission's data. The elements displayed in this view are selected at the time of the form's creation. This view option displays attachments as thumbnails and/or viewing links. This button only appears when in the expanded, or, "show more" view, and is also referred to as *Collapsed View.*
 
