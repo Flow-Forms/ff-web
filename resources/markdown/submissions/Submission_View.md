@@ -48,10 +48,13 @@ View every action that has been taken on that submission so far. When selected, 
 
 ### Actions / Continue
 #### Actions:
-When a submission is pending on you for viewing and approval, but you don't need to contribute data for the continued progress of the form, the blue, **Actions** button will appear beside **History.**
-Clicking **Actions** opens a slide-out menu from the right side of your screen with the title, **Available Actions** at the top.  Next, the submission data will appear listed with clickable links for viewing and downloading any attached documents or photos. Below the submission data, the options for your action on the form are presented with color coded buttons.
+From the **Submissions** page, when a submission is **Pending On Me** for viewing and approval, but there are no requirements to contribute additional data or input for the continued progress of the form, the blue, **Actions** button will appear beside **History.**
 
-- **Approve** - You are satisfied with the submission data and are allowing it to proceed with your approval. There are two "Approval plus" options if you click on the {{icon:chevron-down size-4 inline-block align-text-center}} icon that is on the right end of the Approve button.
+Clicking **Actions** opens a slide-out menu from the right side of your screen with **Available Actions** at the top.  Next, the submission data will appear listed with clickable links for viewing and downloading any attached documents or photos. Below the submission data, the options for your action on the form are presented with color coded buttons. 
+
+*When viewing a full submission on its own page, from the **{{icon:arrow-top-right-on-square size-4 inline-block align-text-center}} (Pop-out)** icon, or from a direct email link to that submission, the action buttons appear at the bottom of the submission, and there is no **Action** or **Continue** button to access them.
+
+- **Approve** - You have viewed and are satisfied with the submission data and are allowing it to proceed with your approval. There are two "Approval plus" options if you click on the {{icon:chevron-down size-4 inline-block align-text-center}} icon that is on the right end of the Approve button.
 	- *Approve & View* - Approves the submission, then opens the full submission in its own window for convenient other steps like downloading or printing.
 	- *Approve & Print* - Approves the submission, 
 	
@@ -62,8 +65,19 @@ Clicking **Actions** opens a slide-out menu from the right side of your screen w
 	
 	Click the purple **Request Info** button to proceed, or **Cancel** to go back to the **Available Actions** menu without submitting the request. 
 	
-	Once this is completed, the submission will remain in a pending state on the user
+	Once the **Request Info** option is selected, the submission will then be pending on the user that you requested the information from until the request is addressed. An email will send to that user, with your **Message**, and a link to the submission. If they "reply" directly from their email, their response will be entered into the **Notes** log for that submission. They can also follow the link and reply on the submission directly, which will populate a text box for their reply. As the user that initially requested the information, you will be notified, via email, when the response is received and the submission will return to being pending on the you, the requestor, for continued action.
 
+-  **Send Back -** THIS IS NOT RIGHT, PENDING TALK WITH ANDY This will cause the submission to return to the initial submitter/owner of the form and it will then be pending on their action for the submission to progress toward finalization. This is useful if the submitter entered something incorrectly or information was incomplete. 
+	
+	When selected, a **Message** text box will appear for you to explain why it is being sent back. You must enter a message in order to select the final **Send Back** button. You can also click **Cancel** to return to the **Available Actions** menu. 
+	
+	When **Send Back** is selected, the form's submitter will receive an email to notify them of your action that includes your message and a link to the submission. When the form's submitter addresses the issue and submits their input, the flow-steps restart. any approvals or additions
+
+- **Deny -** If, for whatever reason, a form cannot be approved or corrected, you can choose to **Deny** it. This will end its pending status and set the final status as **Denied.** When selected, a **Message** text box will appear for you to enter details for the denial. You must enter a message in order to select the red **Deny** button to submit. You can also **Cancel** to return to the other **Available Actions.** 
+
+	After a submitted denial, an email, that contains your message, will send to the form's submitter to notify them of the denial. This is by default, but, if desired, a form can be made to notify any, or all, of the other users that were contributors to the form in its flow. The data of the denied form will still be accessible and viewable since it has not been deleted. 
+	
+	An administrator has the ability to select **{{icon:arrow-uturn-left size-4 inline-block align-text-center}} Undo Denied**. This will cause the submission to return to the user that took the last action. It will be pending on them again, as if their **Deny** action did not happen.
 
 ### Final Status or Pending on - 
 If not listed as **Approved** or **Denied,** a color-coded box, or boxes, with the initials of the user/s on whom the submission is pending will appear. 
