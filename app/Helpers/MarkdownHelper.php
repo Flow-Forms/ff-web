@@ -478,6 +478,28 @@ class MarkdownHelper
         return $extracted['content'];
     }
 
+    public static function resolveMarkdownPath(string $folder, string $subfolder, string $slug): ?string
+    {
+        // 1. Try direct file: markdown/{folder}/{subfolder}/{slug}.md
+        $directPath = resource_path("markdown/{$folder}/{$subfolder}/{$slug}.md");
+        if (File::exists($directPath)) {
+            return $directPath;
+        }
+
+        // 2. Try leaf-folder: markdown/{folder}/{subfolder}/{slug}/ → find single .md file
+        $leafDir = resource_path("markdown/{$folder}/{$subfolder}/{$slug}");
+        if (File::isDirectory($leafDir)) {
+            $mdFiles = collect(File::files($leafDir))
+                ->filter(fn ($f) => $f->getExtension() === 'md' && $f->getFilename() !== '_meta.md');
+
+            if ($mdFiles->count() === 1) {
+                return $mdFiles->first()->getPathname();
+            }
+        }
+
+        return null;
+    }
+
     public static function getIndexDocumentPath(): ?string
     {
         $markdownPath = resource_path('markdown');

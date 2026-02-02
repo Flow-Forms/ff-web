@@ -385,6 +385,30 @@ describe('Dynamic file discovery and accessibility', function () {
     });
 });
 
+describe('resolveMarkdownPath', function () {
+    it('resolves markdown path for direct subfolder files', function () {
+        $path = \App\Helpers\MarkdownHelper::resolveMarkdownPath('submissions', 'managing_submissions', 'Managing_Submissions');
+
+        expect($path)->not->toBeNull();
+        expect($path)->toEndWith('Managing_Submissions.md');
+        expect(file_exists($path))->toBeTrue();
+    });
+
+    it('resolves markdown path for leaf-folder files with clean slug', function () {
+        $path = \App\Helpers\MarkdownHelper::resolveMarkdownPath('submissions', 'managing_submissions', 'filters');
+
+        expect($path)->not->toBeNull();
+        expect($path)->toEndWith('Filters.md');
+        expect(file_exists($path))->toBeTrue();
+    });
+
+    it('returns null for non-existent subfolder paths', function () {
+        $path = \App\Helpers\MarkdownHelper::resolveMarkdownPath('submissions', 'managing_submissions', 'nonexistent');
+
+        expect($path)->toBeNull();
+    });
+});
+
 describe('Raw markdown for LLMs', function () {
     it('returns raw markdown for root level pages with .md extension', function () {
         $response = get('/security.md');
