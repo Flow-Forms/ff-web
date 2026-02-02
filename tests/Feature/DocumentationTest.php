@@ -105,6 +105,33 @@ it('generates grouped navigation for folders', function () {
     expect($overviewItem['folder'])->toBe('forms');
 });
 
+it('generates navigation with subfolder items', function () {
+    $navigationItems = \App\Helpers\MarkdownHelper::getNavigationItems();
+
+    // The submissions folder should exist and contain sub-folders
+    expect($navigationItems)->toHaveKey('submissions');
+    expect($navigationItems['submissions']['type'])->toBe('folder');
+
+    $items = $navigationItems['submissions']['items'];
+
+    // Should contain direct files (like notifications.md)
+    $directFile = collect($items)->firstWhere('filename', 'notifications');
+    expect($directFile)->not->toBeNull();
+    expect($directFile['type'])->toBe('file');
+
+    // Should contain a subfolder (managing_submissions)
+    $subfolder = collect($items)->firstWhere('type', 'subfolder');
+    expect($subfolder)->not->toBeNull();
+    expect($subfolder['title'])->toBe('Managing Submissions');
+    expect($subfolder['items'])->toBeArray();
+    expect($subfolder['items'])->not->toBeEmpty();
+
+    // Subfolder items should include both direct files and leaf-folder files
+    $subfolderTitles = collect($subfolder['items'])->pluck('title')->toArray();
+    expect($subfolderTitles)->toContain('Filters');
+    expect($subfolderTitles)->toContain('Display Options');
+});
+
 it('returns 404 for non-existent nested pages', function () {
     $response = get('/forms/non-existent');
 
@@ -177,8 +204,10 @@ describe('Navigation links work correctly', function () {
                 $response->assertOk();
             } elseif ($item['type'] === 'folder' && isset($item['items'])) {
                 foreach ($item['items'] as $subItem) {
-                    $response = get($subItem['url']);
-                    $response->assertOk();
+                    if ($subItem['type'] === 'file') {
+                        $response = get($subItem['url']);
+                        $response->assertOk();
+                    }
                 }
             }
         }
