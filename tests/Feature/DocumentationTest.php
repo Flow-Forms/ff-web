@@ -385,6 +385,26 @@ describe('Dynamic file discovery and accessibility', function () {
     });
 });
 
+it('can access direct files in subfolders via 3-segment URL', function () {
+    $response = get('/submissions/managing_submissions/Managing_Submissions');
+
+    $response->assertOk();
+    $response->assertSee('Managing Submissions');
+});
+
+it('can access leaf-folder files via clean 3-segment URL', function () {
+    $response = get('/submissions/managing_submissions/filters');
+
+    $response->assertOk();
+    $response->assertSee('Filters');
+});
+
+it('returns 404 for non-existent 3-segment paths', function () {
+    $response = get('/submissions/managing_submissions/nonexistent');
+
+    $response->assertNotFound();
+});
+
 describe('resolveMarkdownPath', function () {
     it('resolves markdown path for direct subfolder files', function () {
         $path = \App\Helpers\MarkdownHelper::resolveMarkdownPath('submissions', 'managing_submissions', 'Managing_Submissions');
