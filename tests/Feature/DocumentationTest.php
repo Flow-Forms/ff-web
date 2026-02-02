@@ -429,6 +429,25 @@ describe('resolveMarkdownPath', function () {
     });
 });
 
+it('renders navigation with subfolder links on homepage', function () {
+    $response = get('/');
+
+    $response->assertOk();
+    $content = $response->getContent();
+    // The navigation should contain links to subfolder items
+    expect($content)->toContain('/submissions/managing_submissions/filters');
+});
+
+it('renders collapsible subfolder groups in navigation', function () {
+    $response = get('/submissions/managing_submissions/filters');
+
+    $response->assertOk();
+    // When viewing a subfolder page, navigation should show the subfolder items
+    $content = $response->getContent();
+    expect($content)->toContain('Managing Submissions');
+    expect($content)->toContain('/submissions/managing_submissions/filters');
+});
+
 describe('Raw markdown for LLMs', function () {
     it('returns raw markdown for root level pages with .md extension', function () {
         $response = get('/security.md');
