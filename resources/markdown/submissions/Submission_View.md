@@ -6,7 +6,7 @@ order: 6
 
 # Submission View
 
-From the "{{icon:paper-clip size-4 inline-block align-text-center}} Submissions" page, navigate to any of the entries that have populated below the Control Panel to view individual form submissions. Submissions are listed with up to 20 per page. There is a forward/backward button at the bottom of the page for access to any additional pages of filtered results/submissions.
+From the **{{icon:paper-clip size-4 inline-block align-text-center}} Submissions** page, navigate to any of the entries that have populated below the Control Panel to view individual form submissions. Submissions are listed with up to 20 per page. There is a forward/backward button at the bottom of the page for access to any additional pages of filtered results/submissions.
 
 ## Submission Header
 The header of each submission contains all of the controls, status indicators, and options available for you to understand and directly interact with a submission. 
@@ -67,7 +67,14 @@ Clicking **Actions** opens a slide-out menu from the right side of your screen w
 	
 	Once the **Request Info** option is selected, the submission will then be pending on the user that you requested the information from until the request is addressed. An email will send to that user, with your **Message**, and a link to the submission. If they "reply" directly from their email, their response will be entered into the **Notes** log for that submission. They can also follow the link and reply on the submission directly, which will populate a text box for their reply. As the user that initially requested the information, you will be notified, via email, when the response is received and the submission will return to being pending on the you, the requestor, for continued action.
 
--  **Send Back -** THIS IS NOT RIGHT, PENDING TALK WITH ANDY This will cause the submission to return to the initial submitter/owner of the form and it will then be pending on their action for the submission to progress toward finalization. This is useful if the submitter entered something incorrectly or information was incomplete. 
+-  **Send Back -** THIS IS NOT RIGHT, PENDING TALK WITH ANDY With this option, you can choose to return the submission to a user(s) from a previous step in the flow or to the initial submitter. The form will then be pending on their action for the submission to progress toward finalization. If there were multiple previous steps and users, you will be presented with with two choices: 
+	- **To initial submitter** - sends the submission back to whoever originally created it
+	- **Last step** - sends the submission back to the user/s from the previous flow step. 
+		If the preceding step's type was: 
+		- *one or multiple* - a drop-down box allows you to select which user(s) to send back to
+		- *all* - automatically sends to all group members of that flow step
+		- *dynamic* - sends to whoever processed that step originally
+	If there is only one previous step or user, you will just be presented with a **Message** text box, which requires your input, before you can continue to the final **Send Back** button. 
 	
 	When selected, a **Message** text box will appear for you to explain why it is being sent back. You must enter a message in order to select the final **Send Back** button. You can also click **Cancel** to return to the **Available Actions** menu. 
 	
@@ -77,7 +84,7 @@ Clicking **Actions** opens a slide-out menu from the right side of your screen w
 
 	When the submission is denied, an email, that contains your message, will send to the form's submitter to notify them of the denial. This is by default, but, if desired, the form can be made to notify any, or all, of the other users that were contributors to the form in its flow. The data of the denied form will still be accessible and viewable since it has not been deleted. 
 	
-	An administrator has the ability to select **{{icon:arrow-uturn-left size-4 inline-block align-text-center}} Undo Denied**. This will cause the submission to return to the user that took the last action. It will be pending on them again, as if their **Deny** action did not happen.
+	*Note: An administrator has the ability to select **{{icon:arrow-uturn-left size-4 inline-block align-text-center}} Undo Denied**. This will cause the submission to return to the user that took the last action. It will be pending on them again, as if their **Deny** action did not happen.*
 
 ### Final Status or Pending on - 
 If not listed as **Approved** or **Denied,** a color-coded box, or boxes, with the initials of the user/s on whom the submission is pending will appear. 
