@@ -75,7 +75,7 @@ Clicking **Actions** opens a slide-out menu from the right side of your screen w
 
 - **Deny -** If, for whatever reason, a form cannot be approved or corrected, you can choose to **Deny** it. This will end its pending status and set the final status as **Denied.** When selected, a **Message** text box will appear for you to enter details for the denial. You must enter a message in order to select the red **Deny** button to submit. You can also **Cancel** to return to the other **Available Actions.** 
 
-	After a submitted denial, an email, that contains your message, will send to the form's submitter to notify them of the denial. This is by default, but, if desired, a form can be made to notify any, or all, of the other users that were contributors to the form in its flow. The data of the denied form will still be accessible and viewable since it has not been deleted. 
+	When the submission is denied, an email, that contains your message, will send to the form's submitter to notify them of the denial. This is by default, but, if desired, the form can be made to notify any, or all, of the other users that were contributors to the form in its flow. The data of the denied form will still be accessible and viewable since it has not been deleted. 
 	
 	An administrator has the ability to select **{{icon:arrow-uturn-left size-4 inline-block align-text-center}} Undo Denied**. This will cause the submission to return to the user that took the last action. It will be pending on them again, as if their **Deny** action did not happen.
 
@@ -181,12 +181,14 @@ Options you may be presented with are as follows:
 
 
 - #### {{icon:trash size-4 inline-block align-text-center}} Delete Submission
-	As the owner/submitter of a form, or an administrator, you may delete a submission by selecting "{{icon:trash size-4 inline-block align-text-center}} Delete Submission" from the "{{icon:cog-6-tooth size-4 inline-block align-text-center}} (Options)" menu of that submission. A modal will appear that says, *"Are you sure you want to delete this submission? This action cannot be undone."* It then lists the name of the form, its submission ID, and the time it was created. Select "Cancel" to exit without deleting, or the red, "Delete Submission," button to delete the submission. Choosing to delete is a permanent action, and that submission ID and data will be unable to be recovered.
+	As the owner/submitter of a form, or an administrator, you may delete a submission by selecting **{{icon:trash size-4 inline-block align-text-center}} Delete Submission** from the **{{icon:cog-6-tooth size-4 inline-block align-text-center}} (Options)** menu of that submission. A modal will appear that says, *"Are you sure you want to delete this submission? This action cannot be undone."* It then lists the name of the form, its submission ID, and the time it was created. Select **Cancel** to exit without deleting, or the red, **Delete Submission** button to delete the submission. Choosing to delete is a permanent action, and that submission ID and data will be unable to be recovered.
 
-- #### Undo Approval / Denial
-	This is used to reverse an approved or denied decision. This is an Admin-only emergency function to reverse terminal state (approved/denied) decisions. The last action is undone and the submission will be pending on the user responsible for the last flow-step again.
+- #### {{icon:arrow-uturn-left size-4 inline-block align-text-center}} Undo Approved / Denied
+	This is used to reverse an approved or denied decision. This is an Admin-only emergency function to reverse terminal state (approved/denied) decisions. The last action is undone and the submission will be pending on the user responsible for the last flow-step in order to be processed again.
 	
 	***Use Case***- A submission was approved/denied by mistake and needs to be reversed.
+	
+	When selected, a modal will open with **Undo Submission Approved/Denied** at the top. The **Process History** is listed next with **Step,  
 
  - #### {{icon:envelope size-4 inline-block align-text-center}} Resend Email
 	 Select this to resend a notification email to the currently assigned user/s. This sends to all users that have active notifies on this submission, but has a rate limit to prevent redundancy/abuse. 
