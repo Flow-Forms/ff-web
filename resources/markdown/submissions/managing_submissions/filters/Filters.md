@@ -13,7 +13,7 @@ Apply multiple filters simultaneously to narrow your displayed search results. C
 - [Terms](#Terms)
 - [Flow Step](#Flow Step)
 - [Date Range](#Start date / End date)
-- [Status](Submission Status)
+- [Status](#Submission Status)
 - [Submitted By](#Submitted by)
 - [Pending On](#Pending on)
 - [Participants](Participated in Submission)
@@ -136,11 +136,7 @@ When "Forms" or "Status" filters are active, their name will appear listed on th
 
 
 
-### Form-Specific Views
-Navigate to any form to see its entries/data:
-- Submission count
-- Recent entries
-- Status overview
+
 
 ## Filtering Submissions
 
