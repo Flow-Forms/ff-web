@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
@@ -228,6 +229,7 @@ class MarkdownHelper
             $folderFiles = File::files($directory);
             $folderItems = [];
 
+            // Collect direct .md files in this folder
             foreach ($folderFiles as $file) {
                 if ($file->getExtension() === 'md' && $file->getFilename() !== '_meta.md') {
                     $filename = $file->getFilenameWithoutExtension();
@@ -253,8 +255,119 @@ class MarkdownHelper
                 }
             }
 
+            // Scan for sub-directories within this folder
+            $subDirectories = File::directories($directory);
+            foreach ($subDirectories as $subDirectory) {
+                $subfolderName = basename($subDirectory);
+
+                // Read subfolder _meta.md for title/order
+                $subMetaPath = $subDirectory.'/_meta.md';
+                $subfolderOrder = 999;
+                $subfolderTitle = self::filenameToTitle($subfolderName);
+
+                if (File::exists($subMetaPath)) {
+                    $subMeta = self::parseWithFrontmatter($subMetaPath);
+                    $subfolderTitle = $subMeta['frontmatter']['title'] ?? $subfolderTitle;
+                    $subfolderOrder = $subMeta['frontmatter']['order'] ?? 999;
+                }
+
+                $subfolderItems = [];
+
+                // Collect direct .md files in the subfolder
+                $subFiles = File::files($subDirectory);
+                foreach ($subFiles as $subFile) {
+                    if ($subFile->getExtension() === 'md' && $subFile->getFilename() !== '_meta.md') {
+                        $subFilename = $subFile->getFilenameWithoutExtension();
+
+                        $subData = self::parseWithFrontmatter($subFile->getPathname());
+                        $subFrontmatter = $subData['frontmatter'];
+
+                        $subFileTitle = $subFrontmatter['title'] ?? self::filenameToTitle($subFilename);
+                        $subFileOrder = $subFrontmatter['order'] ?? 999;
+
+                        $url = '/'.$folderName.'/'.$subfolderName.'/'.$subFilename;
+
+                        $subfolderItems[] = [
+                            'title' => $subFileTitle,
+                            'url' => $url,
+                            'filename' => $subFilename,
+                            'folder' => $folderName,
+                            'subfolder' => $subfolderName,
+                            'order' => $subFileOrder,
+                            'type' => 'file',
+                            'is_leaf_folder' => false,
+                        ];
+                    }
+                }
+
+                // Collect leaf-folder files (sub-directories containing a single .md file besides _meta.md)
+                $leafDirectories = File::directories($subDirectory);
+                foreach ($leafDirectories as $leafDirectory) {
+                    if (! self::isLeafFolder($leafDirectory)) {
+                        continue;
+                    }
+
+                    $leafFolderName = basename($leafDirectory);
+
+                    // Read leaf folder _meta.md for title/order
+                    $leafMetaPath = $leafDirectory.'/_meta.md';
+                    $leafOrder = 999;
+                    $leafTitle = self::filenameToTitle($leafFolderName);
+
+                    if (File::exists($leafMetaPath)) {
+                        $leafMeta = self::parseWithFrontmatter($leafMetaPath);
+                        $leafTitle = $leafMeta['frontmatter']['title'] ?? $leafTitle;
+                        $leafOrder = $leafMeta['frontmatter']['order'] ?? 999;
+                    }
+
+                    // Find the single .md file in the leaf folder (besides _meta.md)
+                    $leafFiles = File::files($leafDirectory);
+                    foreach ($leafFiles as $leafFile) {
+                        if ($leafFile->getExtension() === 'md' && $leafFile->getFilename() !== '_meta.md') {
+                            // Use _meta.md title/order if available, otherwise fall back to folder name
+                            $leafFileTitle = $leafTitle;
+                            $leafFileOrder = $leafOrder;
+
+                            // Clean URL uses the leaf folder name as the slug
+                            $url = '/'.$folderName.'/'.$subfolderName.'/'.$leafFolderName;
+
+                            $subfolderItems[] = [
+                                'title' => $leafFileTitle,
+                                'url' => $url,
+                                'filename' => $leafFolderName,
+                                'folder' => $folderName,
+                                'subfolder' => $subfolderName,
+                                'order' => $leafFileOrder,
+                                'type' => 'file',
+                                'is_leaf_folder' => true,
+                            ];
+                        }
+                    }
+                }
+
+                if (! empty($subfolderItems)) {
+                    // Sort subfolder items by order, then by title
+                    usort($subfolderItems, function ($a, $b) {
+                        if ($a['order'] == $b['order']) {
+                            return strcmp($a['title'], $b['title']);
+                        }
+
+                        return $a['order'] - $b['order'];
+                    });
+
+                    $folderItems[] = [
+                        'title' => $subfolderTitle,
+                        'type' => 'subfolder',
+                        'order' => $subfolderOrder,
+                        'folder' => $folderName,
+                        'subfolder' => $subfolderName,
+                        'items' => $subfolderItems,
+                    ];
+                }
+            }
+
             if (! empty($folderItems)) {
-                // Sort files within folder by order, then by title
+                // Sort files and subfolders within folder by order, then by title
                 usort($folderItems, function ($a, $b) {
                     if ($a['order'] == $b['order']) {
                         return strcmp($a['title'], $b['title']);
@@ -327,27 +440,46 @@ class MarkdownHelper
 
     public static function markdownExists(string $filename, ?string $folder = null): bool
     {
-        if ($folder) {
-            $filePath = resource_path("markdown/$folder/$filename.md");
-        } else {
-            $filePath = resource_path("markdown/$filename.md");
-        }
-
-        return File::exists($filePath);
+        return self::findMarkdownFile($filename, $folder) !== null;
     }
 
-    public static function getMarkdownPath(string $filename, ?string $folder = null): string
+    public static function getMarkdownPath(string $filename, ?string $folder = null): ?string
     {
-        if ($folder) {
-            return resource_path("markdown/$folder/$filename.md");
-        } else {
-            return resource_path("markdown/$filename.md");
+        return self::findMarkdownFile($filename, $folder);
+    }
+
+    /**
+     * Find a markdown file by name, case-insensitively
+     *
+     * URLs are lowercase but filenames may have mixed case.
+     * This scans the directory to find a matching file regardless of case.
+     */
+    protected static function findMarkdownFile(string $filename, ?string $folder = null): ?string
+    {
+        $directory = $folder
+            ? resource_path("markdown/{$folder}")
+            : resource_path('markdown');
+
+        if (! File::isDirectory($directory)) {
+            return null;
         }
+
+        $targetFilename = strtolower($filename).'.md';
+
+        foreach (File::files($directory) as $file) {
+            if (strtolower($file->getFilename()) === $targetFilename) {
+                return $file->getPathname();
+            }
+        }
+
+        return null;
     }
 
     public static function getRawContent(string $filename, ?string $folder = null): string
     {
-        return self::getRawContentFromPath(self::getMarkdownPath($filename, $folder));
+        $path = self::getMarkdownPath($filename, $folder);
+
+        return $path ? self::getRawContentFromPath($path) : '';
     }
 
     public static function getRawContentFromPath(string $filePath): string
@@ -360,6 +492,59 @@ class MarkdownHelper
         $extracted = self::extractFrontmatter($fileContent);
 
         return $extracted['content'];
+    }
+
+    public static function resolveMarkdownPath(string $folder, string $subfolder, string $slug): ?string
+    {
+        // 1. Try direct file: markdown/{folder}/{subfolder}/{slug}.md (case-insensitive)
+        $subfolderDir = resource_path("markdown/{$folder}/{$subfolder}");
+        if (File::isDirectory($subfolderDir)) {
+            $targetFilename = strtolower($slug).'.md';
+            foreach (File::files($subfolderDir) as $file) {
+                if (strtolower($file->getFilename()) === $targetFilename) {
+                    return $file->getPathname();
+                }
+            }
+        }
+
+        // 2. Try leaf-folder: markdown/{folder}/{subfolder}/{slug}/ → find single .md file
+        $leafDir = resource_path("markdown/{$folder}/{$subfolder}/{$slug}");
+        if (File::isDirectory($leafDir)) {
+            $mdFiles = self::getContentMarkdownFiles($leafDir);
+
+            if ($mdFiles->count() === 1) {
+                return $mdFiles->first()->getPathname();
+            }
+
+            if ($mdFiles->count() > 1) {
+                Log::warning("Leaf folder has multiple .md files, cannot resolve: {$leafDir}");
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Get markdown files in a directory, excluding _meta.md
+     *
+     * @return \Illuminate\Support\Collection<int, \SplFileInfo>
+     */
+    public static function getContentMarkdownFiles(string $directory): \Illuminate\Support\Collection
+    {
+        return collect(File::files($directory))
+            ->filter(fn ($f) => $f->getExtension() === 'md' && $f->getFilename() !== '_meta.md');
+    }
+
+    /**
+     * Check if a directory is a leaf folder (contains exactly one .md file besides _meta.md)
+     */
+    public static function isLeafFolder(string $directory): bool
+    {
+        if (! File::isDirectory($directory)) {
+            return false;
+        }
+
+        return self::getContentMarkdownFiles($directory)->count() === 1;
     }
 
     public static function getIndexDocumentPath(): ?string

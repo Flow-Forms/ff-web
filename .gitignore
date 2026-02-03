@@ -32,3 +32,10 @@ resources/markdown/.obsidian/*
 boost.json
 .mcp.json
 auth.json
+
+# AI assistant instruction files (keep CLAUDE.md tracked, ignore duplicates)
+AGENTS.md
+GEMINI.md
+
+# AI planning documents
+docs/

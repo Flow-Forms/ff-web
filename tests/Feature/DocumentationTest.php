@@ -105,6 +105,33 @@ it('generates grouped navigation for folders', function () {
     expect($overviewItem['folder'])->toBe('forms');
 });
 
+it('generates navigation with subfolder items', function () {
+    $navigationItems = \App\Helpers\MarkdownHelper::getNavigationItems();
+
+    // The submissions folder should exist and contain sub-folders
+    expect($navigationItems)->toHaveKey('submissions');
+    expect($navigationItems['submissions']['type'])->toBe('folder');
+
+    $items = $navigationItems['submissions']['items'];
+
+    // Should contain direct files (like notifications.md)
+    $directFile = collect($items)->firstWhere('filename', 'notifications');
+    expect($directFile)->not->toBeNull();
+    expect($directFile['type'])->toBe('file');
+
+    // Should contain a subfolder (managing_submissions)
+    $subfolder = collect($items)->firstWhere('type', 'subfolder');
+    expect($subfolder)->not->toBeNull();
+    expect($subfolder['title'])->toBe('Managing Submissions');
+    expect($subfolder['items'])->toBeArray();
+    expect($subfolder['items'])->not->toBeEmpty();
+
+    // Subfolder items should include both direct files and leaf-folder files
+    $subfolderTitles = collect($subfolder['items'])->pluck('title')->toArray();
+    expect($subfolderTitles)->toContain('Filters');
+    expect($subfolderTitles)->toContain('Display Options');
+});
+
 it('returns 404 for non-existent nested pages', function () {
     $response = get('/forms/non-existent');
 
@@ -170,15 +197,21 @@ describe('Navigation links work correctly', function () {
     it('has working navigation links for all pages', function () {
         $navigationItems = \App\Helpers\MarkdownHelper::getNavigationItems();
 
-        // Test all navigation links
         foreach ($navigationItems as $key => $item) {
             if ($item['type'] === 'file') {
                 $response = get($item['url']);
                 $response->assertOk();
             } elseif ($item['type'] === 'folder' && isset($item['items'])) {
                 foreach ($item['items'] as $subItem) {
-                    $response = get($subItem['url']);
-                    $response->assertOk();
+                    if ($subItem['type'] === 'file') {
+                        $response = get($subItem['url']);
+                        $response->assertOk();
+                    } elseif ($subItem['type'] === 'subfolder' && isset($subItem['items'])) {
+                        foreach ($subItem['items'] as $leafItem) {
+                            $response = get($leafItem['url']);
+                            $response->assertOk();
+                        }
+                    }
                 }
             }
         }
@@ -332,13 +365,25 @@ describe('Dynamic file discovery and accessibility', function () {
         );
 
         foreach ($iterator as $file) {
-            if ($file->getExtension() === 'md' && $file->getFilename() !== 'README.md') {
+            if ($file->getExtension() === 'md' && $file->getFilename() !== 'README.md' && $file->getFilename() !== '_meta.md') {
                 $relativePath = str_replace($markdownPath.'/', '', $file->getPathname());
                 // Remove .md extension
                 $url = '/'.str_replace('.md', '', $relativePath);
                 // Remove numeric prefix from URLs
                 $url = preg_replace('/\/\d{2}-/', '/', $url);
                 $url = preg_replace('/^\/\d{2}-/', '/', $url);
+
+                // Detect leaf-folder files: if this is the only content .md in its directory
+                // at depth 3+, use the folder name as slug instead of the filename
+                $fileDir = dirname($file->getPathname());
+                $depth = substr_count(trim(str_replace($markdownPath, '', $fileDir), '/'), '/');
+
+                if ($depth >= 2 && \App\Helpers\MarkdownHelper::isLeafFolder($fileDir)) {
+                    // Leaf folder — use folder path as URL, drop the filename
+                    $folderRelative = str_replace($markdownPath.'/', '', $fileDir);
+                    $url = '/'.$folderRelative;
+                }
+
                 $allFiles[] = $url;
             }
         }
@@ -354,6 +399,85 @@ describe('Dynamic file discovery and accessibility', function () {
         expect($allFiles)->toContain('/forms/overview');
         expect($allFiles)->toContain('/forms/field-types');
     });
+});
+
+it('can access direct files in subfolders via 3-segment URL', function () {
+    $response = get('/submissions/managing_submissions/managing_submissions');
+
+    $response->assertOk();
+    $response->assertSee('Managing Submissions');
+});
+
+it('can access leaf-folder files via clean 3-segment URL', function () {
+    $response = get('/submissions/managing_submissions/filters');
+
+    $response->assertOk();
+    $response->assertSee('Filters');
+});
+
+it('returns 404 for non-existent 3-segment paths', function () {
+    $response = get('/submissions/managing_submissions/nonexistent');
+
+    $response->assertNotFound();
+});
+
+describe('resolveMarkdownPath', function () {
+    it('resolves markdown path for direct subfolder files', function () {
+        // URL is lowercase but file is Managing_Submissions.md
+        $path = \App\Helpers\MarkdownHelper::resolveMarkdownPath('submissions', 'managing_submissions', 'managing_submissions');
+
+        expect($path)->not->toBeNull();
+        expect($path)->toEndWith('Managing_Submissions.md');
+        expect(file_exists($path))->toBeTrue();
+    });
+
+    it('resolves markdown path for leaf-folder files with clean slug', function () {
+        // URL is lowercase but file is Filters.md
+        $path = \App\Helpers\MarkdownHelper::resolveMarkdownPath('submissions', 'managing_submissions', 'filters');
+
+        expect($path)->not->toBeNull();
+        expect($path)->toEndWith('Filters.md');
+        expect(file_exists($path))->toBeTrue();
+    });
+
+    it('returns null for non-existent subfolder paths', function () {
+        $path = \App\Helpers\MarkdownHelper::resolveMarkdownPath('submissions', 'managing_submissions', 'nonexistent');
+
+        expect($path)->toBeNull();
+    });
+});
+
+it('renders navigation with subfolder links on homepage', function () {
+    $response = get('/');
+
+    $response->assertOk();
+    $content = $response->getContent();
+    // The navigation should contain links to subfolder items
+    expect($content)->toContain('/submissions/managing_submissions/filters');
+});
+
+it('renders collapsible subfolder groups in navigation', function () {
+    $response = get('/submissions/managing_submissions/filters');
+
+    $response->assertOk();
+    // When viewing a subfolder page, navigation should show the subfolder items
+    $content = $response->getContent();
+    expect($content)->toContain('Managing Submissions');
+    expect($content)->toContain('/submissions/managing_submissions/filters');
+});
+
+it('generates clean URLs for leaf-folder documents in search index', function () {
+    // Run the index builder
+    $this->artisan('command:build-index')->assertExitCode(0);
+
+    // Check that the filters document has a clean URL (folder name, not filename)
+    $doc = \App\Models\Documentation::where('slug', 'like', '%filters%')
+        ->where('url', 'like', '%managing_submissions%')
+        ->first();
+
+    expect($doc)->not->toBeNull();
+    // URL should use folder name, not file name for leaf folders
+    expect($doc->url)->toBe('/submissions/managing_submissions/filters');
 });
 
 describe('Raw markdown for LLMs', function () {
@@ -411,5 +535,15 @@ describe('Raw markdown for LLMs', function () {
 
         $response = get('/forms/non-existent.md');
         $response->assertNotFound();
+    });
+
+    it('returns raw markdown for 3-segment paths with .md extension', function () {
+        $response = get('/submissions/managing_submissions/managing_submissions.md');
+
+        $response->assertOk();
+        $response->assertHeader('Content-Type', 'text/markdown; charset=UTF-8');
+
+        $content = $response->getContent();
+        expect($content)->not->toContain('<!DOCTYPE html>');
     });
 });

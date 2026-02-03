@@ -1,45 +1,60 @@
-<nav class="space-y-8">
+<flux:navlist>
     @foreach($navigationItems as $key => $item)
         @if($item['type'] === 'file')
-            {{-- Root level item --}}
-            <a
+            <flux:navlist.item
                 href="{{ $item['url'] }}"
+                :current="request()->is($item['filename'])"
                 x-on:click="$dispatch('close-sidebar')"
-                @class([
-                    'block text-sm font-medium transition-colors',
-                    'text-zinc-900 dark:text-white' => request()->is($item['filename']),
-                    'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white' => !request()->is($item['filename']),
-                ])
             >
                 {{ $item['title'] }}
-            </a>
+            </flux:navlist.item>
+
         @elseif($item['type'] === 'folder')
-            {{-- Section with items --}}
-            <div>
-                <h3 class="text-sm font-semibold text-zinc-900 dark:text-white mb-3">
-                    {{ $item['title'] }}
-                </h3>
-                <ul class="space-y-2 border-l border-zinc-200 dark:border-zinc-800">
+            <flux:navlist.group heading="{{ $item['title'] }}">
+                <div class="relative ps-7 space-y-[2px]">
+                    {{-- Vertical line indicator --}}
+                    <div class="absolute inset-y-[3px] w-px bg-zinc-200 dark:bg-white/30 start-0 ms-4"></div>
+
                     @foreach($item['items'] as $subItem)
-                        @php
-                            $isActive = request()->is($subItem['folder'].'/'.$subItem['filename']);
-                        @endphp
-                        <li>
-                            <a
+                        @if($subItem['type'] === 'file')
+                            <flux:navlist.item
                                 href="{{ $subItem['url'] }}"
+                                :current="request()->is($subItem['folder'] . '/' . $subItem['filename'])"
                                 x-on:click="$dispatch('close-sidebar')"
-                                @class([
-                                    'block text-sm pl-4 -ml-px border-l transition-colors',
-                                    'border-cyan-500 text-cyan-600 dark:text-cyan-400 font-medium' => $isActive,
-                                    'border-transparent text-zinc-600 hover:text-zinc-900 hover:border-zinc-300 dark:text-zinc-400 dark:hover:text-white dark:hover:border-zinc-600' => !$isActive,
-                                ])
                             >
                                 {{ $subItem['title'] }}
-                            </a>
-                        </li>
+                            </flux:navlist.item>
+
+                        @elseif($subItem['type'] === 'subfolder')
+                            @php
+                                $isSubfolderActive = collect($subItem['items'])->contains(function ($leaf) {
+                                    $urlPath = trim($leaf['url'], '/');
+                                    return request()->is($urlPath);
+                                });
+                            @endphp
+                            <flux:navlist.group
+                                heading="{{ $subItem['title'] }}"
+                                :expandable="true"
+                                :expanded="$isSubfolderActive"
+                            >
+                                @foreach($subItem['items'] as $leafItem)
+                                    @php
+                                        $leafUrlPath = trim($leafItem['url'], '/');
+                                        $isLeafActive = request()->is($leafUrlPath);
+                                    @endphp
+                                    <flux:navlist.item
+                                        href="{{ $leafItem['url'] }}"
+                                        :current="$isLeafActive"
+                                        x-on:click="$dispatch('close-sidebar')"
+                                    >
+                                        {{ $leafItem['title'] }}
+                                    </flux:navlist.item>
+                                @endforeach
+                            </flux:navlist.group>
+                        @endif
                     @endforeach
-                </ul>
-            </div>
+                </div>
+            </flux:navlist.group>
         @endif
     @endforeach
-</nav>
+</flux:navlist>
