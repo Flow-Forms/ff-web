@@ -448,6 +448,20 @@ it('renders collapsible subfolder groups in navigation', function () {
     expect($content)->toContain('/submissions/managing_submissions/filters');
 });
 
+it('generates clean URLs for leaf-folder documents in search index', function () {
+    // Run the index builder
+    $this->artisan('command:build-index')->assertExitCode(0);
+
+    // Check that the filters document has a clean URL (folder name, not filename)
+    $doc = \App\Models\Documentation::where('slug', 'like', '%filters%')
+        ->where('url', 'like', '%managing_submissions%')
+        ->first();
+
+    expect($doc)->not->toBeNull();
+    // URL should use folder name, not file name for leaf folders
+    expect($doc->url)->toBe('/submissions/managing_submissions/filters');
+});
+
 describe('Raw markdown for LLMs', function () {
     it('returns raw markdown for root level pages with .md extension', function () {
         $response = get('/security.md');

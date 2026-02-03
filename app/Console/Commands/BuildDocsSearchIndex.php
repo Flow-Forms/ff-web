@@ -93,6 +93,23 @@ class BuildDocsSearchIndex extends Command
 
         // Build URL
         $url = rtrim('/'.$basePath.$cleanFilename, '/');
+
+        // Clean URL for leaf-folder files: if this .md is the only content file
+        // in its directory (depth 3+), use the folder name as the slug
+        $fileDir = dirname($filePath);
+        $markdownRoot = resource_path('markdown');
+        $depth = substr_count(trim(str_replace($markdownRoot, '', $fileDir), '/'), '/');
+
+        if ($depth >= 2) {
+            $siblingsInDir = collect(File::files($fileDir))
+                ->filter(fn ($f) => $f->getExtension() === 'md' && $f->getFilename() !== '_meta.md');
+
+            if ($siblingsInDir->count() === 1) {
+                // This is a leaf folder — use parent folder name as slug
+                $url = rtrim('/'.$basePath, '/');
+            }
+        }
+
         if ($url === '/index') {
             $url = '/';
         }
