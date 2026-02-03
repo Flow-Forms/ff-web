@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
@@ -302,11 +303,7 @@ class MarkdownHelper
                 // Collect leaf-folder files (sub-directories containing a single .md file besides _meta.md)
                 $leafDirectories = File::directories($subDirectory);
                 foreach ($leafDirectories as $leafDirectory) {
-                    // Only treat as a leaf folder if it contains exactly 1 .md file besides _meta.md
-                    $leafMdFiles = collect(File::files($leafDirectory))
-                        ->filter(fn ($f) => $f->getExtension() === 'md' && $f->getFilename() !== '_meta.md');
-
-                    if ($leafMdFiles->count() !== 1) {
+                    if (! self::isLeafFolder($leafDirectory)) {
                         continue;
                     }
 
@@ -443,27 +440,46 @@ class MarkdownHelper
 
     public static function markdownExists(string $filename, ?string $folder = null): bool
     {
-        if ($folder) {
-            $filePath = resource_path("markdown/$folder/$filename.md");
-        } else {
-            $filePath = resource_path("markdown/$filename.md");
-        }
-
-        return File::exists($filePath);
+        return self::findMarkdownFile($filename, $folder) !== null;
     }
 
-    public static function getMarkdownPath(string $filename, ?string $folder = null): string
+    public static function getMarkdownPath(string $filename, ?string $folder = null): ?string
     {
-        if ($folder) {
-            return resource_path("markdown/$folder/$filename.md");
-        } else {
-            return resource_path("markdown/$filename.md");
+        return self::findMarkdownFile($filename, $folder);
+    }
+
+    /**
+     * Find a markdown file by name, case-insensitively
+     *
+     * URLs are lowercase but filenames may have mixed case.
+     * This scans the directory to find a matching file regardless of case.
+     */
+    protected static function findMarkdownFile(string $filename, ?string $folder = null): ?string
+    {
+        $directory = $folder
+            ? resource_path("markdown/{$folder}")
+            : resource_path('markdown');
+
+        if (! File::isDirectory($directory)) {
+            return null;
         }
+
+        $targetFilename = strtolower($filename).'.md';
+
+        foreach (File::files($directory) as $file) {
+            if (strtolower($file->getFilename()) === $targetFilename) {
+                return $file->getPathname();
+            }
+        }
+
+        return null;
     }
 
     public static function getRawContent(string $filename, ?string $folder = null): string
     {
-        return self::getRawContentFromPath(self::getMarkdownPath($filename, $folder));
+        $path = self::getMarkdownPath($filename, $folder);
+
+        return $path ? self::getRawContentFromPath($path) : '';
     }
 
     public static function getRawContentFromPath(string $filePath): string
@@ -480,24 +496,55 @@ class MarkdownHelper
 
     public static function resolveMarkdownPath(string $folder, string $subfolder, string $slug): ?string
     {
-        // 1. Try direct file: markdown/{folder}/{subfolder}/{slug}.md
-        $directPath = resource_path("markdown/{$folder}/{$subfolder}/{$slug}.md");
-        if (File::exists($directPath)) {
-            return $directPath;
+        // 1. Try direct file: markdown/{folder}/{subfolder}/{slug}.md (case-insensitive)
+        $subfolderDir = resource_path("markdown/{$folder}/{$subfolder}");
+        if (File::isDirectory($subfolderDir)) {
+            $targetFilename = strtolower($slug).'.md';
+            foreach (File::files($subfolderDir) as $file) {
+                if (strtolower($file->getFilename()) === $targetFilename) {
+                    return $file->getPathname();
+                }
+            }
         }
 
         // 2. Try leaf-folder: markdown/{folder}/{subfolder}/{slug}/ → find single .md file
         $leafDir = resource_path("markdown/{$folder}/{$subfolder}/{$slug}");
         if (File::isDirectory($leafDir)) {
-            $mdFiles = collect(File::files($leafDir))
-                ->filter(fn ($f) => $f->getExtension() === 'md' && $f->getFilename() !== '_meta.md');
+            $mdFiles = self::getContentMarkdownFiles($leafDir);
 
             if ($mdFiles->count() === 1) {
                 return $mdFiles->first()->getPathname();
             }
+
+            if ($mdFiles->count() > 1) {
+                Log::warning("Leaf folder has multiple .md files, cannot resolve: {$leafDir}");
+            }
         }
 
         return null;
+    }
+
+    /**
+     * Get markdown files in a directory, excluding _meta.md
+     *
+     * @return \Illuminate\Support\Collection<int, \SplFileInfo>
+     */
+    public static function getContentMarkdownFiles(string $directory): \Illuminate\Support\Collection
+    {
+        return collect(File::files($directory))
+            ->filter(fn ($f) => $f->getExtension() === 'md' && $f->getFilename() !== '_meta.md');
+    }
+
+    /**
+     * Check if a directory is a leaf folder (contains exactly one .md file besides _meta.md)
+     */
+    public static function isLeafFolder(string $directory): bool
+    {
+        if (! File::isDirectory($directory)) {
+            return false;
+        }
+
+        return self::getContentMarkdownFiles($directory)->count() === 1;
     }
 
     public static function getIndexDocumentPath(): ?string

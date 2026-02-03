@@ -378,15 +378,10 @@ describe('Dynamic file discovery and accessibility', function () {
                 $fileDir = dirname($file->getPathname());
                 $depth = substr_count(trim(str_replace($markdownPath, '', $fileDir), '/'), '/');
 
-                if ($depth >= 2) {
-                    $siblingsInDir = collect(\Illuminate\Support\Facades\File::files($fileDir))
-                        ->filter(fn ($f) => $f->getExtension() === 'md' && $f->getFilename() !== '_meta.md');
-
-                    if ($siblingsInDir->count() === 1) {
-                        // Leaf folder — use folder path as URL, drop the filename
-                        $folderRelative = str_replace($markdownPath.'/', '', $fileDir);
-                        $url = '/'.$folderRelative;
-                    }
+                if ($depth >= 2 && \App\Helpers\MarkdownHelper::isLeafFolder($fileDir)) {
+                    // Leaf folder — use folder path as URL, drop the filename
+                    $folderRelative = str_replace($markdownPath.'/', '', $fileDir);
+                    $url = '/'.$folderRelative;
                 }
 
                 $allFiles[] = $url;
@@ -407,7 +402,7 @@ describe('Dynamic file discovery and accessibility', function () {
 });
 
 it('can access direct files in subfolders via 3-segment URL', function () {
-    $response = get('/submissions/managing_submissions/Managing_Submissions');
+    $response = get('/submissions/managing_submissions/managing_submissions');
 
     $response->assertOk();
     $response->assertSee('Managing Submissions');
@@ -428,7 +423,8 @@ it('returns 404 for non-existent 3-segment paths', function () {
 
 describe('resolveMarkdownPath', function () {
     it('resolves markdown path for direct subfolder files', function () {
-        $path = \App\Helpers\MarkdownHelper::resolveMarkdownPath('submissions', 'managing_submissions', 'Managing_Submissions');
+        // URL is lowercase but file is Managing_Submissions.md
+        $path = \App\Helpers\MarkdownHelper::resolveMarkdownPath('submissions', 'managing_submissions', 'managing_submissions');
 
         expect($path)->not->toBeNull();
         expect($path)->toEndWith('Managing_Submissions.md');
@@ -436,6 +432,7 @@ describe('resolveMarkdownPath', function () {
     });
 
     it('resolves markdown path for leaf-folder files with clean slug', function () {
+        // URL is lowercase but file is Filters.md
         $path = \App\Helpers\MarkdownHelper::resolveMarkdownPath('submissions', 'managing_submissions', 'filters');
 
         expect($path)->not->toBeNull();
@@ -541,7 +538,7 @@ describe('Raw markdown for LLMs', function () {
     });
 
     it('returns raw markdown for 3-segment paths with .md extension', function () {
-        $response = get('/submissions/managing_submissions/Managing_Submissions.md');
+        $response = get('/submissions/managing_submissions/managing_submissions.md');
 
         $response->assertOk();
         $response->assertHeader('Content-Type', 'text/markdown; charset=UTF-8');

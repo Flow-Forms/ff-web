@@ -1,6 +1,8 @@
 <?php
 use App\Helpers\MarkdownHelper;
-use function Laravel\Folio\render;
+use function Laravel\Folio\{name, render};
+
+name('docs.subfolder.show');
 
 render(function (\Illuminate\View\View $view, string $folder, string $subfolder, string $slug) {
     $filePath = MarkdownHelper::resolveMarkdownPath($folder, $subfolder, $slug);

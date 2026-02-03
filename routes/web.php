@@ -35,7 +35,7 @@ Route::get('/{slug}.md', function (string $slug) {
     return response(MarkdownHelper::getRawContent($slug), 200, [
         'Content-Type' => 'text/markdown; charset=UTF-8',
     ]);
-})->where('slug', '[a-zA-Z0-9_-]+');
+})->where('slug', '[a-z0-9_-]+');
 
 Route::get('/{folder}/{slug}.md', function (string $folder, string $slug) {
     if (! MarkdownHelper::markdownExists($slug, $folder)) {
@@ -45,7 +45,7 @@ Route::get('/{folder}/{slug}.md', function (string $folder, string $slug) {
     return response(MarkdownHelper::getRawContent($slug, $folder), 200, [
         'Content-Type' => 'text/markdown; charset=UTF-8',
     ]);
-})->where(['folder' => '[a-z0-9_-]+', 'slug' => '[a-zA-Z0-9_-]+']);
+})->where(['folder' => '[a-z0-9_-]+', 'slug' => '[a-z0-9_-]+']);
 
 Route::get('/{folder}/{subfolder}/{slug}.md', function (string $folder, string $subfolder, string $slug) {
     $filePath = MarkdownHelper::resolveMarkdownPath($folder, $subfolder, $slug);
@@ -57,7 +57,7 @@ Route::get('/{folder}/{subfolder}/{slug}.md', function (string $folder, string $
     return response(MarkdownHelper::getRawContentFromPath($filePath), 200, [
         'Content-Type' => 'text/markdown; charset=UTF-8',
     ]);
-})->where(['folder' => '[a-z0-9_-]+', 'subfolder' => '[a-z0-9_-]+', 'slug' => '[a-zA-Z0-9_-]+']);
+})->where(['folder' => '[a-z0-9_-]+', 'subfolder' => '[a-z0-9_-]+', 'slug' => '[a-z0-9_-]+']);
 
 Route::middleware([
     'auth:sanctum',

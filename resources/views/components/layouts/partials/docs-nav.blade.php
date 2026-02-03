@@ -11,44 +11,49 @@
 
         @elseif($item['type'] === 'folder')
             <flux:navlist.group heading="{{ $item['title'] }}">
-                @foreach($item['items'] as $subItem)
-                    @if($subItem['type'] === 'file')
-                        <flux:navlist.item
-                            href="{{ $subItem['url'] }}"
-                            :current="request()->is($subItem['folder'] . '/' . $subItem['filename'])"
-                            x-on:click="$dispatch('close-sidebar')"
-                        >
-                            {{ $subItem['title'] }}
-                        </flux:navlist.item>
+                <div class="relative ps-7 space-y-[2px]">
+                    {{-- Vertical line indicator --}}
+                    <div class="absolute inset-y-[3px] w-px bg-zinc-200 dark:bg-white/30 start-0 ms-4"></div>
 
-                    @elseif($subItem['type'] === 'subfolder')
-                        @php
-                            $isSubfolderActive = collect($subItem['items'])->contains(function ($leaf) {
-                                $urlPath = trim($leaf['url'], '/');
-                                return request()->is($urlPath);
-                            });
-                        @endphp
-                        <flux:navlist.group
-                            heading="{{ $subItem['title'] }}"
-                            :expandable="true"
-                            :expanded="$isSubfolderActive"
-                        >
-                            @foreach($subItem['items'] as $leafItem)
-                                @php
-                                    $leafUrlPath = trim($leafItem['url'], '/');
-                                    $isLeafActive = request()->is($leafUrlPath);
-                                @endphp
-                                <flux:navlist.item
-                                    href="{{ $leafItem['url'] }}"
-                                    :current="$isLeafActive"
-                                    x-on:click="$dispatch('close-sidebar')"
-                                >
-                                    {{ $leafItem['title'] }}
-                                </flux:navlist.item>
-                            @endforeach
-                        </flux:navlist.group>
-                    @endif
-                @endforeach
+                    @foreach($item['items'] as $subItem)
+                        @if($subItem['type'] === 'file')
+                            <flux:navlist.item
+                                href="{{ $subItem['url'] }}"
+                                :current="request()->is($subItem['folder'] . '/' . $subItem['filename'])"
+                                x-on:click="$dispatch('close-sidebar')"
+                            >
+                                {{ $subItem['title'] }}
+                            </flux:navlist.item>
+
+                        @elseif($subItem['type'] === 'subfolder')
+                            @php
+                                $isSubfolderActive = collect($subItem['items'])->contains(function ($leaf) {
+                                    $urlPath = trim($leaf['url'], '/');
+                                    return request()->is($urlPath);
+                                });
+                            @endphp
+                            <flux:navlist.group
+                                heading="{{ $subItem['title'] }}"
+                                :expandable="true"
+                                :expanded="$isSubfolderActive"
+                            >
+                                @foreach($subItem['items'] as $leafItem)
+                                    @php
+                                        $leafUrlPath = trim($leafItem['url'], '/');
+                                        $isLeafActive = request()->is($leafUrlPath);
+                                    @endphp
+                                    <flux:navlist.item
+                                        href="{{ $leafItem['url'] }}"
+                                        :current="$isLeafActive"
+                                        x-on:click="$dispatch('close-sidebar')"
+                                    >
+                                        {{ $leafItem['title'] }}
+                                    </flux:navlist.item>
+                                @endforeach
+                            </flux:navlist.group>
+                        @endif
+                    @endforeach
+                </div>
             </flux:navlist.group>
         @endif
     @endforeach
