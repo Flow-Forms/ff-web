@@ -197,7 +197,6 @@ describe('Navigation links work correctly', function () {
     it('has working navigation links for all pages', function () {
         $navigationItems = \App\Helpers\MarkdownHelper::getNavigationItems();
 
-        // Test all navigation links
         foreach ($navigationItems as $key => $item) {
             if ($item['type'] === 'file') {
                 $response = get($item['url']);
@@ -207,6 +206,11 @@ describe('Navigation links work correctly', function () {
                     if ($subItem['type'] === 'file') {
                         $response = get($subItem['url']);
                         $response->assertOk();
+                    } elseif ($subItem['type'] === 'subfolder' && isset($subItem['items'])) {
+                        foreach ($subItem['items'] as $leafItem) {
+                            $response = get($leafItem['url']);
+                            $response->assertOk();
+                        }
                     }
                 }
             }
