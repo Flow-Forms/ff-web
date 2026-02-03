@@ -361,13 +361,30 @@ describe('Dynamic file discovery and accessibility', function () {
         );
 
         foreach ($iterator as $file) {
-            if ($file->getExtension() === 'md' && $file->getFilename() !== 'README.md') {
+            if ($file->getExtension() === 'md' && $file->getFilename() !== 'README.md' && $file->getFilename() !== '_meta.md') {
                 $relativePath = str_replace($markdownPath.'/', '', $file->getPathname());
                 // Remove .md extension
                 $url = '/'.str_replace('.md', '', $relativePath);
                 // Remove numeric prefix from URLs
                 $url = preg_replace('/\/\d{2}-/', '/', $url);
                 $url = preg_replace('/^\/\d{2}-/', '/', $url);
+
+                // Detect leaf-folder files: if this is the only content .md in its directory
+                // at depth 3+, use the folder name as slug instead of the filename
+                $fileDir = dirname($file->getPathname());
+                $depth = substr_count(trim(str_replace($markdownPath, '', $fileDir), '/'), '/');
+
+                if ($depth >= 2) {
+                    $siblingsInDir = collect(\Illuminate\Support\Facades\File::files($fileDir))
+                        ->filter(fn ($f) => $f->getExtension() === 'md' && $f->getFilename() !== '_meta.md');
+
+                    if ($siblingsInDir->count() === 1) {
+                        // Leaf folder — use folder path as URL, drop the filename
+                        $folderRelative = str_replace($markdownPath.'/', '', $fileDir);
+                        $url = '/'.$folderRelative;
+                    }
+                }
+
                 $allFiles[] = $url;
             }
         }
