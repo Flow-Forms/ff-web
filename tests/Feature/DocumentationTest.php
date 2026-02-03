@@ -504,4 +504,14 @@ describe('Raw markdown for LLMs', function () {
         $response = get('/forms/non-existent.md');
         $response->assertNotFound();
     });
+
+    it('returns raw markdown for 3-segment paths with .md extension', function () {
+        $response = get('/submissions/managing_submissions/Managing_Submissions.md');
+
+        $response->assertOk();
+        $response->assertHeader('Content-Type', 'text/markdown; charset=UTF-8');
+
+        $content = $response->getContent();
+        expect($content)->not->toContain('<!DOCTYPE html>');
+    });
 });

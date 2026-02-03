@@ -47,6 +47,18 @@ Route::get('/{folder}/{slug}.md', function (string $folder, string $slug) {
     ]);
 })->where(['folder' => '[a-z0-9-]+', 'slug' => '[a-z0-9-]+']);
 
+Route::get('/{folder}/{subfolder}/{slug}.md', function (string $folder, string $subfolder, string $slug) {
+    $filePath = MarkdownHelper::resolveMarkdownPath($folder, $subfolder, $slug);
+
+    if (! $filePath) {
+        abort(404, 'Documentation page not found');
+    }
+
+    return response(MarkdownHelper::getRawContentFromPath($filePath), 200, [
+        'Content-Type' => 'text/markdown; charset=UTF-8',
+    ]);
+})->where(['folder' => '[a-z0-9_-]+', 'subfolder' => '[a-z0-9_-]+', 'slug' => '[a-zA-Z0-9_-]+']);
+
 Route::middleware([
     'auth:sanctum',
     'verified',
