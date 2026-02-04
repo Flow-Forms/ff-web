@@ -8,13 +8,15 @@ order: 6
 
 From the **{{icon:paper-clip size-4 inline-block align-text-center}} Submissions** page, navigate to any of the entries that have populated below the Control Panel to view individual form submissions. Submissions are listed with up to 20 per page. There is a forward/backward button at the bottom of the page for access to any additional pages of filtered results/submissions.
 
-## Submission Header
-The header of each submission contains all of the controls, status indicators, and options available for you to understand and directly interact with a submission. 
+The **header** of each submission contains all of the controls, status indicators, and options available for you to understand and directly interact with a submission. 
 
-These include:
+Some of the more basic elements of the submission's header are outlined here, but those that require more detail have been divided into their own sub-categories.
 
+Each submission displays the **Form Name,** or title, which is listed in the top left corner of the submission's header. This is also a clickable link to start a new submission of that form type. 
 
-### Form Status - 
+Just below that, is the **submitted by** section that lists the name of the user that submitted the form, along with a color-coded box (auto-assigned) containing their initials.
+
+## Form Status 
 The color-coded bar across the top of each submission's header indicates the status of that particular submission as it progresses through its workflow toward completion. Not every status is utilized in every form, but the exhaustive list is as follows: 
 	
 - Blue - **Approved** (submission is complete)
@@ -25,20 +27,25 @@ The color-coded bar across the top of each submission's header indicates the sta
 - Gray- **Denied** (submission has been rejected and cannot be continued)
 - Teal - **Escalated** (skipped flow-step(s) to seek input/approval)
 
-### Form Title / Name - 
-Click to start a new submission of that form type. 
 
-### Submitted By - 
-Name of the user that submitted the form, along with a color-coded box (auto-assigned) containing their initials.
+## {{icon:funnel size-7 inline-block align-text-center}} (Filter By)
+The {{icon:funnel size-4 inline-block align-text-center}} (funnel) icon can be found beside every form element on a submission entry. This is a quick method to filter your submission results by that specific element on a form. 
 
-### {{icon:pencil-square size-4 inline-block align-text-center}} (Edit) -
+*For example:* If you had a form named **Expenses,** one of the elements on that form could be to select the *Category* for an expense, such as "Software," or "Marketing," or "Travel." From the **{{icon:paper-clip size-4 inline-block align-text-center}} Submissions** page, if you are focusing on an **Expenses** submission, and you select the {{icon:funnel size-4 inline-block align-text-center}} icon beside *Category,* and that submission has "Marketing" as the input for *Category,* your submission results will filter to display only those **Expenses** form submissions that have "Marketing" as the input under *Category.*
+
+When a {{icon:funnel size-4 inline-block align-text-center}}  filter is selected, the Control Panel above the listed submissions will load with the new active filters displayed. The name of the form you are filtering by will be listed beside **{{icon:document-duplicate size-4 inline-block align-text-center}} Forms,** and can be unselected as a filter by clicking the "X" beside it. Whatever form element was selected with the {{icon:funnel size-4 inline-block align-text-center}} filter, will be listed below that with "**Filtering By**," beside the form element, along with the input that you are filtering by. This also will be listed with a "X" beside it in order to cease filtering by that input. 
+
+*As in the example above:* **Expenses** would be listed beside **{{icon:document-duplicate size-4 inline-block align-text-center}} Forms,** and **"Filtering By**  |  Category:  **Marketing**" would be displayed as the rest of the filter's parameters as they appear in the Control Panel.
+
+
+## {{icon:pencil-square size-7 inline-block align-text-center}} (Edit) 
 If a form's permissions have been set to allow editing, you may alter the inputs and add data/comments to the input areas of a submission that has already been submitted. 
 
-When a submission has been edited, a note is added in that submission's "Notes" log that lists the editor's user name and the time it was edited, along with the message, *"This submission has been edited."* This is accessible from the submission's **{{icon:document-text size-4 inline-block align-text-center}} View All Notes** button or while fully viewing a single submission via the **{{icon:arrow-top-right-on-square size-4 inline-block align-text-center}} (Pop-out)** button.
+When a submission has been edited, a note is added in that submission's "Notes" log that lists the editor's user name and the time it was edited, along with the message, *"This submission has been edited."* This is accessible from the submission's **{{icon:document-text size-4 inline-block align-text-center}} View All Notes** button or while fully viewing a single submission via the **{{icon:arrow-top-right-on-square size-4 inline-block align-text-center}} (Pop-out)** button or a direct, emailed link.
 
-If desired, a form's contributors can receive a notification when a form has been edited. This is initiated by an admin and set up in the form's flow steps.
+If desired, all of a form's contributors can receive a notification when a form has been edited. This is initiated by a user with administrator permissions, and is set up in the form's flow steps.
 
-### History - 
+## History - 
 View every action that has been taken on that submission so far. When selected, a modal will display the **Process History.**
 - **Action By**- lists the user's name
 - **Action**- displays the kind of action they took on the form
@@ -46,30 +53,37 @@ View every action that has been taken on that submission so far. When selected, 
 
 *You may also choose to **show conditional steps** for a more in-depth insight into the flow's parameters (not interesting to most of us).*
 
-### Actions / Continue
+## Actions / Continue
 
-*Note: When viewing a full submission on its own page, from the **{{icon:arrow-top-right-on-square size-4 inline-block align-text-center}} (Pop-out)** icon, or from a direct, email link to that submission, the action buttons appear at the bottom of the submission, and there is no **Actions** or **Continue** button to access them.*
+*Note: When viewing a full submission on its own page, from the **{{icon:arrow-top-right-on-square size-4 inline-block align-text-center}} (Pop-out)** icon, or from a direct, emailed link to that submission, the action buttons appear at the bottom of the submission, and there is no **Actions** or **Continue** button to access them.*
 
-#### Continue:
+### Continue:
 From the **Submissions** page, when a submission is **Pending On Me** to make any sort of addition to the submission's data before it can proceed, a blue, **Continue** button will appear beside **History.** 
 
 Clicking **Continue** will load a slide-out from the right of your screen that says **Additional Information Required.** It then presents you with the submission's data, as it is so far, along with the portion/s of the form to be completed by you. Required form elements are marked by a red, **{{icon:exclamation-circle size-4 inline-block align-text-center}} required** label just above their input box. 
 
 Once the required information areas are complete, you can select the **Approve** action button to move the submission on to its next flow step, and it will cease to be pending on you. You can also proceed, below this, to the **Other Available Options** area that contains other action buttons to fit your needs like, **Request Info, Send Back, or Deny.** Details about all possible **Actions** are outlined directly below.
-#### Actions:
+### Actions:
 From the **Submissions** page, when a submission is **Pending On Me** for viewing and approval, but there are no requirements to contribute additional data or input for the continued progress of the form, the blue button that appears beside **History** will say, **Actions.**
 
 Clicking **Actions** opens a slide-out menu from the right side of your screen with **Available Actions** at the top.  Next, the submission data will appear listed with clickable links for viewing and downloading any attached documents or photos. Below the submission data, the options for your action on the form are presented with color coded buttons. 
+- #### Approve - 
+	You have viewed and are satisfied with the submission data and are allowing it to proceed with your approval. 
 
-- **Approve** - You have viewed and are satisfied with the submission data and are allowing it to proceed with your approval. There are two "Approval plus" options if you click on the {{icon:chevron-down size-4 inline-block align-text-center}} icon that is on the right end of the **Approve** button.
+	There are two "Approval plus" options if you click on the {{icon:chevron-down size-4 inline-block align-text-center}} icon that is on the right end of the **Approve** button.
+
 	- *Approve & View* - Approves the submission, then opens the full submission in its own window.
-	- *Approve & Print* - Approves the submission, then opens the submission in its **Print View** form. *This is for forms whose input data is set up to populate in a predetermined form presentation (ie: W-4, W-9, or any other standardized, pre-existing form from an organization or governing body). If a form does not have a **Print View** attached to it, selecting this option will just open the submission in its own window.* 
-	
+	- *Approve & Print* - Approves the submission, then opens the submission in its **Print View** form. 
+		- *This is for forms whose input data is set up to populate in a predetermined form presentation (ie: W-4, W-9, or any other standardized, pre-existing form from an organization or governing body). If a form does not have a **Print View** attached to it, selecting this option will just open the submission in its own window.* 
+
 	Once final approval of a submission is achieved, its pending status is ended and it reaches the *terminal* status of, **Approved.** Once a submission is in a terminal status, its submitter, or anyone else in its flow, cannot take further actions on the submission, though, if permitted, editing is still possible. 
 	
 	*Note: An administrator has the ability to select **{{icon:arrow-uturn-left size-4 inline-block align-text-center}} Undo Approved**. This will cause the submission to return to the user that took the last action. It will be pending on them again, as if the final **Approve** action did not happen.*
 	
-- **Request Info** - You need additional information from another user, that has a role in the form's flow, before proceeding with your approval. 
+	
+- #### Request Info - 
+	You need additional information from another user, that has a role in the form's flow, before proceeding with your approval. 
+	
 	When selected, **Send to** will appear below the action buttons with a drop down box labeled *"Select recipient."* Click to see a list of the available users in the flow. Select their name, and it will appear in the box. 
 	
 	Below that, the **Message** box allows you to type your communication for the requested information. 
@@ -78,7 +92,8 @@ Clicking **Actions** opens a slide-out menu from the right side of your screen w
 	
 	Once the **Request Info** option is selected, the submission will then be pending on the user that you requested the information from until the request is addressed. An email will send to that user, with your **Message**, and a link to the submission. If they "reply" directly from their email, their response will be entered into the **Notes** log for that submission. They can also follow the link and reply on the submission directly, which will populate a text box for their reply. As the user that initially requested the information, you will be notified, via email, when the response is received and the submission will return to being pending on you, the requestor, for continued action.
 
--  **Send Back -** With this option, you can choose to return the submission to a user(s) from a previous step in the flow or to the initial submitter. The submission will then be pending on that user's action for it to progress again in its flow toward finalization. 
+- #### Send Back -
+	With this option, you can choose to return the submission to a user(s) from a previous step in the flow or to the initial submitter. The submission will then be pending on that user's action for it to progress again in its flow toward finalization. 
 
 	If there is only one previous step or user, you will just be presented with a **Message** text box, which requires your input, before you can continue to the final **Send Back** button. If there were multiple previous steps and users, you will be presented with two choices: 
 	- **To initial submitter** - sends the submission back to whoever originally created it
@@ -94,9 +109,10 @@ Clicking **Actions** opens a slide-out menu from the right side of your screen w
 	
 	The submission will remain pending on the user you selected until they address the issue and submit their input.  The flow-steps restart from that point in the flow, and any approvals or contributions that follow the step to which it was sent back have to be reissued and approved again in order for the submission to reach final approval. 
 
-- **Deny -** If, for whatever reason, a form cannot be approved or corrected, you can choose to **Deny** it. This will end its pending status and set the final status as **Denied.** When selected, a **Message** text box will appear for you to enter details for the denial. You must enter a message in order to select the red **Deny** button to submit. You can also **Cancel** to return to the other **Available Actions.** 
+- #### Deny -
+	If, for whatever reason, a form cannot be approved or corrected, you can choose to **Deny** it. This will end its pending status and set the final status as **Denied.** When selected, a **Message** text box will appear for you to enter details for the denial. You must enter a message in order to select the red **Deny** button to submit. You can also **Cancel** to return to the other **Available Actions.** 
 
-	When the submission is denied, an email, that contains your message, will send to the form's submitter to notify them of the denial. This is by default, but, if desired, the form can be made to notify any, or all, of the other users that were contributors to the form in its flow. The data of the denied form will still be accessible and viewable since it has not been deleted. 
+	When the submission is denied, an email that contains your message will be sent to the form's submitter to notify them of the denial. This is the default; however, if desired, the form can notify any or all of the other users who contributed to the form in its flow. The data of the denied form will still be accessible and viewable since it has not been deleted. 
 	
 	*Note: An administrator has the ability to select **{{icon:arrow-uturn-left size-4 inline-block align-text-center}} Undo Denied**. This will cause the submission to return to the user that took the last action. It will be pending on them again, as if their **Deny** action did not happen.*
 
