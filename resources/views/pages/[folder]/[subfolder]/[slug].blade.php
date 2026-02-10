@@ -4,7 +4,11 @@ use function Laravel\Folio\{name, render};
 
 name('docs.subfolder.show');
 
-render(function (\Illuminate\View\View $view, string $folder, string $subfolder, string $slug) {
+render(function (\Illuminate\View\View $view, ?string $folder = null, ?string $subfolder = null, ?string $slug = null) {
+    if ($folder === null || $subfolder === null || $slug === null) {
+        abort(404, 'Documentation page not found');
+    }
+
     $filePath = MarkdownHelper::resolveMarkdownPath($folder, $subfolder, $slug);
 
     if (!$filePath) {

@@ -2,9 +2,8 @@
 use App\Helpers\MarkdownHelper;
 use function Laravel\Folio\render;
 
-render(function (\Illuminate\View\View $view, string $slug) {
-    // Check if the markdown file exists
-    if (!MarkdownHelper::markdownExists($slug)) {
+render(function (\Illuminate\View\View $view, ?string $slug = null) {
+    if ($slug === null || !MarkdownHelper::markdownExists($slug)) {
         abort(404, 'Documentation page not found');
     }
 
