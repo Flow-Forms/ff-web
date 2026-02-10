@@ -93,7 +93,12 @@ Add additional information, comments, or attach files for the record. Notes are 
 
 *See the full [Add Note](Submissions/Submission_View/Add_Note) page for detailed instructions on creating, viewing, and managing notes.*
 
-- **{{icon:document-text size-4 inline-block align-text-center}} View All Notes** - displays all notes submitted along with user name and time stamp. This button will appear beside the **+ Add Note** button at the bottom of the submission's window when other notes exist.
+
+## Admin Options
+
+Administrators have access to additional submission options including the ability to undo approved or denied decisions, transfer submissions, edit forms and flows, and configure form options.
+
+*See the full [Admin Options](Submissions/Submission_View/Admin_Options) page for details on administrator-only features.*
 
 
 ### Form-Specific Views

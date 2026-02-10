@@ -3,7 +3,7 @@ title: Options
 order: 1
 ---
 
-# {{icon:cog-6-tooth size-4 inline-block align-text-center}} (Options) -
+# {{icon:cog-6-tooth size-25 inline-block align-text-center}} Options -
 Clicking the gear icon in a submission's header presents you with a side-bar from the right of your screen titled **Submission Options.** Just below that, the name/title of the form is listed along with its Submission ID (starts with "#sub_" followed by a string of letters and numbers that are unique to that submission). The menu below that lists the available options you have for interacting with that submission. These vary greatly by the user's permissions and the submission selected.
 
 Options you may be presented with are as follows:
@@ -13,7 +13,7 @@ Options you may be presented with are as follows:
 	Add collaboration notes and comments to a submission. Selecting **+ Add Note** from the Options menu opens directly to the notes creation modal.
 	*See the [Add Note](Submissions/Submission_View/Add_Note) page for more information on adding notes.*
 
-- ## {{icon:share size-4 inline-block align-text-center}} Share
+- ## {{icon:share size-10 inline-block align-text-center}} Share
 	Unless a form is set up as "private," as the owner/submitter of a form, or as an administrator, you have the ability to share a particular submission, or all your submissions on a particular form, with another Flow Forms user. This only grants viewing permission and does not allow the shared-with-user to take any actions on the submission. Adding notes is permitted for anyone with viewing permissions on a form.
 
 	Choosing **{{icon:share size-4 inline-block align-text-center}} Share** under the **{{icon:cog-6-tooth size-4 inline-block align-text-center}} (Options)** menu opens a modal that presents you with a searchable, drop-down box of users labeled, **Select User to Share Submissions With.** Select a user's name and a checkmark will appear beside their info and their name and email address will appear in the drop-down box.
@@ -61,10 +61,9 @@ Options you may be presented with are as follows:
 	-  **Trigger** - A trigger is an action that is auto-deployed at the time of a set occurrence in a form's flow. If, at the time of the form's flow design, a trigger has been created, it will appear here as an option to deploy that trigger at the time specified by your reminder. Both the trigger's action and your reminder communication will occur when this is selected from reminders.
 	-  **Message** - Type your desired communication for the reminder in this section. It will be sent as your reminder message via email, and SMS if selected, along with abbreviated submission info and a link to the submission.
 	-  **Send SMS** - Toggle button is off by default. Click to turn on if a text message reminder is desired, in addition to the default email notification.
-	- **Current Reminders** - If any reminders are already set on the submission, they will appear here, listed with their "Type" and "Message." If there are none, "No reminders set" will appear. You can set multiple reminders on a submission.
-	- Click "Cancel" to exit reminders or click "Add Reminder" to set your reminder with the parameters you have selected.
+	- **Current Reminders** - If any reminders are already set on the submission, they will appear here, listed with their **Type** and **Message.** If there are none, *"No reminders set"* will appear. You can set multiple reminders on a submission.
+	- Click **Cancel** to exit reminders or click **Add Reminder** to set your reminder with the parameters you have selected.
 - ## Reassign
-- ## Transfer
 - ## Reassign to Me
 - ## Connected Submissions
 - ## Connected Forms
@@ -96,14 +95,9 @@ Options you may be presented with are as follows:
 - ## {{icon:trash size-4 inline-block align-text-center}} Delete Submission
 	As the owner/submitter of a form, or an administrator, you may delete a submission by selecting **{{icon:trash size-4 inline-block align-text-center}} Delete Submission** from the **{{icon:cog-6-tooth size-4 inline-block align-text-center}} (Options)** menu of that submission. A modal will appear that says, *"Are you sure you want to delete this submission? This action cannot be undone."* It then lists the name of the form, its submission ID, and the time it was created. Select **Cancel** to exit without deleting, or the red, **Delete Submission** button to delete the submission. Choosing to delete is a permanent action, and that submission ID and data will be unable to be recovered.
 
-- ## {{icon:arrow-uturn-left size-4 inline-block align-text-center}} Undo Approved / Denied
-	This is used to reverse an approved or denied decision. This is an Admin-only emergency function to reverse terminal state (approved/denied) decisions. The last action is undone and the submission will be pending on the user responsible for the last flow-step in order to be processed again.
-
-	***Use Case***- A submission was approved/denied by mistake and needs to be reversed.
-
-	When selected, a modal will open with **Undo Submission Approved/Denied** at the top. The **Process History** is listed next with **Step,
-
  - ## {{icon:envelope size-4 inline-block align-text-center}} Resend Email
+	 ***Use Case***- The assigned users didn't receive the email or it was lost/deleted.
+	 
 	 Select this to resend a notification email to the currently assigned user/s. This sends to all users that have active notifies on this submission, but has a rate limit to prevent redundancy/abuse.
 
-	 ***Use Case***- The assigned users didn't receive the email or it was lost/deleted.
+
