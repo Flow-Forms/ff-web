@@ -138,6 +138,15 @@ it('returns 404 for non-existent nested pages', function () {
     $response->assertNotFound();
 });
 
+it('returns 404 instead of 500 when URL contains literal bracket characters', function () {
+    // Bot scanners may request URLs with literal [slug] in the path, which causes
+    // Folio's MatchLiteralViews to match the filename before MatchWildcardViews
+    // can extract the parameter, resulting in a BindingResolutionException.
+    get('/*/[slug]')->assertNotFound();
+    get('/[slug]')->assertNotFound();
+    get('/forms/[slug]')->assertNotFound();
+});
+
 it('creates dynamic routes for new nested files', function () {
     // Create test nested file
     $testContent = "# Test Nested Page\n\nThis is a test nested page.";
