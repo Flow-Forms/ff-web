@@ -12,9 +12,11 @@ The **header** of each submission contains all of the controls, status indicator
 
 Some of the more basic elements of the submission's header are outlined here, but those that require more detail have been divided into their own sub-categories.
 
-Each submission displays the **Form Name,** or title, which is listed in the top left corner of the submission's header. This is also a clickable link to start a new submission of that form type.
+## Form Name 
+Each submission displays the form's name, or title, which is listed in the top left corner of the submission's header. This is also a clickable link to start a new submission of that form type.
 
-Just below that, is the **submitted by** section that lists the name of the user that submitted the form, along with a color-coded box (auto-assigned) containing their initials.
+## Submitted by
+This section lists the name of the user that submitted the form, along with a color-coded box (auto-assigned) containing their initials.
 
 ## Form Status
 The color-coded bar across the top of each submission's header indicates the status of that particular submission as it progresses through its workflow toward completion. Not every status is utilized in every form, but the exhaustive list is as follows:
@@ -31,7 +33,7 @@ The color-coded bar across the top of each submission's header indicates the sta
 ## {{icon:funnel size-7 inline-block align-text-center}} (Filter By)
 The {{icon:funnel size-4 inline-block align-text-center}} (funnel) icon can be found beside every form element on a submission entry. This is a quick method to filter your submission results by that specific element on a form.
 
-*For example:* If you had a form named **Expenses,** one of the elements on that form could be to select the *Category* for an expense, such as "Software," or "Marketing," or "Travel." From the **{{icon:paper-clip size-4 inline-block align-text-center}} Submissions** page, if you are focusing on an **Expenses** submission, and you select the {{icon:funnel size-4 inline-block align-text-center}} icon beside *Category,* and that submission has "Marketing" as the input for *Category,* your submission results will filter to display only those **Expenses** form submissions that have "Marketing" as the input under *Category.*
+*For example:* If you had a form named **Expenses,** one of the elements on that form could be to select the *Category* for an expense, such as "Software," or "Marketing," or "Travel." From the **{{icon:paper-clip size-4 inline-block align-text-center}} Submissions** page, if you are focusing on an **Expenses** submission, and you select the {{icon:funnel size-4 inline-block align-text-center}} icon beside *Category,* on a submission that has "Marketing" as the input for *Category,* your page's results will reload to filter and display only those **Expenses** form submissions that have "Marketing" as the input under *Category.*
 
 When a {{icon:funnel size-4 inline-block align-text-center}}  filter is selected, the Control Panel above the listed submissions will load with the new active filters displayed. The name of the form you are filtering by will be listed beside **{{icon:document-duplicate size-4 inline-block align-text-center}} Forms,** and can be unselected as a filter by clicking the "X" beside it. Whatever form element was selected with the {{icon:funnel size-4 inline-block align-text-center}} filter, will be listed below that with "**Filtering By**," beside the form element, along with the input that you are filtering by. This also will be listed with a "X" beside it in order to cease filtering by that input.
 
@@ -39,11 +41,17 @@ When a {{icon:funnel size-4 inline-block align-text-center}}  filter is selected
 
 
 ## {{icon:pencil-square size-7 inline-block align-text-center}} (Edit)
-If a form's permissions have been set to allow editing, you may alter the inputs and add data/comments to the input areas of a submission that has already been submitted.
+If a form's permissions allow editing, you can modify inputs and add data or comments to a submission after it has been submitted. There are three permission settings that control editing access: 
+
+- **Is Editable** (Submitter Edit) — Allows the original submitter to edit their own submission.
+- **Can Edit** (Approver Edit) — Allows the approver at a given step to edit the submission.
+- **Edit Submissions** (Edit All) — Allows any user with form access to edit any submission.
+
+If a submission reaches a final **Denied** state, no further edits are allowed regardless of these settings. However, submissions in an **Approved** state may still be edited if the form's settings permit it.
 
 When a submission has been edited, a note is added in that submission's "Notes" log that lists the editor's user name and the time it was edited, along with the message, *"This submission has been edited."* This is accessible from the submission's **{{icon:document-text size-4 inline-block align-text-center}} View All Notes** button or while fully viewing a single submission via the **{{icon:arrow-top-right-on-square size-4 inline-block align-text-center}} (Pop-out)** button or a direct, emailed link.
 
-If desired, all of a form's contributors can receive a notification when a form has been edited. This is initiated by a user with administrator permissions, and is set up in the form's flow steps.
+If desired, all of a form's contributors can receive a [notification](submissions/notifications) when a form has been edited. This is initiated by a user with administrator permissions, and is set up in the form's flow steps.
 
 ## History -
 View every action that has been taken on that submission so far. When selected, a modal will display the **Process History.**
@@ -55,7 +63,7 @@ View every action that has been taken on that submission so far. When selected, 
 
 ## Actions / Continue
 
-The [**Actions** / **Continue**](Submissions/Submission_View/Actions) button allow you to take workflow actions on submissions pending your input. When a submission is **Pending On Me**, you will see either a **Continue** button (if additional data input is required) or an **Actions** button (if only approval/review is needed).
+The **Actions** or the **Continue** button allow you to take workflow actions on submissions pending your input. When a submission is **Pending On Me**, you will see either a **Continue** button (if additional data input is required) or an **Actions** button (if only approval/review is needed).
 
 Available actions include **Approve, Request Info, Send Back,** and **Deny.**
 
@@ -73,7 +81,7 @@ While still pending, only the date and time the submission was created is listed
 
 ### {{icon:cog-6-tooth size-4 inline-block align-text-center}} (Options)
 
-Clicking the gear icon in a submission's header presents you with a side-bar titled **Submission Options** that lists the available options for interacting with that submission. These vary greatly by the user's permissions and the submission selected.
+Clicking the gear icon in a submission's header presents you with a sidebar titled **Submission Options** that lists the available options for interacting with that submission. These vary greatly by the user's permissions and the submission selected.
 
 *See the full [Options](Submissions/Submission_View/Options) page for detailed information on each available option.*
 

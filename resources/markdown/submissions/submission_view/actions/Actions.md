@@ -8,13 +8,13 @@ order: 1
 *Note: When viewing a full submission on its own page, from the **{{icon:arrow-top-right-on-square size-4 inline-block align-text-center}} (Pop-out)** icon, or from a direct, emailed link to that submission, the action buttons appear at the bottom of the submission, and there is no **Actions** or **Continue** button to access them.*
 
 ## Continue:
-From the **Submissions** page, when a submission is **Pending On Me** to make any sort of addition to the submission's data before it can proceed, a blue, **Continue** button will appear beside **History.**
+From the **{{icon:paper-clip size-4 inline-block align-text-center}} Submissions** page, when a submission is **Pending On Me** to make any sort of addition to the submission's data before it can proceed, a blue, **Continue** button will appear beside **History.**
 
-Clicking **Continue** will load a slide-out from the right of your screen that says **Additional Information Required.** It then presents you with the submission's data, as it is so far, along with the portion/s of the form to be completed by you. Required form elements are marked by a red, **{{icon:exclamation-circle size-4 inline-block align-text-center}} required** label just above their input box.
+Clicking **Continue** will load a sidebar from the right of your screen that says **Additional Information Required.** It then presents you with the submission's data, as it is so far, along with the portion/s of the form to be completed by you. Required form elements are marked by a red, **{{icon:exclamation-circle size-4 inline-block align-text-center}} required** label just above their input box.
 
-Once the required information areas are complete, you can select the **Approve** action button to move the submission on to its next flow step, and it will cease to be pending on you. You can also proceed, below this, to the **Other Available Options** area that contains other action buttons to fit your needs like, **Request Info, Send Back, or Deny.** Details about all possible **Actions** are outlined directly below.
+Once the required information areas are complete, you can select the **Approve** action button to move the submission on to its next flow step, and it will cease to be pending on you. You can also proceed, below this, to the **Other Available Options** area that contains other action buttons to fit your needs. These are: **Request Info, Send Back, or Deny.** Details about all possible **Actions** are outlined directly below.
 ## Actions:
-From the **Submissions** page, when a submission is **Pending On Me** for viewing and approval, but there are no requirements to contribute additional data or input for the continued progress of the form, the blue button that appears beside **History** will say, **Actions.**
+From the **{{icon:paper-clip size-4 inline-block align-text-center}} Submissions** page, when a submission is **Pending On Me** for viewing and approval, but there are no requirements to contribute additional data or input for the continued progress of the form, the blue button that appears beside **History** will say, **Actions.**
 
 Clicking **Actions** opens a slide-out menu from the right side of your screen with **Available Actions** at the top.  Next, the submission data will appear listed with clickable links for viewing and downloading any attached documents or photos. Below the submission data, the options for your action on the form are presented with color coded buttons.
 - ### Approve -
