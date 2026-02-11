@@ -55,7 +55,7 @@ View every action that has been taken on that submission so far. When selected, 
 
 ## Actions / Continue
 
-The [Actions and Continue](Submissions/Submission_View/Actions) buttons allow you to take workflow actions on submissions pending your input. When a submission is **Pending On Me**, you will see either a **Continue** button (if additional data input is required) or an **Actions** button (if only approval/review is needed).
+The [**Actions** / **Continue**](Submissions/Submission_View/Actions) button allow you to take workflow actions on submissions pending your input. When a submission is **Pending On Me**, you will see either a **Continue** button (if additional data input is required) or an **Actions** button (if only approval/review is needed).
 
 Available actions include **Approve, Request Info, Send Back,** and **Deny.**
 
