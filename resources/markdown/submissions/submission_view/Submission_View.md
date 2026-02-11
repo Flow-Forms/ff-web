@@ -71,7 +71,7 @@ If there are multiple user actions pending, you can click the boxes, containing 
 ### Time stamp(s) -
 While still pending, only the date and time the submission was created is listed. When the submission has reached finality, whether through approval or denial, the date and time of its completion, or when it was last edited, is listed as well.
 
-## {{icon:cog-6-tooth size-4 inline-block align-text-center}} (Options)
+### {{icon:cog-6-tooth size-4 inline-block align-text-center}} (Options)
 
 Clicking the gear icon in a submission's header presents you with a side-bar titled **Submission Options** that lists the available options for interacting with that submission. These vary greatly by the user's permissions and the submission selected.
 
@@ -87,14 +87,14 @@ Fully view all data/entries on the form submission while remaining on your "Subm
 ### {{icon:arrows-pointing-in size-5 inline-block align-text-center}} Show Less -
 Return to the overview display of the submission's data. The elements displayed in this view are selected at the time of the form's creation. This view option displays attachments as thumbnails and/or viewing links. This button only appears when in the expanded, or, "show more" view, and is also referred to as *Collapsed View.*
 
-## + Add Note
+### + Add Note
 
 Add additional information, comments, or attach files for the record. Notes are visible to anyone with access to the submission, but can be set to "protected" when you need only a group of users to be able to view them.
 
 *See the full [Add Note](Submissions/Submission_View/Add_Note) page for detailed instructions on creating, viewing, and managing notes.*
 
 
-## Admin Options
+### Admin Options
 
 Administrators have access to additional submission options including the ability to undo approved or denied decisions, transfer submissions, edit forms and flows, and configure form options.
 
