@@ -355,12 +355,26 @@ class MarkdownHelper
                         return $a['order'] - $b['order'];
                     });
 
+                    // If a child item has the same title as the subfolder, promote its URL
+                    // to the subfolder level and remove it from the children
+                    $subfolderUrl = null;
+                    $subfolderItems = array_values(array_filter($subfolderItems, function ($item) use ($subfolderTitle, &$subfolderUrl) {
+                        if ($item['title'] === $subfolderTitle) {
+                            $subfolderUrl = $item['url'];
+
+                            return false;
+                        }
+
+                        return true;
+                    }));
+
                     $folderItems[] = [
                         'title' => $subfolderTitle,
                         'type' => 'subfolder',
                         'order' => $subfolderOrder,
                         'folder' => $folderName,
                         'subfolder' => $subfolderName,
+                        'url' => $subfolderUrl,
                         'items' => $subfolderItems,
                     ];
                 }
