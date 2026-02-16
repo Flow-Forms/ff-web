@@ -66,7 +66,9 @@ Options you may be presented with are as follows:
 - ## Reassign
 - ## Reassign to Me
 - ## Connected Submissions
+connected to another form. In the form's build, a connected element is set. conn subs show up when the data on the submission you're looking at is pulled from or contributing to other submissions. only shows those "downstream" and, from Options, it's just filtering to show your results that are connected submissions
 - ## Connected Forms
+some elements are used from the viewed form on other forms. clicking takes you to the connected form
 
 - ## {{icon:printer size-4 inline-block align-text-center}} Print
 	If you select to print from the Options menu, the submission will be reloaded on its own page, from which you see the full, individual submission for printing.
