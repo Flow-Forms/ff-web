@@ -63,23 +63,26 @@ When no sharing is configured, the modal displays _"No submissions individually"
 
 If you would like an email and/or text message to be sent to you, at a specific time, that is linked to a submission, select **{{icon:calendar size-4 inline-block align-text-center}} Reminders** from the Options menu of that submission. A modal will appear with these options:
 
-- **When** - set the date for the reminder, or for when the reminders are to begin
-	- **Frequency** -
-		- *One Time* - for one reminder, sent one time (on date set above)
-		- *Recurring* - Select for reminders to be sent at an interval of your choosing
-			- **Interval** - number of units between reminders
-			- **Frequency** - unit of time (day, week, month, year)
-			- **Ends** -
-				- *Never* - Select to have reminders continue in perpetuity
-				- *On* - Select to end reminders on a specified date (date selection box appears when "On" is selected)
-				- *After* - Select for reminders to end after a certain number have been sent. When selected, an "Occurrences" box appears to allow the number of reminders to be selected.
+- **When** - set the date for a single reminder, or for when you'd like multiple reminders to begin
+- **Frequency** -
+	- *One Time* - for one reminder, sent one time (on date set above)
+	- *Recurring* - Select for reminders to be sent at an interval of your choosing
+		- **Interval** - The number of units between reminders. Click and type in a number or use the up/down arrows.
+		- **Frequency** - Select the unit of time (day, week, month, year) from the dropdown box.
+		- **Ends** -
+			- *Never* - Select to have reminders continue in perpetuity. These can later be deleted from this same modal, under **Current Reminders**.
+			- *On* - Select to end reminders on a specified date. The **Ends On** date selection box appears with this option.
+			- *After* - Select for reminders to end after a certain number have been sent. When selected, an **Occurrences** box appears to allow the number of reminders to be selected.
 -  **Trigger** - A trigger is an action that is auto-deployed at the time of a set occurrence in a form's workflow. If, at the time of the form's flow design, a trigger has been created, it will appear here as an option to deploy that trigger at the time specified by your reminder. Both the trigger's action and your reminder communication will occur when this is selected from reminders.
 -  **Message** - Type your desired communication for the reminder in this section. It will be sent as your reminder message via email, and SMS if selected, along with abbreviated submission info and a link to the submission.
--  **Send SMS** - Toggle button is off by default. Click to turn on if a text message reminder is desired in addition to the default email notification.
+-  **Send SMS** - Toggle is off by default. Click to turn on if a text message reminder is desired in addition to the default email notification.
 - **Current Reminders** - If any reminders are already set on the submission, they will appear here, listed with their **Type** and **Message.** If there are none, *"No reminders set"* will appear. You can set multiple reminders on a submission. Reminders can be deleted (stopped), before they are set to expire, by clicking the {{icon:trash size-4 inline-block align-text-center}} (trash) icon that appears beside their listing in current reminders.
 - Click **Cancel** to exit reminders or click **Add Reminder** to set your reminder with the parameters you have selected.
 
 ## {{icon:arrow-path-rounded-square size-4 inline-block align-text-center}} Reassign
+When a submission is pending on a user that is unable to take action to move the submission along, **{{icon:arrow-path-rounded-square size-4 inline-block align-text-center}} Reassign** allows that user's action to be reassigned to a different user that is in the same group type. A group type refers to a user's group category within the system. An administrative assistant's action can be reassigned to another user in the administrative assistant group, and so on. Users that are already assigned in that workflow are excluded from availability. 
+
+Only submissions with a **Pending** status are eligible to be reassigned. Additionally, only the user that processed the previous workflow step on that submission can access this option as well as Administrators. The u
 
 ## {{icon:arrows-right-left size-4 inline-block align-text-center}} Reassign to Me
 
