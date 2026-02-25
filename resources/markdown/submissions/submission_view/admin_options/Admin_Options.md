@@ -21,7 +21,7 @@ The bottom of the modal warns you,
 
 Once you select the blue, **Undo and Revert** button, notifications will be sent, the status becomes "Pending" again, on the user you selected, and any steps that come after your selection will have to be redone and approved again.  
 
-## {{icon:user-group size-4 inline-block align-text-center}} Transfer
+## {{icon:user-group size-6 inline-block align-text-center}} Transfer
 *Use Case-* A submission got stuck/misrouted and needs emergency admin intervention.
 
 

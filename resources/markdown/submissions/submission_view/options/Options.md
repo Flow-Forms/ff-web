@@ -31,30 +31,30 @@ After clicking the blue **Share** button, your new sharing selection appears in 
 
 
 - ### Advanced Sharing:
-Clicking the blue **Advanced sharing** link under the sharing options select-box opens additional sharing options.
+	Clicking the blue **Advanced sharing** link under the sharing options select-box opens additional sharing options.
 
-From the **Sharing** modal, you can toggle **All Submissions** on if you would like to designate a user to be allowed to view all of your submissions across all of your forms. When enabled, the remaining selection is a searchable dropdown box labeled **Share with Selected Users.** Select a user's name and a checkmark will appear beside it. Their name will also appear in the dropdown box. Click the blue **Save** button to apply the sharing or **X** to exit without saving.
+	From the **Sharing** modal, you can toggle **All Submissions** on if you would like to designate a user to be allowed to view all of your submissions across all of your forms. When enabled, the remaining selection is a searchable dropdown box labeled **Share with Selected Users.** Select a user's name and a checkmark will appear beside it. Their name will also appear in the dropdown box. Click the blue **Save** button to apply the sharing or **X** to exit without saving.
 
-When the **All Submissions** toggle switch is **off,** you'll see two searchable dropdowns:
+	When the **All Submissions** toggle switch is **off,** you'll see two searchable dropdowns:
 
-- **Submissions From Selected Forms -** lists all forms you're included in. Select the form you'd like to share, a checkmark will appear beside it, and its name will appear in the dropdown.
-- **Share with Selected Users -** Select the user you'd like to grant access and their name will appear in the box. This allows the user viewing access to all your submissions, but only on the specified form.
+	- **Submissions From Selected Forms -** lists all forms you're included in. Select the form you'd like to share, a checkmark will appear beside it, and its name will appear in the dropdown.
+	- **Share with Selected Users -** Select the user you'd like to grant access and their name will appear in the box. This allows the user viewing access to all your submissions, but only on the specified form.
 
-Click the blue **Save** button to activate the sharing or **X** to exit without saving.
+	Click the blue **Save** button to activate the sharing or **X** to exit without saving.
 
-Clicking the blue **Advanced sharing** link under the sharing options select-box takes you to additional sharing options for you as a user.
+	Clicking the blue **Advanced sharing** link under the sharing options select-box takes you to additional sharing options for you as a user.
 
-From the **Sharing** modal, you may select to turn on a toggle switch labeled, **All Submissions.** Do this if you would like to designate a user to be allowed to view *all* of your submissions to *all* of your forms. When this is switched **on,** the only remaining selection is a drop-down box, with search capability, labeled, **Share with Selected Users.** From this, you may select the user's name with whom you would like to share your viewing permissions. A checkmark will appear beside their name once selected, and will also appear in the drop-down box. Click the blue, **Save** button to submit this new share or "X" out of the modal to exit without saving.
+	From the **Sharing** modal, you may select to turn on a toggle switch labeled, **All Submissions.** Do this if you would like to designate a user to be allowed to view *all* of your submissions to *all* of your forms. When this is switched **on,** the only remaining selection is a drop-down box, with search capability, labeled, **Share with Selected Users.** From this, you may select the user's name with whom you would like to share your viewing permissions. A checkmark will appear beside their name once selected, and will also appear in the drop-down box. Click the blue, **Save** button to submit this new share or "X" out of the modal to exit without saving.
 
-When the **All Submissions** toggle switch is set to **off,** you are left with two, searchable, drop-down boxes.
+	When the **All Submissions** toggle switch is set to **off,** you are left with two, searchable, drop-down boxes.
 	- **Submissions From Selected Forms -** lists all the forms you are included in. Select the form you'd like to share, a checkmark will appear beside it, and the form name will appear in the drop-down box.
 	- **Share with Selected Users -** Select the user you'd like to grant access to that form, and their name will appear in the box. This allows the user viewing access to all your submissions, but only on the specified form.
 
-Click the blue, **Save** button to activate the new share, or the **X** to exit without saving.
+	Click the blue, **Save** button to activate the new share, or the **X** to exit without saving.
 
-Any existing shares appear at the bottom under **Individual Shared Submissions** or **Submissions Shared by Form**, showing the user's name and number of shared forms. Click a user's name to expand the list of shared forms, each with a **{{icon:trash size-4 inline-block align-text-center}}** (trash) icon. Clicking the trash icon prompts _"Are you sure you want to delete this share?"_ Click **Cancel** to exit or **OK** to remove sharing for that form.
+	Any existing shares appear at the bottom under **Individual Shared Submissions** or **Submissions Shared by Form**, showing the user's name and number of shared forms. Click a user's name to expand the list of shared forms, each with a **{{icon:trash size-4 inline-block align-text-center}}** (trash) icon. Clicking the trash icon prompts _"Are you sure you want to delete this share?"_ Click **Cancel** to exit or **OK** to remove sharing for that form.
 
-When no sharing is configured, the modal displays _"No submissions individually"_ under **Individual Shared Submissions** and _"No submissions shared by form"_ under **Submissions Shared by Form**.
+	When no sharing is configured, the modal displays _"No submissions individually"_ under **Individual Shared Submissions** and _"No submissions shared by form"_ under **Submissions Shared by Form**.
 
 
 
@@ -91,6 +91,9 @@ When selected, the **Reassign** modal appears with **Select a user to reassign t
 
 
 ## {{icon:arrows-right-left size-6 inline-block align-text-center}} Reassign to Me
+***Use Case** - I requested info from the submitter, they provided it, now I'll handle it myself.*
+
+This option is available exclusively when you have chosen [Request Info](submissions/submission_view/actions#Request%Info) as your action on a submission that was **Pending on Me**. Once you receive the needed information from the other user, you can select **Reassign to Me** to change the status from *Info Requested* back to *Pending* without requiring further action from them. 
 
 ## Connected Submissions
 connected to another form. In the form's build, a connected element is set. conn subs show up when the data on the submission you're looking at is pulled from or contributing to other submissions. only shows those "downstream" and, from Options, it's just filtering to show your results that are connected submissions
