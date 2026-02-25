@@ -79,12 +79,18 @@ If you would like an email and/or text message to be sent to you, at a specific 
 - **Current Reminders** - If any reminders are already set on the submission, they will appear here, listed with their **Type** and **Message.** If there are none, *"No reminders set"* will appear. You can set multiple reminders on a submission. Reminders can be deleted (stopped), before they are set to expire, by clicking the {{icon:trash size-4 inline-block align-text-center}} (trash) icon that appears beside their listing in current reminders.
 - Click **Cancel** to exit reminders or click **Add Reminder** to set your reminder with the parameters you have selected.
 
-## {{icon:arrow-path-rounded-square size-4 inline-block align-text-center}} Reassign
-When a submission is pending on a user that is unable to take action to move the submission along, **{{icon:arrow-path-rounded-square size-4 inline-block align-text-center}} Reassign** allows that user's action to be reassigned to a different user that is in the same group type. A group type refers to a user's group category within the system. An administrative assistant's action can be reassigned to another user in the administrative assistant group, and so on. Users that are already assigned in that workflow are excluded from availability. 
+## {{icon:arrow-path-rounded-square size-6 inline-block align-text-center}} Reassign
+***Use Case** - This submission needs to go to someone else to take this action.*
 
-Only submissions with a **Pending** status are eligible to be reassigned. Additionally, only the user that processed the previous workflow step on that submission can access this option as well as Administrators. The u
+When a submission is pending on a user who is unable to take action, **{{icon:arrow-path-rounded-square size-4 inline-block align-text-center}} Reassign** allows that user's action to be reassigned to a different user in the same group type. A group refers to the various user categories within the system that ensure appropriate access. For example, an administrative assistant's action can be reassigned to another user in the administrative assistant group. You cannot reassign to a user who already has an action assigned to them in that submission's workflow.
 
-## {{icon:arrows-right-left size-4 inline-block align-text-center}} Reassign to Me
+Only submissions with **Pending** status are eligible for reassignment. Additionally, only the user who processed the previous workflow step and Administrators can access this option. **Note:** Administrators can reassign outside of these constraints using [Transfer](submissions/submission_view/admin_options#transfer).
+
+When selected, the **Reassign** modal appears with **Select a user to reassign this submission to** above a dropdown displaying available users. Below this, you can choose whether to **Notify users of assignment**—leave this enabled for the selected user to be notified of the reassignment.
+
+
+
+## {{icon:arrows-right-left size-6 inline-block align-text-center}} Reassign to Me
 
 ## Connected Submissions
 connected to another form. In the form's build, a connected element is set. conn subs show up when the data on the submission you're looking at is pulled from or contributing to other submissions. only shows those "downstream" and, from Options, it's just filtering to show your results that are connected submissions
