@@ -13,6 +13,8 @@ class LaravelSlugNormalizer implements TextNormalizerInterface
 {
     public function normalize(string $text, ?array $context = null): string
     {
+        $text = preg_replace('/\{\{icon:[^}]+\}\}/', '', $text);
+
         return Str::slug($text);
     }
 }
