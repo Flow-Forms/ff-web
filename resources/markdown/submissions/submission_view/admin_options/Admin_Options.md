@@ -9,7 +9,7 @@ The following options are available exclusively to users with administrator perm
 
 ## {{icon:arrow-uturn-left size-4 inline-block align-text-center}} Undo Approved / Denied
 
-***Use Case***- A submission was approved/denied by mistake and needs to be reversed.
+***Use Case**- A submission was approved/denied by mistake and needs to be reversed.*
 
 This is an emergency function to reverse terminal state (approved/denied) decisions. The last action is undone and the submission is reverted to a previous workflow step, allowing it to be processed again.
 
@@ -22,7 +22,9 @@ The bottom of the modal warns you,
 Once you select the blue, **Undo and Revert** button, notifications will be sent, the status becomes "Pending" again, on the user you selected, and any steps that come after your selection will have to be redone and approved again.  
 
 ## {{icon:user-group size-6 inline-block align-text-center}} Transfer
-*Use Case-* A submission got stuck/misrouted and needs emergency admin intervention.
+***Use Case** - A submission is stuck/misrouted and needs emergency admin intervention.*
+
+If a submission needs intervention to change the user that is assigned on a step in a form's workflow, you can make that new designation via the **Transfer** option. Unlike [Reassign](submissions/submission_view/options#Reassign), which only allows you to designate a user in the same group-type as the original, **Transfer** allows you to select any users, even external. 
 
 
 

@@ -59,7 +59,7 @@ After clicking the blue **Share** button, your new sharing selection appears in 
 
 
 ## {{icon:calendar size-6 inline-block align-text-center}} Reminders
-***Use Case:** I need to be reminded to follow up on this next week*
+***Use Case:** I need to be reminded to follow up on this next week*.
 
 If you would like an email and/or text message to be sent to you, at a specific time, that is linked to a submission, select **{{icon:calendar size-4 inline-block align-text-center}} Reminders** from the Options menu of that submission. A modal will appear with these options:
 
@@ -80,13 +80,13 @@ If you would like an email and/or text message to be sent to you, at a specific 
 - Click **Cancel** to exit reminders or click **Add Reminder** to set your reminder with the parameters you have selected.
 
 ## {{icon:arrow-path-rounded-square size-6 inline-block align-text-center}} Reassign
-***Use Case** - This submission needs to go to someone else to take this action.*
+***Use Case** - This submission needs to go to someone else on the team.*
 
-When a submission is pending on a user who is unable to take action, **{{icon:arrow-path-rounded-square size-4 inline-block align-text-center}} Reassign** allows that user's action to be reassigned to a different user in the same group type. A group refers to the various user categories within the system that ensure appropriate access. For example, an administrative assistant's action can be reassigned to another user in the administrative assistant group. You cannot reassign to a user who already has an action assigned to them in that submission's workflow.
+When a submission is pending on a user who is unable to take action, **{{icon:arrow-path-rounded-square size-4 inline-block align-text-center}} Reassign** allows that user's action to be reassigned to a different user in the same group type. A group refers to the various user categories within the system that ensure appropriate access. For example, an administrative assistant's action can be reassigned to another user in the administrative assistant group. You cannot reassign to a user who already has an action assigned to them in that submission's workflow. The submission will continue in its normal workflow after the reassigned user has taken their action.
 
-Only submissions with **Pending** status are eligible for reassignment. Additionally, only the user who processed the previous workflow step and Administrators can access this option. **Note:** Administrators can reassign outside of these constraints using [Transfer](submissions/submission_view/admin_options#transfer).
+Only submissions with **Pending** status are eligible for reassignment. Additionally, only the user who processed the previous workflow step can access this option. **Note:** Administrators can reassign outside of these constraints using [Transfer](submissions/submission_view/admin_options#transfer).
 
-When selected, the **Reassign** modal appears with **Select a user to reassign this submission to** above a dropdown displaying available users. Below this, you can choose whether to **Notify users of assignment**—leave this enabled for the selected user to be notified of the reassignment.
+When selected, the **Reassign** modal appears with **Select a user to reassign this submission to** above a dropdown displaying available users. Below this, you can choose whether to **Notify users of assignment**—leave this enabled for the selected users to be notified, via email, of the reassignment. 
 
 
 
