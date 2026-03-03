@@ -5,7 +5,7 @@ order: 1
 
 # Admin Options
 
-The following options are available exclusively to users with administrator permissions. These options appear in the **{{icon:cog-6-tooth size-4 inline-block align-text-center}} (Options)** menu or on a submission's page when you have admin-level access.
+The following options are available exclusively to users with administrator permissions. These appear under **{{icon:cog-6-tooth size-4 inline-block align-text-center}} (Options)** in the submission's header when you have admin-level access.
 
 ## {{icon:arrow-uturn-left size-4 inline-block align-text-center}} Undo Approved / Denied
 
@@ -24,12 +24,20 @@ Once you select the blue, **Undo and Revert** button, notifications will be sent
 ## {{icon:user-group size-6 inline-block align-text-center}} Transfer
 ***Use Case** - A submission is stuck/misrouted and needs emergency admin intervention.*
 
-If a submission needs intervention to change the user that is assigned on a step in a form's workflow, you can make that new designation via the **Transfer** option. Unlike [Reassign](submissions/submission_view/options#Reassign), which only allows you to designate a user in the same group-type as the original, **Transfer** allows you to select any users, even external. 
+If a submission needs intervention to change the assigned user on a workflow step, you can make that designation using the **Transfer** option. Unlike [Reassign](submissions/submission_view/options#reassign), which only allows you to select users in the same group type as the original, **Transfer** allows you to select any users, including external ones.
+
+The **Transfer Submission** modal prompts you to _Select users to transfer to_ with a dropdown containing all available users. To _**include external users**_ in the dropdown, activate the toggle switch with that label. Selected users will show a checkmark beside their information and appear listed in the dropdown.
+
+The _**Send email notification(s)**_ toggle is enabled by default. Turn it off if you prefer not to notify the selected users. Click **Cancel** to exit without transferring the submission's action, or the blue **Transfer to Users** button to initiate the transfer. If notifications are enabled, they will be sent at this time.
+
+
+## {{icon:swatch size-6 inline-block align-text-center}} Form Options
+
+
+##  {{icon:queue-list size-6 inline-block align-text-center}} Edit Flow
+
+
+## {{icon:pencil size-6 inline-block align-text-center}} Edit Form
 
 
 
-## Edit Form
-
-## Edit Flow
-
-## {{icon:swatch size-4 inline-block align-text-center}}Form Options

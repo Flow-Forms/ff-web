@@ -4,7 +4,7 @@ order: 5
 ---
 
 # Display Options
-The submissions management panel includes clickable icons that allow you to switch between two display options as well as change the sort order of your displayed submissions. These are found on the right side of the management panel below the "{{icon:adjustments-horizontal size-4 inline-block align-text-center}} Filters" button and beside the "{{icon:check-badge size-4 inline-block align-text-center}} Status" quick-filter button. *(Directly below "Clear Filters" when a filter is active.)*
+The control panel includes clickable icons that allow you to switch between two display options as well as change the sort order of your displayed submissions. These are found on the right side of the control panel below the **{{icon:adjustments-horizontal size-4 inline-block align-text-center}} Filters** button and beside the **{{icon:check-badge size-4 inline-block align-text-center}} Status** quick-filter button. *(Directly below "Clear Filters" when a filter is active.)*
 
 
 ## Sort Submissions {{icon:bars-arrow-down size-5 inline-block align-text-center}}
