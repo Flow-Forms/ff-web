@@ -48,6 +48,23 @@ Once complete:
 - **Completed**: PDF is ready for download
 - **Failed**: An error occurred during processing
 
+### Bulk Actions
+Select multiple submissions to:
+- Export to CSV
+- Update status in bulk
+- Assign to users
+- Apply tags or categories
+
+## Best Practices
+
+- Use filters to create custom workflows
+- Save commonly used filters
+- Regularly export data for backup
+- Set up group permissions appropriately
+- Use bulk actions to save time
+
+
+
 ## Technical Implementation
 
 ### Architecture

@@ -56,3 +56,17 @@ Ready to dive deeper?
 - Master the [Form Builder](./03-form-builder.md)
 - Set up [Conditional Logic](./04-conditional-logic.md)
 - Configure [Validation Rules](./05-validation.md)
+
+## Grouping & Permissions
+
+### Group Access
+Administrators can assign groups to view specific form submissions:
+1. Edit the form
+2. Go to "Additional Form Options"
+3. Assign groups who should have access
+4. Save changes
+
+### Permission Levels
+- **View Only** - See submission data
+- **Edit** - Modify submission content
+- **Manage** - Full control including deletion
