@@ -6,7 +6,7 @@ order: 2
 
 ## Export
 
-The **{{icon:chart-bar size-4 inline-block align-text-center}} Export** button, located above the right end of the Submissions Control Panel, allows you to download form submissions as a CSV file. The export data will include all form fields, timestamps, submission metadata and status information.
+The **{{icon:chart-bar size-4 inline-block align-text-center}} Export** button, located above the right end of the Submissions Control Panel, allows you to download form submissions as a CSV file. The export data will include all form fields, timestamps, submitter information, current status, and a link to the submission. 
 
 To initiate an export, you must first filter your submissions [by form.](submissions/managing_submissions/filters#forms) If you want to further narrow your dataset, select additional criteria from **Filters**. Once the desired data is displayed, click **Export**.
 
