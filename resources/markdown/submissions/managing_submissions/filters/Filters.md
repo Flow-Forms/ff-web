@@ -6,7 +6,7 @@ order: 4
 # Filters
 Flow Forms provides comprehensive filtering options to find exactly what you need. Using filters to limit your displayed submissions allows you to handle common tasks efficiently, locate data quickly, run reports, and much more.
 
-To access the complete filter menu, start from the **{{icon:paper-clip size-4 inline-block align-text-center}} Submissions** page and click the blue **{{icon:adjustments-horizontal size-4 inline-block align-text-center}} Filters** button in the Control Panel. A slide-out menu will appear from the right side of the screen. If any filters are currently active, a "Clear All" button will be available at the top. Clear the filters when starting a new search to ensure previous filtering choices aren't limiting your results. Your Submission Count is also displayed at the top of this menu beside "Filters" and will adjust based on your filtering selections. If your submission count shows "0," no submissions match your search criteria.
+To access the complete filter menu, start from the **{{icon:paper-clip size-4 inline-block align-text-center}} Submissions** page and click the blue **{{icon:adjustments-horizontal size-4 inline-block align-text-center}} Filters** button in the Control Panel. A slide-out menu will appear from the right side of the screen. If any filters are currently active, a **Clear All** button will be available at the top. Clear the filters when starting a new search to ensure previous filtering choices aren't limiting your results. Your Submission Count is also displayed at the top of this menu beside **Filters** and will adjust based on your filtering selections. If your submission count shows "0," no submissions match your search criteria.
 
 Apply multiple filters simultaneously to narrow your displayed results. You can filter by any of these criteria:
 - [Forms](#Forms)
@@ -68,28 +68,28 @@ The submissions displayed will be based on the date they were submitted.
 ### Submission Status 
 Display and search submissions that share the status you select.
 
-As a submission moves through its workflow toward completion, its status reflects that progress. Each status is represented by a color. Not every status is utilized in every form, but the exhaustive list is as follows: 
-		
+As a submission moves through its workflow toward completion, its status reflects that progress. Each status is represented by a color. Not every status is used in every form, but the complete list is as follows:
+
 - Blue - **Approved** (submission is complete)
-- Yellow- **Pending** (waiting on another's action)
+- Yellow- **Pending** (waiting on another user's action)
 - Red - **Pending on Me** (waiting on your action)
-- Orange - **Sent Back** (submission has been sent back to the form's originator)
-- Magenta - **Info Requested** (sent back to any flow-step for additional information)
+- Orange - **Sent Back** (submission has been sent back to a prior step or to the initial submitter)
+- Magenta - **Info Requested** (pending on a user in the form's workflow for additional information)
 - Gray- **Denied** (submission has been rejected and cannot be continued)
-- Teal - **Escalated** (skipped flow-step(s) to seek input/approval)
+- Teal - **Escalated** (skipped flowstep(s) to seek input or approval)
 
-Select by clicking in the box beside any status. A checkmark will be displayed when a status is selected, and multiple may be selected.  Click the box a second time to unselect. With this filter active, your search results will only display submissions that correlate with the statuses selected.
+Select by clicking in the box beside any status. A checkmark will appear when a status is selected, and multiple may be selected. Click the box again to deselect. With this filter active, your search results will only display submissions that match the selected statuses.
 
-***Status** and **Forms** filters are both enabled with "[Quick-Filters](#quick-filters)" access. When **Status** is selected as a filter, the status' name (along with a corresponding color dot) will appear on the submission management panel, beside "{{icon:funnel size-4 inline-block align-text-center}} Status," located just below the right end of the search bar. From the submission management panel, you then have the option to click the "X," listed with that status, to cease filtering by that form.*
+**Status** and **Forms** filters are both accessible through [Quick-Filters](#quick-filters). When **Status** is selected as a filter, the status name (along with a corresponding color dot) will appear on the Control Panel beside **{{icon:funnel size-4 inline-block align-text-center}} Status**, located just below the right end of the search bar. From the Control Panel, you can click the "X" next to that status to stop filtering by that status.
 
 
 ### Submitted By
 
-To display only the submissions submitted by a specified user or users, utilize the "Submitted By" filter option.
+To display only  submissions submitted by a specified user or users, utilize the **Submitted By** filter option.
 
-From the blue, "Filters" button, scroll down to "Submitted By" and click its drop down bar that says, "Search by name or email."  A list of users accessible to you within your organization will load below with a search bar at the top. Begin to type the name or email of a desired user into the search bar and click their info line to select them as they appear. A green checkmark will appear beside their email address, if selected, which you may click again to unselect. All selected user names will appear listed just above, along with a red "X" that you can click if you want to remove their submissions from your filtered search results.
+From the blue **Filters** button, scroll down to **Submitted By** and click its dropdown that says *Search by name or email.* A list of users accessible to you within your organization will load below with a search bar at the top. Begin typing the name or email of a desired user into the search bar and click their info line to select them as they appear. A checkmark will appear beside their email address when selected, which you can click again to deselect. All selected user names will appear listed above, along with an "X" that you can click to remove their submissions from your filtered search results.
 
-By default, the list of users that populates in the drop-down will only include those with Flow Forms user accounts within your organization. There is, however, a toggle switch just below the drop down box, with "show external" beside it, that, when selected, allows you to also search and select names and emails of users that have submitted into your Flow Forms data set from an *external* form link. Activating this switch would be of use if you need to search for data submitted by a user that filled out a public-facing form for your organization.
+By default, the list of users that populates in the dropdown will only include those with Flow Forms user accounts within your organization. However, there is a toggle switch just below the dropdown labeled **show external** that, when selected, allows you to also search and select names and emails of users who have submitted to your Flow Forms dataset from an _external_ form link. Activating this switch would be useful if you need to search for data submitted by a user who filled out a public-facing form for your organization."
 
 
 ### Pending On
