@@ -26,6 +26,8 @@ Display and search only submissions from selected forms. From the **{{icon:adjus
 
 After selecting your desired forms, the number of selected forms displays in the dropdown box.
 
+By default, when a form has been disabled (meaning it is no longer active for your organization and users can no longer make submissions to it), those forms are excluded from the dropdown forms list. If you would like to view results that include disabled forms, you can click the checkbox labeled **Show disabled forms** and then select them from the dropdown.
+
 *The **Forms** and **Status** filters are both accessible through [Quick-Filters](#quick-filters). When a form is selected as a filter, that form's title will also appear on the Control Panel beside **{{icon:document-duplicate size-4 inline-block align-text-center}} Forms**, located just below the left end of the search bar. From the Control Panel, you can click the "X" next to a form's title to stop filtering by that form.*
 
 
@@ -87,99 +89,55 @@ Select by clicking in the box beside any status. A checkmark will appear when a 
 
 To display only  submissions submitted by a specified user or users, utilize the **Submitted By** filter option.
 
-From the blue **Filters** button, scroll down to **Submitted By** and click its dropdown that says *Search by name or email.* A list of users accessible to you within your organization will load below with a search bar at the top. Begin typing the name or email of a desired user into the search bar and click their info line to select them as they appear. A checkmark will appear beside their email address when selected, which you can click again to deselect. All selected user names will appear listed above, along with an "X" that you can click to remove their submissions from your filtered search results.
+From the blue **Filters** button, scroll down to **Submitted By** and click its dropdown that says *Search by name or email.* A list of users accessible to you within your organization will load below with a search bar at the top. Begin typing the name of a desired user into the search bar and click to select them as they appear. A checkmark will appear beside their name when selected, which you can click again to deselect. All selected user names will appear listed in the dropdown, along with an "X" that you can click to remove their submissions from your filtered search results.
 
-By default, the list of users that populates in the dropdown will only include those with Flow Forms user accounts within your organization. However, there is a toggle switch just below the dropdown labeled **show external** that, when selected, allows you to also search and select names and emails of users who have submitted to your Flow Forms dataset from an _external_ form link. Activating this switch would be useful if you need to search for data submitted by a user who filled out a public-facing form for your organization."
+By default, the list of users that populates in the dropdown will only include those with Flow Forms user accounts within your organization. However, there is a toggle switch just below the dropdown labeled **Show external users** that, when selected, allows you to also search and select names of users who have submitted to your Flow Forms dataset from an _external_ form link. Activating this switch would be useful if you need to search for data submitted by a user who filled out a public-facing form for your organization."
 
 
 ### Pending On
 
-To display the submissions that are pending on a specific user or users, click the blue, "Filters" button, and scroll down to "Pending On." Click the drop down that says, "Search by name or email," and a list of users accessible to you within your organization will load below with a search bar at the top. Begin to type the name or email of a desired user into the search bar and click their info line to select them as they appear. A green checkmark will appear beside their email address, if selected, which you may click again to unselect. All selected user names will appear listed just above, along with a red "X" that you can click if you want to remove their submissions from your filtered search results.
+To display submissions that are pending on a specific user or users, click the blue **Filters** button and scroll down to **Pending On**. Click the dropdown that says _Search by name or email_ and a list of users accessible to you within your organization will load below with a search bar at the top. Begin typing the name of a desired user into the search bar and click to select them when they appear. A checkmark will appear beside their name when selected, which you can click again to deselect. All selected user names will appear listed in the dropdown, along with an "X" that you can click to remove their submissions from your filtered search results.
 
-By default, the list of users that populates in the drop-down will only include those with Flow Forms user accounts within your organization. There is, however, a toggle switch just below the drop down box, with "show external" beside it, that, when selected, allows you to also search and select names and emails of users that have submitted into your Flow Forms data set from an *external* form link. This search addition would come in handy if you need to search for data submitted by a user that filled out a public-facing form for your organization.
+By default, the list of users that populates in the dropdown will only include those with Flow Forms user accounts within your organization. However, there is a toggle switch just below the dropdown labeled **Show external users** that, when selected, allows you to include users who have submitted to your Flow Forms dataset from an _external_ form link. This search addition would be useful if you need to search for data submitted by a user who filled out a public-facing form for your organization.
 
 ### Participated In Submission
 
-To only show submissions to forms that include a designated user or users, at any point in the workflow, you can specify this with the "Participated in Submission" filter. 
+To only show submissions to forms that include a designated user or users who had a role in any step of the workflow, you can use the **Participated in Submission** filter.
 
-From the blue, "Filters" button slide-out menu, scroll down to "Participated in Submission."  Click the drop down that says, "Search by name or email,"  and a list of users accessible to you within your organization will load below with a search bar at the top. Begin to type the name or email of a desired user into the search bar and click their info line to select them as they appear. A green checkmark will appear beside their email address, if selected, which you may click again to unselect. All selected user names will appear listed just above, along with a red "X" that you can click if you want to remove their submissions from your filtered search results.
+From the blue **Filters** button slide-out menu, scroll down to **Participated in Submission**. Click the dropdown that says _Search by name or email_, and a list of users accessible to you within your organization will load below with a search bar at the top. Begin typing the name of a desired user into the search bar and click their info line to select them as they appear. A checkmark will appear beside their name when selected, and they will appear at the top of the dropdown list. Click them again to deselect. All selected user names will appear listed in the dropdown, along with an "X" that you can click to remove them from your filtered search results.
 
-By default, the list of users that populates in the drop-down will only include those with Flow Forms user accounts within your organization. There is, however, a toggle switch just below the drop down box, with "show external" beside it, that, when selected, allows you to also search and select names and emails of users that have submitted into your Flow Forms data set from an *external* form link. This search addition can be used to search for data submitted by a user that filled out a public-facing form for your organization that does not have an internal Flow Forms account for their use.
+By default, the list of users that populates in the dropdown will only include those with Flow Forms user accounts within your organization. However, there is a toggle switch just below the dropdown labeled **Show external users** that, when selected, allows you to also search and select names of users who have submitted to your Flow Forms dataset from an _external_ form link. This search addition can be used to search for data submitted by users who filled out a public-facing form for your organization but do not have an internal Flow Forms account.
 
 
 
 ## Saved Filters
 
 For frequently accessed search criteria, you have the option to save a filter and name it accordingly. Follow these steps to create reusable filters:
-1. **Make your filtering selections** - Utilize any or all of the above mentioned filters.
-2. **Click "{{icon:bookmark size-4 inline-block align-text-center}} Save Current Filters"** - This option displays at the top of the "Filters" slide-out menu after a filter is selected.
-3. **Name your filter**- Enter your choice for the filter's name in the text box that appears next.
-4. **Click "Save"** (or cancel to exit without saving) - Refresh your page, after saving, for the new filter to appear.
-5. **Access saved filters from the sidebar under "{{icon:funnel size-4 inline-block align-text-center}} Filters"** - The list of your saved filters is presented alphabetically, is scrollable for users with more than four filters saved, and also contains a search bar. You can dispose of unwanted filters by clicking the red trash can ({{icon:trash size-4 inline-block align-text-center}}) that is to the right of your filter's name. A pop-up window will ask, "Are you sure you want to delete this filter?" Click "OK" to proceed with deletion, or "Cancel" to exit.
+
+1. **Make your filtering selections** - Use any or all of the filters mentioned above.
+2. **Click "{{icon:bookmark size-4 inline-block align-text-center}} Save Current Filters**" - This option appears at the top of the **Filters** slide-out menu after a filter is selected.
+3. **Name your filter** - Enter your choice for the filter's name in the text box that appears.
+4. **Click "Save"** (or **Cancel** to exit without saving) - Refresh your page after saving for the new filter to appear in the sidebar.
+5. **Access saved filters from the sidebar under "{{icon:funnel size-4 inline-block align-text-center}} Filters**" - Your saved filters are listed alphabetically, scrollable when more than four filters are saved, and include a search bar. You can delete unwanted filters by clicking the trash icon ({{icon:trash size-4 inline-block align-text-center}}) to the right of your filter's name. A pop-up window will ask _Are you sure you want to delete this filter?_ Click **OK** to proceed with deletion, or **Cancel** to exit.
 
 
 ## Clear Filters 
-Any time a filter of any type is active, the option to *"Clear Filters"* will appear on the Submissions Control Panel, to the right of the *"Filters"* button, beside the search bar. Clicking this removes **all** active filters (including in your search bar) and restores the presentation of the full list of submissions available to you. 
+When a filter of any type is active, the **Clear Filters** option will appear on the Control Panel to the right of the **Filters** button, beside the search bar. Clicking this removes **all** active filters (including those typed in your search bar) and restores the full list of submissions available to you.
 
-Since Flow Forms saves and displays your last filter selections on your "Submissions" page, the option to "Clear filters" is also available from the main sidebar, beside "{{icon:paper-clip size-4 inline-block align-text-center}} Submissions," if you wish to clear your filters at the onset of loading your submission page.
-
+Since Flow Forms saves and displays your last filter selections on your Submissions page, **Clear filters** is also available from the main sidebar beside **{{icon:paper-clip size-4 inline-block align-text-center}} Submissions**. This is helpful for loading the Submissions page with your filters pre-cleared.
 
 ## Quick-Filters
-Two of the most commonly used filters, *"Forms"* and *"Status,"*  are easily accessible from their links on the Submissions Control Panel. 
+Two of the most commonly used filters - **Forms** and **Status** - are easily accessible from their links on the Control Panel.
 
-"{{icon:document-duplicate size-4 inline-block align-text-center}} Forms" is located just below the search bar on its left side. To filter by form, click to show a drop down menu with search option. All your forms are listed in alphabetical order and can be scrolled through or found by searching for the form title. Click to select the form or forms you would like to include in your search. A checkmark will appear to the left of any form you have selected. If no form is selected as a filter, submissions from every form will be included in your displayed results.
+**{{icon:document-duplicate size-4 inline-block align-text-center}} Forms** is located just below the search bar on its left side. To quick-filter by form, click to show a dropdown menu with search option. All your forms are listed alphabetically and can be scrolled through or found by searching for the form title. Click to select the form or forms you would like to include in your search. A checkmark will appear to the left of any form you have selected. If no form is selected as a filter, submissions from every form will be included in your displayed results.
 
-"{{icon:check-badge size-4 inline-block align-text-center}} Status" is located below the search bar, but on its right side. To filter by a submission's status, click to see every status option listed (color coded) with a select box to the left of each. Click in the box of any status, and a checkmark will indicate its selection. Click the checkmark again to unselect that status from your filtered results. If no status is selected, submissions with every status will be included in your displayed results.
+**{{icon:check-badge size-4 inline-block align-text-center}} Status** is located below the search bar on its right side. To quick-filter by a submission's status, click **Status** to see all options (color-coded) with a checkbox to the left of each. Click the box of any status, and a checkmark will indicate its selection. Click the checkmark again to deselect that status from your filtered results. If no status is selected, submissions with every status will be included in your displayed results.
 
-When "Forms" or "Status" filters are active, their name will appear listed on the Submissions Control Panel, below the search bar, on their respective sides, with the option to "X" out of any that you would like to remove from filtering.
-
-
+When **Forms** or **Status** filters are active, their names will appear on the Control Panel below the search bar on their respective sides, with the option to "X" out of any you would like to remove from filtering.
 
 
 
 
-
-
-## Filtering Submissions
-
-### Available Filters
-- **Submitted By** - Find submissions from specific users
-- **Forms** - Filter by specific forms
-- **Status** - View by submission status
-- **Terms** - Search within field data using `field name: search term`
-- **Date Range** - Filter by submission date
-- **Participants** - Find submissions involving specific users
-- **Pending On** - See submissions awaiting action from specific users
-
-### Using Filters
-1. Click the filter icon in your submissions view
-2. Select your filter criteria
-3. Apply multiple filters to narrow results
-4. Save frequently used filter combinations
-
-### Saved Filters
-Create reusable filters for common searches:
-1. Set up your filter criteria
-2. Click "Save Filter"
-3. Name your filter
-4. Access saved filters from the dropdown menu
-
-## Submission Actions
-
-### Individual Actions
-For each submission, you can:
-- View full details
-- Edit submission data (if permissions allow)
-- Add notes or comments
-- Change submission status
-- Assign to team members
-
-### Bulk Actions
-Select multiple submissions to:
-- Export to CSV
-- Update status in bulk
-- Assign to users
-- Apply tags or categories
 
 ## Grouping & Permissions
 

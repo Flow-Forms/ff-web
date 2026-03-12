@@ -3,8 +3,16 @@ title: Bulk Actions Toolbar
 order: 6
 
 ---
+# Bulk Actions Toolbar
 
-# Bulk PDF Print Feature
+On the **{{icon:paper-clip size-4 inline-block align-text-center}} Submissions** page, the **Bulk Actions Toolbar** is situated at the bottom of the Control Panel, below the search bar and **{{icon:document-duplicate size-4 inline-block align-text-center}} Forms** quick-filter. On the left end is a checkbox that allows you to select all submissions displayed on your page. If no submissions are selected, the right end will say *select submission(s) to access bulk actions*. 
+
+When at least one submission's checkbox is selected, the right end changes to **{{icon:bolt size-4 inline-block align-text-center}} Actions**. If you have multiple submissions pending your action, and would like to have the same action apply to all of them, click **{{icon:bolt size-4 inline-block align-text-center}} Actions**. A **Bulk Actions** modal appears with a **Select Action** dropdown below it. Depending on the submissions you select, the common corresponding actions available for those submissions will appear in the dropdown. If the action you are looking for is not displaying there, it is because at least one of the submissions you have selected is not eligible for that action. 
+
+Once you have chosen the action that you want, it will appear in the dropdown. The number of submissions the action will apply to is reflected in the blue button you select to proceed (e.g. "**Apply to # Submissions**"). Click **Cancel** or the "X" to exit the modal without taking the action.
+
+
+## Bulk PDF Print Feature
 
 ## Overview
 
